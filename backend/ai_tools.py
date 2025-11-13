@@ -30,12 +30,12 @@ def mask_pii(text: str) -> tuple[str, dict]:
         masked_text = re.sub(ssn_pattern, '[SSN REDACTED]', masked_text)
         redacted['ssn_count'] = len(ssns)
     
-    # Mask student ID patterns (assuming 7-9 digits)
-    student_id_pattern = r'(?i)student\s*(?:id|#|number)?\s*:?\s*(\d{7,9})'
+    # Mask student ID patterns (7-9 digit numbers that appear standalone or after "student ID")
+    student_id_pattern = r'(?i)(?:student\s*(?:id|#|number)?\s*(?:is)?\s*:?\s*)?(\d{7,9})(?=\s|$|\b)'
     student_ids = re.findall(student_id_pattern, masked_text)
     if student_ids:
-        masked_text = re.sub(student_id_pattern, 'student ID: [REDACTED]', masked_text, flags=re.IGNORECASE)
-        redacted['student_id_count'] = len(student_ids)
+        masked_text = re.sub(student_id_pattern, lambda m: '[STUDENT_ID REDACTED]' if m.group(1) else m.group(0), masked_text, flags=re.IGNORECASE)
+        redacted['student_id_count'] = len([s for s in student_ids if s])
     
     # Mask phone numbers
     phone_pattern = r'\b(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b'
@@ -176,10 +176,19 @@ Remember: DO NOT make up award amounts, balances, or account details.
         user_message = UserMessage(text=user_prompt)
         ai_response = await chat.send_message(user_message)
         
-        # Parse AI response
+        # Parse AI response (strip markdown code blocks if present)
         import json
+        ai_text = ai_response.strip()
+        if ai_text.startswith("```json"):
+            ai_text = ai_text[7:]
+        if ai_text.startswith("```"):
+            ai_text = ai_text[3:]
+        if ai_text.endswith("```"):
+            ai_text = ai_text[:-3]
+        ai_text = ai_text.strip()
+        
         try:
-            response_data = json.loads(ai_response)
+            response_data = json.loads(ai_text)
         except json.JSONDecodeError:
             # If AI didn't return valid JSON, extract what we can
             response_data = {
@@ -265,7 +274,17 @@ Provide your response in this exact JSON format:
         ai_response = await chat.send_message(user_message)
         
         import json
-        triage_data = json.loads(ai_response)
+        # Strip markdown code blocks if present
+        ai_text = ai_response.strip()
+        if ai_text.startswith("```json"):
+            ai_text = ai_text[7:]
+        if ai_text.startswith("```"):
+            ai_text = ai_text[3:]
+        if ai_text.endswith("```"):
+            ai_text = ai_text[:-3]
+        ai_text = ai_text.strip()
+        
+        triage_data = json.loads(ai_text)
         
         return triage_data
         
