@@ -1,10 +1,38 @@
 [
   {
-    "content": "Implement POC backend endpoints: /api/tools/search_kb_articles, /api/tools/draft_reply, /api/tools/update_ticket_metadata, /api/tools/add_student_event",
-    "status": "completed"
+    "content": "Create backend CRUD endpoints: Auth (mock OAuth login), Tickets (list/get/patch), Messages (list/create), Students (list/get/patch), Queues (list), Users (list)",
+    "status": "pending"
   },
   {
-    "content": "Call testing_agent_v3 for POC endpoints and prompt safety validation",
+    "content": "Set up frontend routing and Auth context with mock OAuth flow",
+    "status": "pending"
+  },
+  {
+    "content": "Build three-pane workspace layout component (Inbox | Thread | Student Context) following design guidelines",
+    "status": "pending"
+  },
+  {
+    "content": "Implement left panel: Inbox list with filter tabs (All, My Tickets, Unassigned, Waiting, Closed) and queue dropdown",
+    "status": "pending"
+  },
+  {
+    "content": "Implement center panel: Ticket thread view with message list and rich-text reply composer with AI Draft button",
+    "status": "pending"
+  },
+  {
+    "content": "Implement right panel: Student context with profile, editable notes, SIS link, and timeline of events",
+    "status": "pending"
+  },
+  {
+    "content": "Integrate AI draft generation: Generate button → API call → Dialog with editable draft → Send",
+    "status": "pending"
+  },
+  {
+    "content": "Add loading/empty/error states, toast notifications, and data-testid attributes throughout",
+    "status": "pending"
+  },
+  {
+    "content": "Run esbuild check and call testing_agent_v3 for Phase 2 end-to-end testing",
     "status": "pending"
   }
 ]
