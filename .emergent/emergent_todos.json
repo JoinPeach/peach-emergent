@@ -1,0 +1,30 @@
+[
+  {
+    "content": "Install emergentintegrations library and update backend/requirements.txt via pip freeze",
+    "status": "pending"
+  },
+  {
+    "content": "Create sample KB articles (FAFSA, verification, SAP appeals, billing, general) with ai_searchable flag",
+    "status": "pending"
+  },
+  {
+    "content": "Implement POC backend endpoints: /api/tools/search_kb_articles, /api/tools/draft_reply, /api/tools/update_ticket_metadata, /api/tools/add_student_event",
+    "status": "pending"
+  },
+  {
+    "content": "Fetch EMERGENT_LLM_KEY and write prompt templates for AI triage and reply drafting with PII masking and disclaimers",
+    "status": "pending"
+  },
+  {
+    "content": "Create Python test script to validate draft_reply endpoint with sample email and KB context",
+    "status": "pending"
+  },
+  {
+    "content": "Run test script and verify: safe_reply structure, disclaimers present, PII masked, KB citations accurate",
+    "status": "pending"
+  },
+  {
+    "content": "Call testing_agent_v3 for POC endpoints and prompt safety validation",
+    "status": "pending"
+  }
+]
