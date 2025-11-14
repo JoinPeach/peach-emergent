@@ -138,7 +138,11 @@ const TicketList = ({
           </div>
         ) : (
           <div className="divide-y divide-gray-100">
-            {tickets.map((ticket) => (
+            {tickets.map((ticket) => {
+              // Generate 4-digit ticket number from UUID
+              const ticketNumber = parseInt(ticket.id.replace(/\D/g, '').substring(0, 4)) || Math.floor(1000 + Math.random() * 9000);
+              
+              return (
               <button
                 key={ticket.id}
                 onClick={() => onTicketSelect(ticket)}
@@ -151,7 +155,7 @@ const TicketList = ({
               >
                 <div className="flex items-start justify-between mb-2">
                   <span className="text-sm font-semibold text-gray-900 truncate flex-1">
-                    Ticket #{ticket.id.substring(0, 8).toUpperCase()}
+                    Ticket #{ticketNumber}
                   </span>
                   {getStatusBadge(ticket.status)}
                 </div>
@@ -167,7 +171,8 @@ const TicketList = ({
                   </span>
                 </div>
               </button>
-            ))}
+              );
+            })}
           </div>
         )}
       </ScrollArea>
