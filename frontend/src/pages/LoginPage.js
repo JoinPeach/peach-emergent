@@ -34,9 +34,6 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50" data-testid="login-page">
       <Card className="w-full max-w-md mx-4">
         <CardHeader className="space-y-4 pb-4">
-          <div className="flex justify-center">
-            <img src="/peach_logo.svg" alt="Logo" className="h-12" />
-          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
