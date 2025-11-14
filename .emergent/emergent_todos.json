@@ -1,26 +1,14 @@
 [
   {
-    "content": "Create Stripe-style design system (Inter font, muted colors, card-based layout)",
-    "status": "completed"
+    "content": "Redesign right panel layout - remove two-column grid, make cards feel connected and cohesive",
+    "status": "in_progress"
   },
   {
-    "content": "Redesign to two-panel layout: Left (ticket list) + Right (combined details + student + AI draft)",
-    "status": "completed"
+    "content": "Add 'Add Event' button and dialog to timeline for logging notes, calls, and walk-ins",
+    "status": "pending"
   },
   {
-    "content": "Remove middle thread panel and merge into single right panel",
-    "status": "completed"
-  },
-  {
-    "content": "Update all components with modern B2B SaaS styling",
-    "status": "completed"
-  },
-  {
-    "content": "Add smooth transitions and modern interactions",
-    "status": "completed"
-  },
-  {
-    "content": "Test new layout and styling",
-    "status": "completed"
+    "content": "Test new cohesive layout and event creation flow",
+    "status": "pending"
   }
 ]
