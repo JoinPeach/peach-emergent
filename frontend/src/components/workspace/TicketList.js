@@ -83,12 +83,12 @@ const TicketList = ({
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center space-x-1 mb-3">
+        <div className="grid grid-cols-3 gap-1 mb-3">
           {filterButtons.map((btn) => (
             <button
               key={btn.value || 'all'}
               onClick={() => onFilterChange({ status: btn.value })}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+              className={`px-2 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 filters.status === btn.value
                   ? 'bg-gray-900 text-white'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
