@@ -15,6 +15,23 @@ const TicketList = ({
   onFilterChange,
   loading,
 }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  // Filter tickets by search query
+  const filteredTickets = tickets.filter(ticket => {
+    if (!searchQuery.trim()) return true;
+    
+    const query = searchQuery.toLowerCase();
+    const ticketNumber = parseInt(ticket.id.replace(/\D/g, '').substring(0, 4)) || 0;
+    
+    return (
+      ticket.subject?.toLowerCase().includes(query) ||
+      ticket.student?.name?.toLowerCase().includes(query) ||
+      ticket.student?.email?.toLowerCase().includes(query) ||
+      ticket.category?.toLowerCase().includes(query) ||
+      ticketNumber.toString().includes(query)
+    );
+  });
   const getStatusBadge = (status) => {
     const styles = {
       open: 'bg-blue-50 text-blue-700 border-blue-200',
@@ -56,7 +73,7 @@ const TicketList = ({
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-900">Tickets</h2>
           <Badge variant="secondary" className="bg-gray-100 text-gray-700">
-            {tickets.length}
+            {filteredTickets.length}
           </Badge>
         </div>
 
@@ -65,7 +82,10 @@ const TicketList = ({
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <Input
             placeholder="Search tickets..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-9 h-9 bg-gray-50 border-gray-200"
+            data-testid="search-tickets-input"
           />
         </div>
 
@@ -130,15 +150,15 @@ const TicketList = ({
             <div className="w-8 h-8 border-2 border-gray-200 border-t-gray-900 rounded-full animate-spin mx-auto mb-3" />
             <p className="text-sm text-gray-500">Loading tickets...</p>
           </div>
-        ) : tickets.length === 0 ? (
+        ) : filteredTickets.length === 0 ? (
           <div className="p-8 text-center" data-testid="empty-tickets">
             <Mail className="w-12 h-12 mx-auto mb-3 text-gray-300" />
             <p className="text-sm font-medium text-gray-900">No tickets found</p>
-            <p className="text-xs text-gray-500 mt-1">Try adjusting your filters</p>
+            <p className="text-xs text-gray-500 mt-1">{searchQuery ? 'Try a different search term' : 'Try adjusting your filters'}</p>
           </div>
         ) : (
           <div className="divide-y divide-gray-100">
-            {tickets.map((ticket) => {
+            {filteredTickets.map((ticket) => {
               // Generate 4-digit ticket number from UUID
               const ticketNumber = parseInt(ticket.id.replace(/\D/g, '').substring(0, 4)) || Math.floor(1000 + Math.random() * 9000);
               
