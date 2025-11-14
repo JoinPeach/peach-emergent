@@ -166,11 +166,6 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
               <div key={message.id} className="space-y-4">
                 {index > 0 && <Separator />}
                 <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
-                    {message.direction === 'inbound'
-                      ? student.name.charAt(0).toUpperCase()
-                      : user.name.charAt(0).toUpperCase()}
-                  </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center space-x-2 mb-2">
                       <span className="text-sm font-semibold text-gray-900">
@@ -198,10 +193,10 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
 
           <Separator className="mb-6" />
 
-          {/* AI Draft Response */}
+          {/* AI Suggested Reply */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">AI-Generated Reply</h2>
+              <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">AI Suggested Reply</h2>
               {aiDraft && (
                 <div className="flex items-center space-x-2">
                   <Button
