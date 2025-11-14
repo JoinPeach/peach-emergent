@@ -48,6 +48,16 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
 
   const { ticket, messages, student } = ticketDetails;
 
+  const handleStatusChange = async (newStatus) => {
+    try {
+      await ticketAPI.update(ticket.id, { status: newStatus });
+      toast.success('Status updated');
+      onTicketUpdate();
+    } catch (error) {
+      toast.error('Failed to update status');
+    }
+  };
+
   const handleSendReply = async () => {
     if (!aiDraft?.safe_reply?.trim()) {
       toast.error('No reply to send');
