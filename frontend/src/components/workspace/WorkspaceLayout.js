@@ -10,10 +10,31 @@ const WorkspaceLayout = ({ user, children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [notificationCount, setNotificationCount] = useState(3);
+  const [notifications, setNotifications] = useState([
+    {
+      id: '1',
+      title: 'New ticket assigned',
+      description: 'Taylor Kim - Payment plan questions',
+      time: '5 minutes ago',
+    },
+    {
+      id: '2',
+      title: 'Student replied',
+      description: 'Sam Martinez responded to verification request',
+      time: '2 hours ago',
+    },
+    {
+      id: '3',
+      title: 'Ticket updated',
+      description: 'Jordan Lee - SAP appeal status changed to open',
+      time: '1 day ago',
+    },
+  ]);
 
   const isActive = (path) => location.pathname === path;
   
   const handleClearNotifications = () => {
+    setNotifications([]);
     setNotificationCount(0);
     toast.success('All notifications cleared');
   };
@@ -71,34 +92,35 @@ const WorkspaceLayout = ({ user, children }) => {
               <div className="p-3 border-b border-gray-200">
                 <h3 className="font-semibold text-sm text-gray-900">Notifications</h3>
               </div>
-              <div className="max-h-96 overflow-y-auto">
-                <DropdownMenuItem className="flex-col items-start p-3 cursor-pointer">
-                  <p className="text-sm font-medium text-gray-900">New ticket assigned</p>
-                  <p className="text-xs text-gray-500 mt-1">Taylor Kim - Payment plan questions</p>
-                  <p className="text-xs text-gray-400 mt-1">5 minutes ago</p>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex-col items-start p-3 cursor-pointer">
-                  <p className="text-sm font-medium text-gray-900">Student replied</p>
-                  <p className="text-xs text-gray-500 mt-1">Sam Martinez responded to verification request</p>
-                  <p className="text-xs text-gray-400 mt-1">2 hours ago</p>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex-col items-start p-3 cursor-pointer">
-                  <p className="text-sm font-medium text-gray-900">Ticket updated</p>
-                  <p className="text-xs text-gray-500 mt-1">Jordan Lee - SAP appeal status changed to open</p>
-                  <p className="text-xs text-gray-400 mt-1">1 day ago</p>
-                </DropdownMenuItem>
-              </div>
-              <div className="p-2 border-t border-gray-200">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="w-full text-xs text-gray-600 hover:text-gray-900"
-                  onClick={handleClearNotifications}
-                  data-testid="clear-notifications-btn"
-                >
-                  Clear all
-                </Button>
-              </div>
+              {notifications.length === 0 ? (
+                <div className="p-8 text-center">
+                  <Bell className="w-12 h-12 mx-auto mb-3 text-gray-200" />
+                  <p className="text-sm text-gray-500">No notifications</p>
+                </div>
+              ) : (
+                <div className="max-h-96 overflow-y-auto">
+                  {notifications.map((notification) => (
+                    <DropdownMenuItem key={notification.id} className="flex-col items-start p-3 cursor-pointer">
+                      <p className="text-sm font-medium text-gray-900">{notification.title}</p>
+                      <p className="text-xs text-gray-500 mt-1">{notification.description}</p>
+                      <p className="text-xs text-gray-400 mt-1">{notification.time}</p>
+                    </DropdownMenuItem>
+                  ))}
+                </div>
+              )}
+              {notifications.length > 0 && (
+                <div className="p-2 border-t border-gray-200">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="w-full text-xs text-gray-600 hover:text-gray-900"
+                    onClick={handleClearNotifications}
+                    data-testid="clear-notifications-btn"
+                  >
+                    Clear all
+                  </Button>
+                </div>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
 
