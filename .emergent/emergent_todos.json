@@ -1,18 +1,18 @@
 [
   {
     "content": "Make search ticket bar functional with real-time filtering",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Remove Peach logo from login screen only (keep in workspace header)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Remove FileText icon from middle panel empty state",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test search functionality and UI changes",
-    "status": "pending"
+    "status": "completed"
   }
 ]
