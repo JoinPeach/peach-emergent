@@ -139,7 +139,21 @@ const ReportsPage = () => {
     <WorkspaceLayout user={user}>
       <div className="h-full bg-gray-50 overflow-auto" data-testid="reports-page">
       <div className="max-w-7xl mx-auto p-6">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-6">Reports</h1>
+        {/* Header with Time Filter */}
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-semibold text-gray-900">Reports</h1>
+          <Select value={timePeriod} onValueChange={setTimePeriod}>
+            <SelectTrigger className="w-40" data-testid="time-period-filter">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="7">Last 7 Days</SelectItem>
+              <SelectItem value="30">Last 30 Days</SelectItem>
+              <SelectItem value="60">Last 60 Days</SelectItem>
+              <SelectItem value="90">Last 90 Days</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
         {/* Key Metrics - Updated Style */}
         <div className="grid grid-cols-4 gap-6 mb-6">
@@ -151,9 +165,9 @@ const ReportsPage = () => {
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-3xl font-bold text-gray-900">25</p>
+                <p className="text-3xl font-bold text-gray-900">{currentData.totalTickets}</p>
                 <p className="text-sm font-medium text-gray-600">Total Tickets</p>
-                <p className="text-xs text-green-600">↑ 12% from last week</p>
+                <p className="text-xs text-green-600">↑ 12% from previous period</p>
               </div>
             </CardContent>
           </Card>
@@ -166,7 +180,7 @@ const ReportsPage = () => {
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-3xl font-bold text-gray-900">12</p>
+                <p className="text-3xl font-bold text-gray-900">{currentData.avgResponseTime}h</p>
                 <p className="text-sm font-medium text-gray-600">Avg Response Time</p>
                 <p className="text-xs text-green-600">↓ 18% improvement</p>
               </div>
@@ -181,9 +195,9 @@ const ReportsPage = () => {
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-3xl font-bold text-gray-900">02</p>
+                <p className="text-3xl font-bold text-gray-900">{currentData.aiDrafts.toString().padStart(2, '0')}</p>
                 <p className="text-sm font-medium text-gray-600">AI Drafts Generated</p>
-                <p className="text-xs text-gray-500">8 sent as-is</p>
+                <p className="text-xs text-gray-500">{Math.round(currentData.aiDrafts * 0.7)} sent as-is</p>
               </div>
             </CardContent>
           </Card>
@@ -196,7 +210,7 @@ const ReportsPage = () => {
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-3xl font-bold text-gray-900">4.8</p>
+                <p className="text-3xl font-bold text-gray-900">{currentData.satisfaction}</p>
                 <p className="text-sm font-medium text-gray-600">Student Satisfaction</p>
                 <p className="text-xs text-green-600">↑ 0.2 from last month</p>
               </div>
