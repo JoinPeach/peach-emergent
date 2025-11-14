@@ -1,18 +1,26 @@
 [
   {
-    "content": "Change Ticket Volume by Category bar color from blue to #FFD5A3",
-    "status": "completed"
+    "content": "Move x-axis labels outside chart lines to bottom with proper spacing",
+    "status": "in_progress"
   },
   {
-    "content": "Make Response Time Trend line graph more interactive with actual dates",
-    "status": "completed"
+    "content": "Make dots interactive with hover tooltips showing exact values",
+    "status": "pending"
   },
   {
-    "content": "Fix dot cutoff issue and change dot color to #FFD5A3",
-    "status": "completed"
+    "content": "Add edit functionality to Student Profile card",
+    "status": "pending"
   },
   {
-    "content": "Test updated chart colors and interactions",
-    "status": "completed"
+    "content": "Make Sign Out button smaller (not full width)",
+    "status": "pending"
+  },
+  {
+    "content": "Change filter tabs (All, My Tickets, Unassigned) to underlined tabs",
+    "status": "pending"
+  },
+  {
+    "content": "Test all improvements",
+    "status": "pending"
   }
 ]
