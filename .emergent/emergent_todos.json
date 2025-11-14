@@ -1,6 +1,14 @@
 [
   {
-    "content": "Add Figma-style collaborative user avatars to top navigation with hover tooltips",
-    "status": "completed"
+    "content": "Make avatar circles smaller, remove colored dash lines, stack avatars closer (overlapping)",
+    "status": "in_progress"
+  },
+  {
+    "content": "Add cursor-following name display for other users with colored background matching avatar",
+    "status": "pending"
+  },
+  {
+    "content": "Test collaborative features and avatar improvements",
+    "status": "pending"
   }
 ]
