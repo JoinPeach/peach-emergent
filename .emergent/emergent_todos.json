@@ -1,22 +1,22 @@
 [
   {
-    "content": "Remove 'note' from Interaction Timeline and modal dropdown options",
-    "status": "completed"
+    "content": "Login Page: Remove 'AidHub Pro' and 'University Financial Aid Platform' text",
+    "status": "in_progress"
   },
   {
-    "content": "Add 'Add Note' button to Notes section with ability to add and edit notes",
-    "status": "completed"
+    "content": "Middle panel empty state: Remove email icon",
+    "status": "pending"
   },
   {
-    "content": "Make Send Reply functional - send message, display in conversation, clear AI draft",
-    "status": "completed"
+    "content": "Replace AidHub Pro logo with Peach logo (SVG) in top navigation",
+    "status": "pending"
   },
   {
-    "content": "Change AI logic - only auto-generate when NEW student reply arrives, not on ticket open",
-    "status": "completed"
+    "content": "Change ticket numbers from 8-char UUID to random 4-digit format (#1234)",
+    "status": "pending"
   },
   {
-    "content": "Test send reply flow and AI trigger logic",
-    "status": "completed"
+    "content": "Test all branding changes",
+    "status": "pending"
   }
 ]
