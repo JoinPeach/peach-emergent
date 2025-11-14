@@ -1,42 +1,38 @@
 [
   {
-    "content": "Update copy: AI-Generated Reply → AI Suggested Reply, AI Activity Log → Audit Log, Activity Timeline → Interaction Timeline, All Queues → All Tickets",
-    "status": "completed"
+    "content": "Change copy 'Generating AI-powered reply...' to 'Regenerating AI reply...'",
+    "status": "in_progress"
   },
   {
-    "content": "Change Add button to 'Add Interaction' (remove icon)",
-    "status": "completed"
+    "content": "Remove email icon from student name in left panel TicketList",
+    "status": "pending"
   },
   {
-    "content": "Make right panel cards more cohesive and connected (remove gaps, unified design)",
-    "status": "completed"
+    "content": "Redesign right panel - change from unified card to separate cards that fill entire panel height",
+    "status": "pending"
   },
   {
-    "content": "Add ticket status dropdown in middle panel header",
-    "status": "completed"
+    "content": "Remove avatar from Sarah Chen name in conversation messages",
+    "status": "pending"
   },
   {
-    "content": "Remove all gradient circle avatars throughout the app",
-    "status": "completed"
+    "content": "In notifications dropdown, remove 'View all notifications' and add 'Clear all' button",
+    "status": "pending"
   },
   {
-    "content": "Create Reports page with placeholder content",
-    "status": "completed"
+    "content": "Add top navigation to Reports and Knowledge Base pages",
+    "status": "pending"
   },
   {
-    "content": "Create Knowledge Base page with placeholder content",
-    "status": "completed"
+    "content": "Add back navigation to Settings page to return to Tickets",
+    "status": "pending"
   },
   {
-    "content": "Create Settings page with logout moved there, make settings icon functional",
-    "status": "completed"
+    "content": "Make 'New Article' button functional, change to 'Upload', remove icon",
+    "status": "pending"
   },
   {
-    "content": "Make notification icon functional with dropdown",
-    "status": "completed"
-  },
-  {
-    "content": "Test all changes and new pages",
-    "status": "completed"
+    "content": "Test all final refinements",
+    "status": "pending"
   }
 ]
