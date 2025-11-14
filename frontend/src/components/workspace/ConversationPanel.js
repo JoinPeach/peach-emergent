@@ -3,9 +3,10 @@ import { ScrollArea } from '../ui/scroll-area';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { Separator } from '../ui/separator';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Mail, Send, RefreshCw, Edit3, Sparkles, Clock, Check } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { messageAPI, aiToolsAPI } from '../../lib/api';
+import { messageAPI, aiToolsAPI, ticketAPI } from '../../lib/api';
 import { toast } from 'sonner';
 import { useAuth } from '../../contexts/AuthContext';
 
