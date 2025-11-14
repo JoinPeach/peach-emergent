@@ -1,14 +1,14 @@
 [
   {
     "content": "Fix cursor name positioning - prevent cutoff and overlapping with avatars",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Add proper spacing between collaborative avatars in header (not overlapping)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test fixed positioning and spacing",
-    "status": "pending"
+    "status": "completed"
   }
 ]
