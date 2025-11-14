@@ -7,7 +7,7 @@ import { Separator } from '../ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { User, Phone, Mail, ExternalLink, Edit3, MessageSquare, PhoneCall, UserCheck, Sparkles, ArrowRight, Clock, CheckCircle2 } from 'lucide-react';
+import { User, Phone, Mail, ExternalLink, Edit3, MessageSquare, PhoneCall, UserCheck, Sparkles, ArrowRight, Clock, CheckCircle2, Plus } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { studentAPI, aiToolsAPI } from '../../lib/api';
 import { toast } from 'sonner';
@@ -16,10 +16,12 @@ import { useAuth } from '../../contexts/AuthContext';
 const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
   const { user } = useAuth();
   const [editingNotes, setEditingNotes] = useState(false);
+  const [addingNote, setAddingNote] = useState(false);
   const [notes, setNotes] = useState('');
+  const [newNote, setNewNote] = useState('');
   const [timeline, setTimeline] = useState([]);
   const [showAddEventDialog, setShowAddEventDialog] = useState(false);
-  const [newEventType, setNewEventType] = useState('note');
+  const [newEventType, setNewEventType] = useState('phone_call');
   const [newEventContent, setNewEventContent] = useState('');
   const [savingEvent, setSavingEvent] = useState(false);
   const [aiAuditLog, setAiAuditLog] = useState([]);
@@ -35,7 +37,9 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
   const loadTimeline = async (studentId) => {
     try {
       const data = await studentAPI.get(studentId);
-      setTimeline(data.timeline || []);
+      // Filter out 'note' events - they belong in Notes section
+      const filteredTimeline = (data.timeline || []).filter(event => event.event_type !== 'note');
+      setTimeline(filteredTimeline);
     } catch (error) {
       console.error('Failed to load timeline:', error);
     }
@@ -81,6 +85,28 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
     }
   };
 
+  const handleAddNote = async () => {
+    if (!newNote.trim()) {
+      toast.error('Please enter note content');
+      return;
+    }
+
+    try {
+      const timestamp = new Date().toLocaleDateString();
+      const formattedNote = `[${timestamp}] ${newNote}`;
+      const updatedNotes = notes ? `${notes}\n\n${formattedNote}` : formattedNote;
+      
+      await studentAPI.update(ticketDetails.student.id, { notes: updatedNotes });
+      setNotes(updatedNotes);
+      setNewNote('');
+      setAddingNote(false);
+      toast.success('Note added');
+      onStudentUpdate();
+    } catch (error) {
+      toast.error('Failed to add note');
+    }
+  };
+
   const handleAddEvent = async () => {
     if (!newEventContent.trim()) {
       toast.error('Please enter event details');
@@ -89,13 +115,6 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
 
     setSavingEvent(true);
     try {
-      // If event type is 'note', also update the student notes field
-      if (newEventType === 'note') {
-        const updatedNotes = notes ? `${notes}\n\n[${new Date().toLocaleDateString()}] ${newEventContent}` : `[${new Date().toLocaleDateString()}] ${newEventContent}`;
-        await studentAPI.update(ticketDetails.student.id, { notes: updatedNotes });
-        setNotes(updatedNotes);
-      }
-      
       await aiToolsAPI.addStudentEvent({
         institution_id: user.institution_id,
         student_id: ticketDetails.student.id,
@@ -118,7 +137,6 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
 
   const getEventIcon = (eventType) => {
     const icons = {
-      note: <MessageSquare className="w-3.5 h-3.5 text-blue-600" />,
       phone_call: <PhoneCall className="w-3.5 h-3.5 text-purple-600" />,
       walk_in: <UserCheck className="w-3.5 h-3.5 text-orange-600" />,
       ai_routed: <Sparkles className="w-3.5 h-3.5 text-green-600" />,
@@ -202,30 +220,76 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
 
             <Separator className="my-3" />
 
+            {/* Notes Section with Add/Edit */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Notes</label>
-                {!editingNotes && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setEditingNotes(true)}
-                    className="h-6 text-xs"
-                    data-testid="edit-notes-btn"
-                  >
-                    <Edit3 className="w-3 h-3 mr-1" />
-                    Edit
-                  </Button>
-                )}
+                <div className="flex space-x-1">
+                  {!addingNote && !editingNotes && (
+                    <>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setAddingNote(true)}
+                        className="h-6 text-xs"
+                        data-testid="add-note-btn"
+                      >
+                        <Plus className="w-3 h-3 mr-1" />
+                        Add
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setEditingNotes(true)}
+                        className="h-6 text-xs"
+                        data-testid="edit-notes-btn"
+                      >
+                        <Edit3 className="w-3 h-3 mr-1" />
+                        Edit
+                      </Button>
+                    </>
+                  )}
+                </div>
               </div>
-              {editingNotes ? (
+              
+              {/* Add Note Mode */}
+              {addingNote ? (
+                <div className="space-y-2">
+                  <Textarea
+                    value={newNote}
+                    onChange={(e) => setNewNote(e.target.value)}
+                    rows={3}
+                    placeholder="Enter new note..."
+                    className="text-sm"
+                    data-testid="add-note-textarea"
+                    autoFocus
+                  />
+                  <div className="flex space-x-2">
+                    <Button size="sm" onClick={handleAddNote} className="h-7 text-xs" data-testid="save-note-btn">
+                      Save
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setNewNote('');
+                        setAddingNote(false);
+                      }}
+                      className="h-7 text-xs"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              ) : editingNotes ? (
                 <div className="space-y-2">
                   <Textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    rows={3}
+                    rows={5}
                     className="text-sm"
                     data-testid="notes-textarea"
+                    autoFocus
                   />
                   <div className="flex space-x-2">
                     <Button size="sm" onClick={handleSaveNotes} className="h-7 text-xs" data-testid="save-notes-btn">
@@ -245,7 +309,7 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
                   </div>
                 </div>
               ) : (
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 whitespace-pre-wrap">
                   {student.notes || 'No notes yet'}
                 </p>
               )}
@@ -253,7 +317,7 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
           </CardContent>
         </Card>
 
-        {/* Interaction Timeline Card */}
+        {/* Interaction Timeline Card (NO notes) */}
         <Card className="border-gray-200">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
@@ -340,13 +404,13 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
         </Card>
       </div>
 
-      {/* Add Event Dialog */}
+      {/* Add Interaction Dialog (NO note option) */}
       <Dialog open={showAddEventDialog} onOpenChange={setShowAddEventDialog}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add Interaction</DialogTitle>
             <DialogDescription>
-              Log a note, phone call, or walk-in interaction
+              Log a phone call or walk-in interaction
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
@@ -359,7 +423,6 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="note">Note</SelectItem>
                   <SelectItem value="phone_call">Phone Call</SelectItem>
                   <SelectItem value="walk_in">Walk-in</SelectItem>
                 </SelectContent>
