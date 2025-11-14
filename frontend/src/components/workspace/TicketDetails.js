@@ -5,6 +5,8 @@ import { Textarea } from '../ui/textarea';
 import { Badge } from '../ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Separator } from '../ui/separator';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Mail, Send, RefreshCw, Edit3, Sparkles, User, Phone, ExternalLink, Clock, MessageSquare, PhoneCall, UserCheck, ArrowRight } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { messageAPI, aiToolsAPI, studentAPI } from '../../lib/api';
