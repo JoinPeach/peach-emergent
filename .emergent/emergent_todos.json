@@ -1,22 +1,6 @@
 [
   {
-    "content": "Convert Knowledge Base from card layout to data table format",
-    "status": "completed"
-  },
-  {
-    "content": "Change top navigation from button tabs to lined tabs (underlined active state)",
-    "status": "completed"
-  },
-  {
-    "content": "Change color #FFFBEA to #F8FBFF in the application",
-    "status": "completed"
-  },
-  {
-    "content": "Remove plus icon from Add button and edit icon from Edit button in Notes section only",
-    "status": "completed"
-  },
-  {
-    "content": "Test all UI refinements",
-    "status": "completed"
+    "content": "Remove categories sidebar card from Knowledge Base page, make table full-width",
+    "status": "in_progress"
   }
 ]
