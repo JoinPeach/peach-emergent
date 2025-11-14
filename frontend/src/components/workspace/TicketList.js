@@ -146,9 +146,12 @@ const TicketList = ({
                 data-testid={`ticket-${ticket.id}`}
               >
                 <div className="flex items-start justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-900 truncate flex-1">
-                    {ticket.student?.name || 'Unknown Student'}
-                  </span>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs font-mono text-gray-500">#{ticket.id.substring(0, 8).toUpperCase()}</span>
+                    <span className="text-sm font-semibold text-gray-900 truncate flex-1">
+                      {ticket.student?.name || 'Unknown Student'}
+                    </span>
+                  </div>
                   {getStatusBadge(ticket.status)}
                 </div>
 
@@ -157,10 +160,7 @@ const TicketList = ({
                 </p>
 
                 <div className="flex items-center justify-between text-xs text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    {getChannelIcon(ticket.channel)}
-                    <span className="capitalize">{ticket.category.replace('_', ' ')}</span>
-                  </div>
+                  <span className="capitalize">{ticket.category.replace('_', ' ')}</span>
                   <span>
                     {ticket.updated_at && formatDistanceToNow(new Date(ticket.updated_at), { addSuffix: true })}
                   </span>
