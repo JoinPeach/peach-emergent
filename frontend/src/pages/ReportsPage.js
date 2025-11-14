@@ -147,49 +147,100 @@ const ReportsPage = () => {
           </Card>
         </div>
 
-        {/* Team Member Activity Table */}
+        {/* Team Member Activity - Stacked Bar Chart */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Team Member Activity</CardTitle>
-            <CardDescription>Latest actions by financial aid staff</CardDescription>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-lg">Team Member Activity</CardTitle>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 rounded-sm bg-orange-200"></div>
+                  <span className="text-sm text-gray-700">Edited</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 rounded-sm bg-green-200"></div>
+                  <span className="text-sm text-gray-700">Approved without edits</span>
+                </div>
+              </div>
+            </div>
+            <CardDescription>AI draft activity by financial aid staff</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Team Member</th>
-                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Action</th>
-                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Ticket</th>
-                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Time</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {teamActivity.map((activity) => (
-                    <tr key={activity.id} className="hover:bg-gray-50">
-                      <td className="py-3 px-4">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-medium">
-                            {activity.member.charAt(0)}
-                          </div>
-                          <span className="text-sm font-medium text-gray-900">{activity.member}</span>
-                        </div>
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className="text-sm text-gray-700">{activity.action}</span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className="text-sm text-gray-600">{activity.ticket}</span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className="text-xs text-gray-500">
-                          {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="flex items-end space-x-4 h-64 relative">
+              {/* Y-axis */}
+              <div className="flex flex-col justify-between h-full text-xs text-gray-500 pr-4">
+                <span>300</span>
+                <span>200</span>
+                <span>100</span>
+                <span>50</span>
+                <span>0</span>
+              </div>
+              
+              {/* Bars */}
+              <div className="flex-1 flex items-end justify-between h-full pb-8">
+                {/* Sarah Chen */}
+                <div className="flex flex-col items-center">
+                  <div className="w-16 flex flex-col justify-end h-full">
+                    <div className="bg-green-200 w-full" style={{ height: '80px' }}></div>
+                    <div className="bg-orange-200 w-full" style={{ height: '40px' }}></div>
+                  </div>
+                  <span className="text-xs text-gray-600 mt-2">Sarah Chen</span>
+                </div>
+                
+                {/* Michael Rodriguez */}
+                <div className="flex flex-col items-center">
+                  <div className="w-16 flex flex-col justify-end h-full">
+                    <div className="bg-green-200 w-full" style={{ height: '120px' }}></div>
+                    <div className="bg-orange-200 w-full" style={{ height: '30px' }}></div>
+                  </div>
+                  <span className="text-xs text-gray-600 mt-2">Michael Rodriguez</span>
+                </div>
+                
+                {/* Dr. Emily Thompson */}
+                <div className="flex flex-col items-center">
+                  <div className="w-16 flex flex-col justify-end h-full">
+                    <div className="bg-green-200 w-full" style={{ height: '60px' }}></div>
+                    <div className="bg-orange-200 w-full" style={{ height: '20px' }}></div>
+                  </div>
+                  <span className="text-xs text-gray-600 mt-2">Dr. Emily Thompson</span>
+                </div>
+                
+                {/* Lisa Park */}
+                <div className="flex flex-col items-center">
+                  <div className="w-16 flex flex-col justify-end h-full">
+                    <div className="bg-green-200 w-full" style={{ height: '90px' }}></div>
+                    <div className="bg-orange-200 w-full" style={{ height: '35px' }}></div>
+                  </div>
+                  <span className="text-xs text-gray-600 mt-2">Lisa Park</span>
+                </div>
+                
+                {/* James Wilson */}
+                <div className="flex flex-col items-center">
+                  <div className="w-16 flex flex-col justify-end h-full">
+                    <div className="bg-green-200 w-full" style={{ height: '110px' }}></div>
+                    <div className="bg-orange-200 w-full" style={{ height: '45px' }}></div>
+                  </div>
+                  <span className="text-xs text-gray-600 mt-2">James Wilson</span>
+                </div>
+                
+                {/* Maria Garcia */}
+                <div className="flex flex-col items-center">
+                  <div className="w-16 flex flex-col justify-end h-full">
+                    <div className="bg-green-200 w-full" style={{ height: '70px' }}></div>
+                    <div className="bg-orange-200 w-full" style={{ height: '25px' }}></div>
+                  </div>
+                  <span className="text-xs text-gray-600 mt-2">Maria Garcia</span>
+                </div>
+                
+                {/* David Brown */}
+                <div className="flex flex-col items-center">
+                  <div className="w-16 flex flex-col justify-end h-full">
+                    <div className="bg-green-200 w-full" style={{ height: '100px' }}></div>
+                    <div className="bg-orange-200 w-full" style={{ height: '50px' }}></div>
+                  </div>
+                  <span className="text-xs text-gray-600 mt-2">David Brown</span>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
