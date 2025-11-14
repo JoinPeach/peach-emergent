@@ -1,14 +1,14 @@
 [
   {
     "content": "Move cursor arrow to top-right of user name instead of bottom-left",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Fix avatar hover tooltip positioning - increase distance to prevent overlap",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test fixed cursor and tooltip positioning",
-    "status": "pending"
+    "status": "completed"
   }
 ]
