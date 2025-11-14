@@ -1,10 +1,15 @@
 import React from 'react';
+import WorkspaceLayout from '../components/workspace/WorkspaceLayout';
+import { useAuth } from '../contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { BarChart3, TrendingUp, Users, Clock } from 'lucide-react';
 
 const ReportsPage = () => {
+  const { user } = useAuth();
+  
   return (
-    <div className="h-full bg-gray-50 overflow-auto" data-testid="reports-page">
+    <WorkspaceLayout user={user}>
+      <div className="h-full bg-gray-50 overflow-auto" data-testid="reports-page">
       <div className="max-w-7xl mx-auto p-6">
         <h1 className="text-2xl font-semibold text-gray-900 mb-6">Reports</h1>
 
@@ -91,7 +96,7 @@ const ReportsPage = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </WorkspaceLayout>
   );
 };
 
