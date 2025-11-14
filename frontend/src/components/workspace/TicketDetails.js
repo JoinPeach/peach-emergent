@@ -73,6 +73,34 @@ const TicketDetails = ({ ticketDetails, onTicketUpdate }) => {
     }
   };
 
+  const handleAddEvent = async () => {
+    if (!newEventContent.trim()) {
+      toast.error('Please enter event details');
+      return;
+    }
+
+    setSavingEvent(true);
+    try {
+      await aiToolsAPI.addStudentEvent({
+        institution_id: user.institution_id,
+        student_id: ticketDetails.student.id,
+        ticket_id: ticketDetails.ticket.id,
+        event_type: newEventType,
+        content: newEventContent,
+        created_by: user.id,
+      });
+      toast.success('Event added');
+      setShowAddEventDialog(false);
+      setNewEventContent('');
+      loadTimeline(ticketDetails.student.id);
+      onTicketUpdate();
+    } catch (error) {
+      toast.error('Failed to add event');
+    } finally {
+      setSavingEvent(false);
+    }
+  };
+
   if (!ticketDetails) {
     return (
       <div className="flex-1 flex items-center justify-center bg-gray-50" data-testid="ticket-details-empty">
