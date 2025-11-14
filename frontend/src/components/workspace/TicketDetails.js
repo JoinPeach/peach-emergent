@@ -22,6 +22,10 @@ const TicketDetails = ({ ticketDetails, onTicketUpdate }) => {
   const [editingNotes, setEditingNotes] = useState(false);
   const [notes, setNotes] = useState('');
   const [timeline, setTimeline] = useState([]);
+  const [showAddEventDialog, setShowAddEventDialog] = useState(false);
+  const [newEventType, setNewEventType] = useState('note');
+  const [newEventContent, setNewEventContent] = useState('');
+  const [savingEvent, setSavingEvent] = useState(false);
 
   // Auto-generate AI draft when ticket opens - with delay to avoid immediate timeout
   useEffect(() => {
