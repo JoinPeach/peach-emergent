@@ -74,16 +74,16 @@ const CursorTracker = () => {
                 </svg>
               </div>
               
-              {/* Name Label */}
+              {/* Name Label - Better positioning */}
               <div
                 className="fixed pointer-events-none z-40 transition-all duration-1000"
                 style={{
-                  left: nameX,
-                  top: nameY,
+                  left: Math.max(10, Math.min(window.innerWidth - 120, user.x + 25)),
+                  top: Math.max(10, user.y - 15),
                 }}
               >
                 <div
-                  className="px-2 py-1 rounded text-white text-xs font-medium shadow-lg"
+                  className="px-3 py-1.5 rounded-md text-white text-sm font-medium shadow-lg whitespace-nowrap"
                   style={{ backgroundColor: user.color }}
                 >
                   {user.name}
