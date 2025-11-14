@@ -363,8 +363,6 @@ const ReportsPage = () => {
                             cy={`${y}%`}
                             r="5"
                             fill="#FFD5A3"
-                            stroke="#FFA726"
-                            strokeWidth="2"
                             className="hover:r-7 transition-all cursor-pointer drop-shadow-sm"
                             onMouseEnter={() => {
                               // Show custom tooltip
