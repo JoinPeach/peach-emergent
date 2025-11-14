@@ -1,34 +1,26 @@
 [
   {
-    "content": "Set up frontend routing and Auth context with mock OAuth flow",
-    "status": "completed"
-  },
-  {
-    "content": "Build three-pane workspace layout component (Inbox | Thread | Student Context) following design guidelines",
-    "status": "completed"
-  },
-  {
-    "content": "Implement left panel: Inbox list with filter tabs (All, My Tickets, Unassigned, Waiting, Closed) and queue dropdown",
-    "status": "completed"
-  },
-  {
-    "content": "Implement center panel: Ticket thread view with message list and rich-text reply composer with AI Draft button",
-    "status": "completed"
-  },
-  {
-    "content": "Implement right panel: Student context with profile, editable notes, SIS link, and timeline of events",
-    "status": "completed"
-  },
-  {
-    "content": "Integrate AI draft generation: Generate button → API call → Dialog with editable draft → Send",
-    "status": "completed"
-  },
-  {
-    "content": "Add loading/empty/error states, toast notifications, and data-testid attributes throughout",
-    "status": "completed"
-  },
-  {
-    "content": "Run esbuild check and call testing_agent_v3 for Phase 2 end-to-end testing",
+    "content": "Update design guidelines to match Outlook aesthetic (Microsoft blue, sidebar navigation, email-style layout)",
     "status": "in_progress"
+  },
+  {
+    "content": "Redesign workspace layout to match Outlook (left sidebar, center email list, right reading pane)",
+    "status": "pending"
+  },
+  {
+    "content": "Modify ThreadPanel to auto-generate AI draft when ticket opens (no manual Generate button)",
+    "status": "pending"
+  },
+  {
+    "content": "Add Regenerate, Edit, Send buttons for AI draft instead of dialog",
+    "status": "pending"
+  },
+  {
+    "content": "Update color scheme to Microsoft Outlook style",
+    "status": "pending"
+  },
+  {
+    "content": "Test auto-draft generation flow and UI",
+    "status": "pending"
   }
 ]
