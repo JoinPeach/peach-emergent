@@ -1,38 +1,34 @@
 [
   {
-    "content": "Create backend CRUD endpoints: Auth (mock OAuth login), Tickets (list/get/patch), Messages (list/create), Students (list/get/patch), Queues (list), Users (list)",
+    "content": "Set up frontend routing and Auth context with mock OAuth flow",
     "status": "completed"
   },
   {
-    "content": "Set up frontend routing and Auth context with mock OAuth flow",
-    "status": "in_progress"
-  },
-  {
     "content": "Build three-pane workspace layout component (Inbox | Thread | Student Context) following design guidelines",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Implement left panel: Inbox list with filter tabs (All, My Tickets, Unassigned, Waiting, Closed) and queue dropdown",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Implement center panel: Ticket thread view with message list and rich-text reply composer with AI Draft button",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Implement right panel: Student context with profile, editable notes, SIS link, and timeline of events",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Integrate AI draft generation: Generate button → API call → Dialog with editable draft → Send",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add loading/empty/error states, toast notifications, and data-testid attributes throughout",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Run esbuild check and call testing_agent_v3 for Phase 2 end-to-end testing",
-    "status": "pending"
+    "status": "in_progress"
   }
 ]
