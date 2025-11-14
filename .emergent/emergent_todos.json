@@ -1,42 +1,42 @@
 [
   {
     "content": "Make ticket status filter a dropdown and place next to All Tickets dropdown",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Left panel: Remove ticket numbers and change Student Name to show 'Ticket #{number}' instead",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Hide AI Suggested Reply section for closed tickets, only show when status is Open or In Progress",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Change 'Waiting on Student' to 'In Progress' throughout app",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Remove category badge from middle panel header",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add assignee dropdown in middle panel for unassigned tickets",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Clear notifications: Make modal show empty state after clearing",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Change copy to 'Generating AI reply...' (first time) and 'Regenerating AI reply...' (on regenerate click)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Notes interaction: Display in Notes section instead of timeline when added",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test all refinements",
-    "status": "pending"
+    "status": "completed"
   }
 ]
