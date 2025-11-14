@@ -2,10 +2,51 @@ import React from 'react';
 import WorkspaceLayout from '../components/workspace/WorkspaceLayout';
 import { useAuth } from '../contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { BarChart3, TrendingUp, Users, Clock } from 'lucide-react';
+import { BarChart3, TrendingUp, Users, Clock, User, Mail } from 'lucide-react';
+import { Badge } from '../components/ui/badge';
+import { formatDistanceToNow } from 'date-fns';
 
 const ReportsPage = () => {
   const { user } = useAuth();
+  
+  // Mock team member activity data
+  const teamActivity = [
+    {
+      id: '1',
+      member: 'Sarah Chen',
+      action: 'Replied to ticket',
+      ticket: 'Verification documents - what do I need?',
+      timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+    },
+    {
+      id: '2',
+      member: 'Michael Rodriguez',
+      action: 'Closed ticket',
+      ticket: 'Payment plan questions',
+      timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+    },
+    {
+      id: '3',
+      member: 'Sarah Chen',
+      action: 'Updated ticket status',
+      ticket: 'SAP appeal submission',
+      timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+    },
+    {
+      id: '4',
+      member: 'Dr. Emily Thompson',
+      action: 'Assigned ticket',
+      ticket: 'Question about FAFSA priority deadline',
+      timestamp: new Date(Date.now() - 1000 * 60 * 180).toISOString(),
+    },
+    {
+      id: '5',
+      member: 'Michael Rodriguez',
+      action: 'Added note',
+      ticket: 'Transfer credit evaluation',
+      timestamp: new Date(Date.now() - 1000 * 60 * 240).toISOString(),
+    },
+  ];
   
   return (
     <WorkspaceLayout user={user}>
@@ -83,15 +124,49 @@ const ReportsPage = () => {
           </Card>
         </div>
 
-        {/* Tables */}
+        {/* Team Member Activity Table */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Recent Activity</CardTitle>
-            <CardDescription>Latest tickets and interactions</CardDescription>
+            <CardTitle className="text-lg">Team Member Activity</CardTitle>
+            <CardDescription>Latest actions by financial aid staff</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-center py-8 text-gray-400">
-              <p className="text-sm">Detailed reports coming soon</p>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Team Member</th>
+                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Action</th>
+                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Ticket</th>
+                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Time</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {teamActivity.map((activity) => (
+                    <tr key={activity.id} className="hover:bg-gray-50">
+                      <td className="py-3 px-4">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-medium">
+                            {activity.member.charAt(0)}
+                          </div>
+                          <span className="text-sm font-medium text-gray-900">{activity.member}</span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="text-sm text-gray-700">{activity.action}</span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="text-sm text-gray-600">{activity.ticket}</span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="text-xs text-gray-500">
+                          {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </CardContent>
         </Card>

@@ -1,19 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import WorkspaceLayout from '../components/workspace/WorkspaceLayout';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { Search, BookOpen, FileText, Upload } from 'lucide-react';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { Search, FileText, Upload, Link as LinkIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 const KnowledgeBasePage = () => {
   const { user } = useAuth();
+  const [showUploadDialog, setShowUploadDialog] = useState(false);
+  const [uploadType, setUploadType] = useState('article');
+  const [articleTitle, setArticleTitle] = useState('');
+  const [articleCategory, setArticleCategory] = useState('general');
+  const [articleContent, setArticleContent] = useState('');
+  const [linkTitle, setLinkTitle] = useState('');
+  const [linkUrl, setLinkUrl] = useState('');
+  const [uploading, setUploading] = useState(false);
   
   const handleUpload = () => {
-    toast.success('Upload article feature coming soon');
+    setShowUploadDialog(true);
   };
+  
+  const handleSubmitUpload = async () => {
+    if (uploadType === 'article') {
+      if (!articleTitle.trim() || !articleContent.trim()) {
+        toast.error('Please enter title and content');
+        return;
+      }
+    } else {
+      if (!linkTitle.trim() || !linkUrl.trim()) {
+        toast.error('Please enter title and URL');
+        return;
+      }
+    }
+    
+    setUploading(true);
+    // Simulate upload delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    if (uploadType === 'article') {
+      toast.success(`Article "${articleTitle}" uploaded successfully`);
+    } else {
+      toast.success(`Link "${linkTitle}" added successfully`);
+    }
+    
+    // Reset form
+    setShowUploadDialog(false);
+    setArticleTitle('');
+    setArticleContent('');
+    setLinkTitle('');
+    setLinkUrl('');
+    setUploading(false);
+  };
+  
   const categories = [
     { name: 'FAFSA', count: 2, color: 'bg-blue-100 text-blue-700' },
     { name: 'Verification', count: 1, color: 'bg-green-100 text-green-700' },
@@ -23,13 +67,13 @@ const KnowledgeBasePage = () => {
   ];
 
   const articles = [
-    { title: 'FAFSA Submission Deadlines 2024-2025', category: 'FAFSA', updatedAt: '2 days ago' },
-    { title: 'Verification Process - Required Documents', category: 'Verification', updatedAt: '1 week ago' },
-    { title: 'Satisfactory Academic Progress (SAP) Appeals', category: 'SAP Appeals', updatedAt: '3 weeks ago' },
-    { title: 'Understanding Your Billing Statement', category: 'Billing', updatedAt: '1 month ago' },
-    { title: 'General Financial Aid Eligibility Requirements', category: 'General', updatedAt: '2 months ago' },
-    { title: 'How to Complete the FAFSA', category: 'FAFSA', updatedAt: '2 months ago' },
-    { title: 'Work-Study Program Information', category: 'General', updatedAt: '3 months ago' },
+    { title: 'FAFSA Submission Deadlines 2024-2025', category: 'FAFSA', updatedAt: '2 days ago', type: 'article' },
+    { title: 'Verification Process - Required Documents', category: 'Verification', updatedAt: '1 week ago', type: 'article' },
+    { title: 'Satisfactory Academic Progress (SAP) Appeals', category: 'SAP Appeals', updatedAt: '3 weeks ago', type: 'article' },
+    { title: 'Understanding Your Billing Statement', category: 'Billing', updatedAt: '1 month ago', type: 'article' },
+    { title: 'General Financial Aid Eligibility Requirements', category: 'General', updatedAt: '2 months ago', type: 'article' },
+    { title: 'How to Complete the FAFSA', category: 'FAFSA', updatedAt: '2 months ago', type: 'article' },
+    { title: 'Work-Study Program Information', category: 'General', updatedAt: '3 months ago', type: 'article' },
   ];
 
   return (
@@ -105,6 +149,131 @@ const KnowledgeBasePage = () => {
         </div>
       </div>
       </div>
+      
+      {/* Upload Dialog */}
+      <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Upload to Knowledge Base</DialogTitle>
+            <DialogDescription>
+              Add a new article or external link to the knowledge base
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            {/* Upload Type */}
+            <div>
+              <label className="text-sm font-medium text-gray-900 mb-2 block">Type</label>
+              <Select value={uploadType} onValueChange={setUploadType}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="article">Article</SelectItem>
+                  <SelectItem value="link">External Link</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            {uploadType === 'article' ? (
+              <>
+                <div>
+                  <label className="text-sm font-medium text-gray-900 mb-2 block">Title</label>
+                  <Input
+                    value={articleTitle}
+                    onChange={(e) => setArticleTitle(e.target.value)}
+                    placeholder="e.g., FAFSA Deadline Information"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-900 mb-2 block">Category</label>
+                  <Select value={articleCategory} onValueChange={setArticleCategory}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="fafsa">FAFSA</SelectItem>
+                      <SelectItem value="verification">Verification</SelectItem>
+                      <SelectItem value="sap_appeal">SAP Appeals</SelectItem>
+                      <SelectItem value="billing">Billing</SelectItem>
+                      <SelectItem value="general">General</SelectItem>
+                      <SelectItem value="deadlines">Deadlines</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-900 mb-2 block">Content (Markdown)</label>
+                  <Textarea
+                    value={articleContent}
+                    onChange={(e) => setArticleContent(e.target.value)}
+                    rows={10}
+                    placeholder="# Article Title\n\nArticle content in markdown format..."
+                    className="font-mono text-sm"
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <label className="text-sm font-medium text-gray-900 mb-2 block">Link Title</label>
+                  <Input
+                    value={linkTitle}
+                    onChange={(e) => setLinkTitle(e.target.value)}
+                    placeholder="e.g., Federal Student Aid Website"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-900 mb-2 block">URL</label>
+                  <Input
+                    value={linkUrl}
+                    onChange={(e) => setLinkUrl(e.target.value)}
+                    placeholder="https://..."
+                    type="url"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-900 mb-2 block">Category</label>
+                  <Select value={articleCategory} onValueChange={setArticleCategory}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="fafsa">FAFSA</SelectItem>
+                      <SelectItem value="verification">Verification</SelectItem>
+                      <SelectItem value="sap_appeal">SAP Appeals</SelectItem>
+                      <SelectItem value="billing">Billing</SelectItem>
+                      <SelectItem value="general">General</SelectItem>
+                      <SelectItem value="deadlines">Deadlines</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </>
+            )}
+          </div>
+          
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowUploadDialog(false);
+                setArticleTitle('');
+                setArticleContent('');
+                setLinkTitle('');
+                setLinkUrl('');
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSubmitUpload}
+              disabled={uploading}
+              className="bg-gray-900 hover:bg-gray-800 text-white"
+            >
+              {uploading ? 'Uploading...' : uploadType === 'article' ? 'Upload Article' : 'Add Link'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </WorkspaceLayout>
   );
 };
