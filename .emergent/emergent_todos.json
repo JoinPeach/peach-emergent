@@ -1,14 +1,14 @@
 [
   {
     "content": "Make avatar circles smaller, remove colored dash lines, stack avatars closer (overlapping)",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Add cursor-following name display for other users with colored background matching avatar",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test collaborative features and avatar improvements",
-    "status": "pending"
+    "status": "completed"
   }
 ]
