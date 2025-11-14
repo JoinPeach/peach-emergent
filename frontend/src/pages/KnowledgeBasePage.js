@@ -104,6 +104,7 @@ const KnowledgeBasePage = () => {
           </div>
         </div>
       </div>
+      </div>
     </WorkspaceLayout>
   );
 };
