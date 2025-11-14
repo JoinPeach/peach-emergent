@@ -96,6 +96,7 @@ const ReportsPage = () => {
           </CardContent>
         </Card>
       </div>
+      </div>
     </WorkspaceLayout>
   );
 };
