@@ -53,12 +53,12 @@ const CursorTracker = () => {
         .map(user => {
           return (
             <div key={user.id}>
-              {/* Colored Cursor Arrow - Top right of name */}
+              {/* Colored Cursor Arrow - Top of name */}
               <div
                 className="fixed pointer-events-none z-50 transition-all duration-1000"
                 style={{
-                  left: Math.max(10, Math.min(window.innerWidth - 120, user.x + 25)) + 80, // Position after name
-                  top: Math.max(10, user.y - 15) - 5, // Slightly above name
+                  left: Math.max(10, Math.min(window.innerWidth - 120, user.x + 25)) + 30, // Center above name
+                  top: Math.max(10, user.y - 15) - 25, // Well above name
                 }}
               >
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
