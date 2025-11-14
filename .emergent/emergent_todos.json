@@ -1,26 +1,26 @@
 [
   {
     "content": "Create Stripe-style design system (Inter font, muted colors, card-based layout)",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Redesign to two-panel layout: Left (ticket list) + Right (combined details + student + AI draft)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Remove middle thread panel and merge into single right panel",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Update all components with modern B2B SaaS styling",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add smooth transitions and modern interactions",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test new layout and styling",
-    "status": "pending"
+    "status": "completed"
   }
 ]
