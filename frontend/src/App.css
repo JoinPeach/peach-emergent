@@ -1,34 +1,88 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary Colors - Trust & Stability */
+    --primary-navy: #003366;
+    --primary-blue: #0066CC;
+    --primary-blue-light: #3399FF;
+    --primary-blue-pale: #E6F2FF;
+
+    /* Secondary Colors */
+    --secondary-slate: #475569;
+    --secondary-gray: #64748B;
+    --secondary-gray-light: #94A3B8;
+
+    /* Neutral Colors */
+    --neutral-white: #FFFFFF;
+    --neutral-gray-50: #F8FAFC;
+    --neutral-gray-100: #F1F5F9;
+    --neutral-gray-200: #E2E8F0;
+    --neutral-gray-300: #CBD5E1;
+
+    /* Semantic Colors */
+    --success-green: #10B981;
+    --success-green-light: #D1FAE5;
+    --warning-amber: #F59E0B;
+    --warning-amber-light: #FEF3C7;
+    --error-red: #EF4444;
+    --error-red-light: #FEE2E2;
+    --info-blue: #3B82F6;
+    --info-blue-light: #DBEAFE;
+
+    /* shadcn/ui theme variables */
+    --background: 0 0% 100%;
+    --foreground: 210 40% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 40% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 40% 20%;
+    --primary: 210 100% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 16% 93%;
+    --secondary-foreground: 210 40% 20%;
+    --muted: 210 16% 93%;
+    --muted-foreground: 210 15% 52%;
+    --accent: 210 16% 93%;
+    --accent-foreground: 210 40% 20%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 20% 88%;
+    --input: 210 20% 88%;
+    --ring: 210 100% 40%;
+    --radius: 0.5rem;
+  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.App-link {
-    color: #61dafb;
+::-webkit-scrollbar-track {
+  background: var(--neutral-gray-100);
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-gray-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-gray);
 }
