@@ -111,6 +111,12 @@ const TicketDetails = ({ ticketDetails, onTicketUpdate }) => {
     }
 
     setGeneratingDraft(true);
+    
+    // Create a timeout promise
+    const timeout = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Draft generation timed out')), 30000)
+    );
+    
     try {
       const draftRequest = {
         institution_id: user.institution_id,
@@ -125,13 +131,25 @@ const TicketDetails = ({ ticketDetails, onTicketUpdate }) => {
         student_notes: student.notes,
       };
 
-      const draft = await aiToolsAPI.draftReply(draftRequest);
+      // Race between API call and timeout
+      const draft = await Promise.race([
+        aiToolsAPI.draftReply(draftRequest),
+        timeout
+      ]);
+      
       setAiDraft(draft);
       setReplyBody(draft.safe_reply);
       setIsEditing(false);
       if (!isAuto) toast.success('AI draft regenerated');
     } catch (error) {
-      if (!isAuto) toast.error('Failed to generate AI draft');
+      console.error('Draft generation error:', error);
+      if (error.message === 'Draft generation timed out') {
+        toast.error('AI draft is taking longer than expected. Please try regenerating.');
+      } else {
+        if (!isAuto) toast.error('Failed to generate AI draft');
+      }
+      // Set editing mode so user can still type manually
+      setIsEditing(true);
     } finally {
       setGeneratingDraft(false);
     }
