@@ -1,6 +1,18 @@
 [
   {
-    "content": "Update Team Member Activity from simple table to stacked bar chart matching attached design",
-    "status": "completed"
+    "content": "Add time period filter dropdown (7/30/60/90 days) that updates all reports data",
+    "status": "in_progress"
+  },
+  {
+    "content": "Create Ticket Volume by Category bar chart visualization",
+    "status": "pending"
+  },
+  {
+    "content": "Create Response Time Trend line chart visualization",
+    "status": "pending"
+  },
+  {
+    "content": "Test chart interactions and filter functionality",
+    "status": "pending"
   }
 ]
