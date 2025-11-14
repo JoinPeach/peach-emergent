@@ -66,6 +66,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <Toaster position="top-right" richColors />
+      <CursorTracker />
     </AuthProvider>
   );
 }
