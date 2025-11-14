@@ -3,7 +3,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { ticketAPI, queueAPI } from '../lib/api';
 import WorkspaceLayout from '../components/workspace/WorkspaceLayout';
 import TicketList from '../components/workspace/TicketList';
-import TicketDetails from '../components/workspace/TicketDetails';
+import ConversationPanel from '../components/workspace/ConversationPanel';
+import StudentPanel from '../components/workspace/StudentPanel';
 import { toast } from 'sonner';
 
 const WorkspacePage = () => {
@@ -93,10 +94,16 @@ const WorkspacePage = () => {
           loading={loading}
         />
 
-        {/* Right Panel: Ticket Details + Student Info + AI Draft */}
-        <TicketDetails
+        {/* Middle Panel: Conversation + AI Draft */}
+        <ConversationPanel
           ticketDetails={ticketDetails}
           onTicketUpdate={handleTicketUpdate}
+        />
+
+        {/* Right Panel: Student Profile + Timeline + Audit Log */}
+        <StudentPanel
+          ticketDetails={ticketDetails}
+          onStudentUpdate={handleTicketUpdate}
         />
       </div>
     </WorkspaceLayout>
