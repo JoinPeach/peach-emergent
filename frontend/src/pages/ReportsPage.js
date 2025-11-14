@@ -94,7 +94,9 @@ const ReportsPage = () => {
     return baseData[period];
   };
   
-      // Generate actual dates based on time period
+  const currentData = getDataForPeriod(timePeriod);
+  
+  // Generate actual dates based on time period
       const generateDates = (period) => {
         const now = new Date();
         const dates = [];
