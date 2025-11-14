@@ -89,6 +89,13 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
 
     setSavingEvent(true);
     try {
+      // If event type is 'note', also update the student notes field
+      if (newEventType === 'note') {
+        const updatedNotes = notes ? `${notes}\n\n[${new Date().toLocaleDateString()}] ${newEventContent}` : `[${new Date().toLocaleDateString()}] ${newEventContent}`;
+        await studentAPI.update(ticketDetails.student.id, { notes: updatedNotes });
+        setNotes(updatedNotes);
+      }
+      
       await aiToolsAPI.addStudentEvent({
         institution_id: user.institution_id,
         student_id: ticketDetails.student.id,
