@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Bell } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Badge } from '../ui/badge';
+import { toast } from 'sonner';
 
 const WorkspaceLayout = ({ user, children }) => {
   const navigate = useNavigate();
