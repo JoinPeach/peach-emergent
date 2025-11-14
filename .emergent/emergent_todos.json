@@ -1,14 +1,14 @@
 [
   {
     "content": "Redesign right panel layout - remove two-column grid, make cards feel connected and cohesive",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Add 'Add Event' button and dialog to timeline for logging notes, calls, and walk-ins",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test new cohesive layout and event creation flow",
-    "status": "pending"
+    "status": "in_progress"
   }
 ]
