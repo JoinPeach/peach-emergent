@@ -1,26 +1,26 @@
 [
   {
     "content": "Update design guidelines to match Outlook aesthetic (Microsoft blue, sidebar navigation, email-style layout)",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Redesign workspace layout to match Outlook (left sidebar, center email list, right reading pane)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Modify ThreadPanel to auto-generate AI draft when ticket opens (no manual Generate button)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add Regenerate, Edit, Send buttons for AI draft instead of dialog",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Update color scheme to Microsoft Outlook style",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test auto-draft generation flow and UI",
-    "status": "pending"
+    "status": "completed"
   }
 ]
