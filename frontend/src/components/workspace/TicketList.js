@@ -57,7 +57,9 @@ const TicketList = ({
     { value: null, label: 'All' },
     { value: 'my', label: 'My Tickets' },
     { value: 'unassigned', label: 'Unassigned' },
+    { value: 'open', label: 'Open' },
     { value: 'waiting_on_student', label: 'Waiting' },
+    { value: 'closed', label: 'Closed' },
   ];
 
   return (
