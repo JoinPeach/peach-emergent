@@ -1,38 +1,30 @@
 [
   {
-    "content": "Change copy 'Generating AI-powered reply...' to 'Regenerating AI reply...'",
-    "status": "completed"
+    "content": "Reports: Update 'Recent Activity' to 'Team Member Activity' and create mock data for activity table",
+    "status": "in_progress"
   },
   {
-    "content": "Remove email icon from student name in left panel TicketList",
-    "status": "completed"
+    "content": "Knowledge Base: Make Upload button functional with dialog flow for uploading articles and adding links",
+    "status": "pending"
   },
   {
-    "content": "Redesign right panel - change from unified card to separate cards that fill entire panel height",
-    "status": "completed"
+    "content": "Tickets left panel: Remove email icon from category, add ticket numbers, add status filter tabs",
+    "status": "pending"
   },
   {
-    "content": "Remove avatar from Sarah Chen name in conversation messages",
-    "status": "completed"
+    "content": "Seed database with 100+ additional tickets for testing",
+    "status": "pending"
   },
   {
-    "content": "In notifications dropdown, remove 'View all notifications' and add 'Clear all' button",
-    "status": "completed"
+    "content": "Notifications: Make 'Clear all' button functional",
+    "status": "pending"
   },
   {
-    "content": "Add top navigation to Reports and Knowledge Base pages",
-    "status": "completed"
+    "content": "Top navigation: Remove Sarah Chen avatar and update name to Puneet Thiara",
+    "status": "pending"
   },
   {
-    "content": "Add back navigation to Settings page to return to Tickets",
-    "status": "completed"
-  },
-  {
-    "content": "Make 'New Article' button functional, change to 'Upload', remove icon",
-    "status": "completed"
-  },
-  {
-    "content": "Test all final refinements",
-    "status": "completed"
+    "content": "Test all new features and mock data",
+    "status": "pending"
   }
 ]
