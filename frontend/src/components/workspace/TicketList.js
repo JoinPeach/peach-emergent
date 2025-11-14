@@ -15,25 +15,15 @@ const TicketList = ({
   onFilterChange,
   loading,
 }) => {
-  const getChannelIcon = (channel) => {
-    const icons = {
-      email: <Mail className="w-3.5 h-3.5 text-gray-400" />,
-      chat: <MessageSquare className="w-3.5 h-3.5 text-gray-400" />,
-      phone: <Phone className="w-3.5 h-3.5 text-gray-400" />,
-      walk_in: <UserCheck className="w-3.5 h-3.5 text-gray-400" />,
-    };
-    return icons[channel] || icons.email;
-  };
-
   const getStatusBadge = (status) => {
     const styles = {
       open: 'bg-blue-50 text-blue-700 border-blue-200',
-      waiting_on_student: 'bg-amber-50 text-amber-700 border-amber-200',
+      in_progress: 'bg-amber-50 text-amber-700 border-amber-200',
       closed: 'bg-green-50 text-green-700 border-green-200',
     };
     const labels = {
       open: 'Open',
-      waiting_on_student: 'Waiting',
+      in_progress: 'In Progress',
       closed: 'Closed',
     };
     return (
@@ -57,9 +47,6 @@ const TicketList = ({
     { value: null, label: 'All' },
     { value: 'my', label: 'My Tickets' },
     { value: 'unassigned', label: 'Unassigned' },
-    { value: 'open', label: 'Open' },
-    { value: 'waiting_on_student', label: 'Waiting' },
-    { value: 'closed', label: 'Closed' },
   ];
 
   return (
@@ -83,12 +70,12 @@ const TicketList = ({
         </div>
 
         {/* Filter Tabs */}
-        <div className="grid grid-cols-3 gap-1 mb-3">
+        <div className="flex items-center space-x-1 mb-3">
           {filterButtons.map((btn) => (
             <button
               key={btn.value || 'all'}
               onClick={() => onFilterChange({ status: btn.value })}
-              className={`px-2 py-1.5 text-xs font-medium rounded-md transition-colors ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 filters.status === btn.value
                   ? 'bg-gray-900 text-white'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
@@ -100,23 +87,40 @@ const TicketList = ({
           ))}
         </div>
 
-        {/* Queue Filter */}
-        <Select
-          value={filters.queue_id || 'all'}
-          onValueChange={(value) => onFilterChange({ queue_id: value === 'all' ? null : value })}
-        >
-          <SelectTrigger className="h-9 bg-gray-50 border-gray-200">
-            <SelectValue placeholder="All Tickets" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Tickets</SelectItem>
-            {queues.map((queue) => (
-              <SelectItem key={queue.id} value={queue.id}>
-                {queue.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {/* Dropdowns Row */}
+        <div className="grid grid-cols-2 gap-2">
+          <Select
+            value={filters.queue_id || 'all'}
+            onValueChange={(value) => onFilterChange({ queue_id: value === 'all' ? null : value })}
+          >
+            <SelectTrigger className="h-9 bg-gray-50 border-gray-200">
+              <SelectValue placeholder="All Tickets" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Tickets</SelectItem>
+              {queues.map((queue) => (
+                <SelectItem key={queue.id} value={queue.id}>
+                  {queue.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          
+          <Select
+            value={filters.ticketStatus || 'all'}
+            onValueChange={(value) => onFilterChange({ ticketStatus: value === 'all' ? null : value, status: value === 'all' ? null : value })}
+          >
+            <SelectTrigger className="h-9 bg-gray-50 border-gray-200" data-testid="status-filter-dropdown">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Status</SelectItem>
+              <SelectItem value="open">Open</SelectItem>
+              <SelectItem value="in_progress">In Progress</SelectItem>
+              <SelectItem value="closed">Closed</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Ticket List */}
@@ -146,12 +150,9 @@ const TicketList = ({
                 data-testid={`ticket-${ticket.id}`}
               >
                 <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xs font-mono text-gray-500">#{ticket.id.substring(0, 8).toUpperCase()}</span>
-                    <span className="text-sm font-semibold text-gray-900 truncate flex-1">
-                      {ticket.student?.name || 'Unknown Student'}
-                    </span>
-                  </div>
+                  <span className="text-sm font-semibold text-gray-900 truncate flex-1">
+                    Ticket #{ticket.id.substring(0, 8).toUpperCase()}
+                  </span>
                   {getStatusBadge(ticket.status)}
                 </div>
 
