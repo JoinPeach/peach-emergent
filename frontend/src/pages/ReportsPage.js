@@ -350,13 +350,15 @@ const ReportsPage = () => {
                       }).join(' ')}
                     />
                     
-                    {/* Interactive dots with hover */}
+                    {/* Interactive dots */}
                     {responseTrendWithDates.map((point, index) => {
                       const x = (index / (responseTrendWithDates.length - 1)) * 100;
                       const y = (1 - (point.time / 4)) * 100;
+                      const dotId = `dot-${index}`;
                       return (
                         <g key={index}>
                           <circle
+                            id={dotId}
                             cx={`${x}%`}
                             cy={`${y}%`}
                             r="5"
@@ -364,21 +366,45 @@ const ReportsPage = () => {
                             stroke="#FFA726"
                             strokeWidth="2"
                             className="hover:r-7 transition-all cursor-pointer drop-shadow-sm"
+                            onMouseEnter={() => {
+                              // Show custom tooltip
+                              const tooltip = document.getElementById(`tooltip-${index}`);
+                              if (tooltip) tooltip.style.display = 'block';
+                            }}
+                            onMouseLeave={() => {
+                              // Hide custom tooltip
+                              const tooltip = document.getElementById(`tooltip-${index}`);
+                              if (tooltip) tooltip.style.display = 'none';
+                            }}
                           />
-                          {/* Larger invisible hover area */}
-                          <circle
-                            cx={`${x}%`}
-                            cy={`${y}%`}
-                            r="12"
-                            fill="transparent"
-                            className="cursor-pointer"
-                          >
-                            <title>{`${point.fullDate}: ${point.time}h response time`}</title>
-                          </circle>
                         </g>
                       );
                     })}
                   </svg>
+                  
+                  {/* Custom Tooltips */}
+                  {responseTrendWithDates.map((point, index) => {
+                    const x = (index / (responseTrendWithDates.length - 1)) * 100;
+                    const y = (1 - (point.time / 4)) * 100;
+                    return (
+                      <div
+                        key={index}
+                        id={`tooltip-${index}`}
+                        className="absolute pointer-events-none hidden"
+                        style={{
+                          left: `${x}%`,
+                          top: `${y}%`,
+                          transform: 'translateX(-50%) translateY(-100%)',
+                          marginTop: '-12px'
+                        }}
+                      >
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 shadow-lg">
+                          <div className="text-sm font-medium text-gray-900">{point.day}</div>
+                          <div className="text-sm" style={{ color: '#FF8C69' }}>{point.time}h response time</div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
                 
                 {/* X-axis labels at very bottom */}
