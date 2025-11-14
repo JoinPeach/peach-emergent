@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { ticketAPI, queueAPI } from '../lib/api';
 import WorkspaceLayout from '../components/workspace/WorkspaceLayout';
-import InboxPanel from '../components/workspace/InboxPanel';
-import ThreadPanel from '../components/workspace/ThreadPanel';
-import StudentPanel from '../components/workspace/StudentPanel';
+import TicketList from '../components/workspace/TicketList';
+import TicketDetails from '../components/workspace/TicketDetails';
 import { toast } from 'sonner';
 
 const WorkspacePage = () => {
@@ -19,17 +18,14 @@ const WorkspacePage = () => {
     queue_id: null,
   });
 
-  // Load queues on mount
   useEffect(() => {
     loadQueues();
   }, []);
 
-  // Load tickets when filters change
   useEffect(() => {
     loadTickets();
   }, [filters]);
 
-  // Load ticket details when selection changes
   useEffect(() => {
     if (selectedTicket) {
       loadTicketDetails(selectedTicket.id);
@@ -77,7 +73,6 @@ const WorkspacePage = () => {
   };
 
   const handleTicketUpdate = () => {
-    // Reload tickets and details after update
     loadTickets();
     if (selectedTicket) {
       loadTicketDetails(selectedTicket.id);
@@ -86,9 +81,9 @@ const WorkspacePage = () => {
 
   return (
     <WorkspaceLayout user={user}>
-      <div className="flex h-full" data-testid="workspace-page">
-        {/* Left Panel: Inbox */}
-        <InboxPanel
+      <div className="flex h-full bg-gray-50" data-testid="workspace-page">
+        {/* Left Panel: Ticket List */}
+        <TicketList
           tickets={tickets}
           selectedTicket={selectedTicket}
           onTicketSelect={handleTicketSelect}
@@ -98,16 +93,10 @@ const WorkspacePage = () => {
           loading={loading}
         />
 
-        {/* Center Panel: Thread */}
-        <ThreadPanel
+        {/* Right Panel: Ticket Details + Student Info + AI Draft */}
+        <TicketDetails
           ticketDetails={ticketDetails}
           onTicketUpdate={handleTicketUpdate}
-        />
-
-        {/* Right Panel: Student Context */}
-        <StudentPanel
-          ticketDetails={ticketDetails}
-          onStudentUpdate={handleTicketUpdate}
         />
       </div>
     </WorkspaceLayout>

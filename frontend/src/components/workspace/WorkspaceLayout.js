@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../ui/button';
-import { LogOut, User, Settings } from 'lucide-react';
+import { LogOut, User, Bell, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 
 const WorkspaceLayout = ({ user, children }) => {
@@ -20,22 +20,47 @@ const WorkspaceLayout = ({ user, children }) => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-[#F3F2F1]" data-testid="workspace-layout">
-      {/* Header - Outlook Style */}
-      <header className="h-12 bg-[#0078D4] flex items-center justify-between px-4">
-        <div className="flex items-center space-x-4">
-          <h1 className="text-lg font-semibold text-white">
+    <div className="h-screen flex flex-col bg-white" data-testid="workspace-layout">
+      {/* Header - Stripe Style */}
+      <header className="h-16 border-b border-gray-200 flex items-center justify-between px-6 bg-white">
+        <div className="flex items-center space-x-6">
+          <h1 className="text-xl font-semibold text-gray-900">
             AidHub Pro
           </h1>
-          <span className="text-sm text-white/90">
-            {user?.institution_id && 'University of Demo'}
-          </span>
+          <nav className="flex items-center space-x-1">
+            <button className="px-3 py-2 text-sm font-medium text-gray-900 bg-gray-100 rounded-md">
+              Tickets
+            </button>
+            <button className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">
+              Reports
+            </button>
+            <button className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">
+              Knowledge Base
+            </button>
+          </nav>
         </div>
 
         <div className="flex items-center space-x-3">
-          <div className="flex items-center space-x-2 px-3 py-1 bg-white/10 rounded-md">
-            <User className="w-4 h-4 text-white" />
-            <span className="text-sm font-medium text-white">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+          >
+            <Bell className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+          >
+            <Settings className="w-4 h-4" />
+          </Button>
+          <div className="h-8 w-px bg-gray-200" />
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-sm font-medium">
+              {user?.name?.charAt(0).toUpperCase()}
+            </div>
+            <span className="text-sm font-medium text-gray-700">
               {user?.name}
             </span>
           </div>
@@ -43,7 +68,7 @@ const WorkspaceLayout = ({ user, children }) => {
             variant="ghost"
             size="sm"
             onClick={handleLogout}
-            className="text-white hover:bg-white/20"
+            className="text-gray-600 hover:text-gray-900 hover:bg-gray-100"
             data-testid="logout-btn"
           >
             <LogOut className="w-4 h-4" />
