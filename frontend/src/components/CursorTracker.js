@@ -27,8 +27,9 @@ const CursorTracker = () => {
     // Simulate random cursor movement for demo users
     const interval = setInterval(() => {
       setActiveUsers(prev => prev.map(user => {
-        const newX = Math.max(50, Math.min(window.innerWidth - 150, user.x + (Math.random() - 0.5) * 200));
-        const newY = Math.max(50, Math.min(window.innerHeight - 100, user.y + (Math.random() - 0.5) * 200));
+        // Better boundary calculations with more conservative margins
+        const newX = Math.max(100, Math.min(window.innerWidth - 200, user.x + (Math.random() - 0.5) * 150));
+        const newY = Math.max(100, Math.min(window.innerHeight - 150, user.y + (Math.random() - 0.5) * 150));
         
         return {
           ...user,
@@ -37,7 +38,7 @@ const CursorTracker = () => {
           isVisible: Math.random() > 0.3 // Keep users visible more often
         };
       }));
-    }, 4000);
+    }, 5000);
 
     // Set initial mock users
     setActiveUsers(mockUsers);
