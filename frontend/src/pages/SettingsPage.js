@@ -49,8 +49,8 @@ const SettingsPage = () => {
                 <div className="flex items-center space-x-3">
                   <User className="w-5 h-5 text-gray-400" />
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-                    <p className="text-xs text-gray-500">{user?.email}</p>
+                    <p className="text-sm font-medium text-gray-900">Puneet Thiara</p>
+                    <p className="text-xs text-gray-500">advisor1@demou.edu</p>
                   </div>
                 </div>
                 <Button variant="outline" size="sm">Edit Profile</Button>
@@ -61,7 +61,7 @@ const SettingsPage = () => {
                   <Shield className="w-5 h-5 text-gray-400" />
                   <div>
                     <p className="text-sm font-medium text-gray-900">Role</p>
-                    <p className="text-xs text-gray-500 capitalize">{user?.role || 'staff'}</p>
+                    <p className="text-xs text-gray-500 capitalize">staff</p>
                   </div>
                 </div>
               </div>
@@ -109,15 +109,18 @@ const SettingsPage = () => {
               <CardDescription>Manage your current session</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button
-                onClick={handleLogout}
-                variant="outline"
-                className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
-                data-testid="logout-btn"
-              >
-                <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
-              </Button>
+              <div className="flex justify-start">
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  size="sm"
+                  className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                  data-testid="logout-btn"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

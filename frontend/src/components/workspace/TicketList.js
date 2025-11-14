@@ -32,6 +32,7 @@ const TicketList = ({
       ticketNumber.toString().includes(query)
     );
   });
+
   const getStatusBadge = (status) => {
     const styles = {
       open: 'bg-blue-50 text-blue-700 border-blue-200',
@@ -89,20 +90,23 @@ const TicketList = ({
           />
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex items-center space-x-1 mb-3">
+        {/* Filter Tabs - Underlined Style */}
+        <div className="flex items-center border-b border-gray-200 mb-3">
           {filterButtons.map((btn) => (
             <button
               key={btn.value || 'all'}
               onClick={() => onFilterChange({ status: btn.value })}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+              className={`px-3 py-2 text-sm font-medium transition-colors relative ${
                 filters.status === btn.value
-                  ? 'bg-gray-900 text-white'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                  ? 'text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
               data-testid={`filter-${btn.value || 'all'}`}
             >
               {btn.label}
+              {filters.status === btn.value && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900" />
+              )}
             </button>
           ))}
         </div>

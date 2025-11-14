@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollArea } from '../ui/scroll-area';
 import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Badge } from '../ui/badge';
 import { Separator } from '../ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { User, Phone, Mail, ExternalLink, Edit3, MessageSquare, PhoneCall, UserCheck, Sparkles, ArrowRight, Clock, CheckCircle2, Plus } from 'lucide-react';
+import { User, Phone, Mail, ExternalLink, Edit3, MessageSquare, PhoneCall, UserCheck, Sparkles, ArrowRight, Clock, CheckCircle2, Save, X } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { studentAPI, aiToolsAPI } from '../../lib/api';
 import { toast } from 'sonner';
@@ -17,8 +18,15 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
   const { user } = useAuth();
   const [editingNotes, setEditingNotes] = useState(false);
   const [addingNote, setAddingNote] = useState(false);
+  const [editingProfile, setEditingProfile] = useState(false);
   const [notes, setNotes] = useState('');
   const [newNote, setNewNote] = useState('');
+  const [profileData, setProfileData] = useState({
+    name: '',
+    student_id: '',
+    phone: '',
+    sis_url: ''
+  });
   const [timeline, setTimeline] = useState([]);
   const [showAddEventDialog, setShowAddEventDialog] = useState(false);
   const [newEventType, setNewEventType] = useState('phone_call');
@@ -29,6 +37,12 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
   useEffect(() => {
     if (ticketDetails?.student) {
       setNotes(ticketDetails.student.notes || '');
+      setProfileData({
+        name: ticketDetails.student.name || '',
+        student_id: ticketDetails.student.student_id || '',
+        phone: ticketDetails.student.phone || '',
+        sis_url: ticketDetails.student.sis_url || ''
+      });
       loadTimeline(ticketDetails.student.id);
       loadAiAuditLog();
     }
@@ -37,7 +51,6 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
   const loadTimeline = async (studentId) => {
     try {
       const data = await studentAPI.get(studentId);
-      // Filter out 'note' events - they belong in Notes section
       const filteredTimeline = (data.timeline || []).filter(event => event.event_type !== 'note');
       setTimeline(filteredTimeline);
     } catch (error) {
@@ -72,6 +85,17 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
       },
     ];
     setAiAuditLog(mockAuditLog);
+  };
+
+  const handleSaveProfile = async () => {
+    try {
+      await studentAPI.update(ticketDetails.student.id, profileData);
+      toast.success('Profile updated');
+      setEditingProfile(false);
+      onStudentUpdate();
+    } catch (error) {
+      toast.error('Failed to update profile');
+    }
   };
 
   const handleSaveNotes = async () => {
@@ -182,40 +206,116 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
         {/* Student Profile Card */}
         <Card className="border-gray-200">
           <CardHeader className="pb-4">
-            <CardTitle className="text-sm font-semibold text-gray-900">Student Profile</CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-semibold text-gray-900">Student Profile</CardTitle>
+              {!editingProfile && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setEditingProfile(true)}
+                  className="h-6 text-xs"
+                  data-testid="edit-profile-btn"
+                >
+                  Edit
+                </Button>
+              )}
+            </div>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div>
-              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Name</label>
-              <p className="text-sm font-semibold text-gray-900">{student.name}</p>
-            </div>
-            <div>
-              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Student ID</label>
-              <p className="text-sm text-gray-900">{student.student_id || 'N/A'}</p>
-            </div>
-            <div>
-              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Email</label>
-              <p className="text-sm text-gray-900 truncate">{student.email}</p>
-            </div>
-            {student.phone && (
-              <div>
-                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Phone</label>
-                <p className="text-sm text-gray-900">{student.phone}</p>
+            {editingProfile ? (
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Name</label>
+                  <Input
+                    value={profileData.name}
+                    onChange={(e) => setProfileData(prev => ({ ...prev, name: e.target.value }))}
+                    className="text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Student ID</label>
+                  <Input
+                    value={profileData.student_id}
+                    onChange={(e) => setProfileData(prev => ({ ...prev, student_id: e.target.value }))}
+                    className="text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Phone</label>
+                  <Input
+                    value={profileData.phone}
+                    onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
+                    className="text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">SIS URL</label>
+                  <Input
+                    value={profileData.sis_url}
+                    onChange={(e) => setProfileData(prev => ({ ...prev, sis_url: e.target.value }))}
+                    placeholder="https://..."
+                    className="text-sm"
+                  />
+                </div>
+                <div className="flex space-x-2 pt-2">
+                  <Button size="sm" onClick={handleSaveProfile} className="h-7 text-xs">
+                    <Save className="w-3 h-3 mr-1" />
+                    Save
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setProfileData({
+                        name: student.name || '',
+                        student_id: student.student_id || '',
+                        phone: student.phone || '',
+                        sis_url: student.sis_url || ''
+                      });
+                      setEditingProfile(false);
+                    }}
+                    className="h-7 text-xs"
+                  >
+                    <X className="w-3 h-3 mr-1" />
+                    Cancel
+                  </Button>
+                </div>
               </div>
-            )}
-            {student.sis_url && (
-              <div>
-                <a
-                  href={student.sis_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-1 text-sm text-gray-900 hover:text-gray-700 font-medium"
-                  data-testid="sis-link"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  <span>View in SIS</span>
-                </a>
-              </div>
+            ) : (
+              <>
+                <div>
+                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Name</label>
+                  <p className="text-sm font-semibold text-gray-900">{student.name}</p>
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Student ID</label>
+                  <p className="text-sm text-gray-900">{student.student_id || 'N/A'}</p>
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Email</label>
+                  <p className="text-sm text-gray-900 truncate">{student.email}</p>
+                </div>
+                {student.phone && (
+                  <div>
+                    <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Phone</label>
+                    <p className="text-sm text-gray-900">{student.phone}</p>
+                  </div>
+                )}
+                {student.sis_url && (
+                  <div>
+                    <a
+                      href={student.sis_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1 text-sm text-gray-900 hover:text-gray-700 font-medium"
+                      data-testid="sis-link"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>View in SIS</span>
+                    </a>
+                  </div>
+                )}
+              </>
             )}
 
             <Separator className="my-3" />
