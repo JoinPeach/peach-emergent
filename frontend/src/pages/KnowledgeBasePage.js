@@ -1,11 +1,19 @@
 import React from 'react';
+import WorkspaceLayout from '../components/workspace/WorkspaceLayout';
+import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { Plus, Search, BookOpen, FileText } from 'lucide-react';
+import { Search, BookOpen, FileText, Upload } from 'lucide-react';
 import { Input } from '../components/ui/input';
+import { toast } from 'sonner';
 
 const KnowledgeBasePage = () => {
+  const { user } = useAuth();
+  
+  const handleUpload = () => {
+    toast.success('Upload article feature coming soon');
+  };
   const categories = [
     { name: 'FAFSA', count: 2, color: 'bg-blue-100 text-blue-700' },
     { name: 'Verification', count: 1, color: 'bg-green-100 text-green-700' },
@@ -25,14 +33,15 @@ const KnowledgeBasePage = () => {
   ];
 
   return (
-    <div className="h-full bg-gray-50 overflow-auto" data-testid="knowledge-base-page">
+    <WorkspaceLayout user={user}>
+      <div className="h-full bg-gray-50 overflow-auto" data-testid="knowledge-base-page">
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-semibold text-gray-900">Knowledge Base</h1>
-          <Button className="bg-gray-900 hover:bg-gray-800 text-white">
-            <Plus className="w-4 h-4 mr-2" />
-            New Article
+          <Button className="bg-gray-900 hover:bg-gray-800 text-white" onClick={handleUpload} data-testid="upload-article-btn">
+            <Upload className="w-4 h-4 mr-2" />
+            Upload
           </Button>
         </div>
 
@@ -95,7 +104,7 @@ const KnowledgeBasePage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </WorkspaceLayout>
   );
 };
 
