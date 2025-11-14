@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Mail, MessageSquare, Phone, UserCheck, Search, Filter } from 'lucide-react';
+import { Mail, MessageSquare, Phone, UserCheck, Search } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
 const TicketList = ({
@@ -144,12 +144,9 @@ const TicketList = ({
                 data-testid={`ticket-${ticket.id}`}
               >
                 <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center space-x-2 flex-1 min-w-0">
-                    <span className="text-sm font-semibold text-gray-900 truncate">
-                      {ticket.student?.name || 'Unknown Student'}
-                    </span>
-                    {getChannelIcon(ticket.channel)}
-                  </div>
+                  <span className="text-sm font-semibold text-gray-900 truncate flex-1">
+                    {ticket.student?.name || 'Unknown Student'}
+                  </span>
                   {getStatusBadge(ticket.status)}
                 </div>
 
@@ -158,7 +155,10 @@ const TicketList = ({
                 </p>
 
                 <div className="flex items-center justify-between text-xs text-gray-500">
-                  <span className="capitalize">{ticket.category.replace('_', ' ')}</span>
+                  <div className="flex items-center space-x-2">
+                    {getChannelIcon(ticket.channel)}
+                    <span className="capitalize">{ticket.category.replace('_', ' ')}</span>
+                  </div>
                   <span>
                     {ticket.updated_at && formatDistanceToNow(new Date(ticket.updated_at), { addSuffix: true })}
                   </span>

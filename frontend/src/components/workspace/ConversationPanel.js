@@ -230,7 +230,7 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
               <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-center space-x-3">
                 <Clock className="w-5 h-5 text-amber-600 animate-spin flex-shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-amber-900">Generating AI-powered reply...</p>
+                  <p className="text-sm font-medium text-amber-900">Regenerating AI reply...</p>
                   <p className="text-xs text-amber-700 mt-1">This may take up to 30 seconds</p>
                 </div>
               </div>

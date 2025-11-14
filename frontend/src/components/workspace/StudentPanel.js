@@ -4,9 +4,10 @@ import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { Badge } from '../ui/badge';
 import { Separator } from '../ui/separator';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { User, Phone, Mail, ExternalLink, Edit3, MessageSquare, PhoneCall, UserCheck, Sparkles, ArrowRight, Clock, CheckCircle2, XCircle } from 'lucide-react';
+import { User, Phone, Mail, ExternalLink, Edit3, MessageSquare, PhoneCall, UserCheck, Sparkles, ArrowRight, Clock, CheckCircle2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { studentAPI, aiToolsAPI } from '../../lib/api';
 import { toast } from 'sonner';
@@ -41,8 +42,6 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
   };
 
   const loadAiAuditLog = async () => {
-    // Mock AI audit log for now - in production this would come from API
-    // showing AI draft generations and their outcomes
     const mockAuditLog = [
       {
         id: '1',
@@ -144,196 +143,201 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
 
   if (!ticketDetails) {
     return (
-      <div className="w-96 bg-gray-50 border-l border-gray-200 flex items-center justify-center" data-testid="student-panel-empty">
+      <div className="w-96 bg-gray-50 flex items-center justify-center" data-testid="student-panel-empty">
         <p className="text-sm text-gray-500">No student selected</p>
       </div>
     );
-  };
+  }
 
   const { student } = ticketDetails;
 
   return (
-    <div className="w-96 bg-gray-50 border-l border-gray-200 flex flex-col" data-testid="student-panel">
-      <ScrollArea className="flex-1">
-        <div className="p-4">
-          {/* Unified Student Context Card - All sections connected */}
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-            {/* Student Profile */}
-            <div className="p-4 border-b border-gray-100">
-              <h3 className="text-sm font-semibold text-gray-900 mb-4">Student Profile</h3>
-              <div className="space-y-3 text-sm">
-                <div>
-                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Name</label>
-                  <p className="text-sm font-semibold text-gray-900">{student.name}</p>
-                </div>
-                <div>
-                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Student ID</label>
-                  <p className="text-sm text-gray-900">{student.student_id || 'N/A'}</p>
-                </div>
-                <div>
-                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Email</label>
-                  <p className="text-sm text-gray-900 truncate">{student.email}</p>
-                </div>
-                {student.phone && (
-                  <div>
-                    <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Phone</label>
-                    <p className="text-sm text-gray-900">{student.phone}</p>
-                  </div>
-                )}
-                {student.sis_url && (
-                  <div>
-                    <a
-                      href={student.sis_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-1 text-sm text-gray-900 hover:text-gray-700 font-medium"
-                      data-testid="sis-link"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      <span>View in SIS</span>
-                    </a>
-                  </div>
-                )}
-              </div>
-
-              <Separator className="my-4" />
-
+    <div className="w-96 bg-gray-50 flex flex-col" data-testid="student-panel">
+      <div className="flex-1 p-4 space-y-4 overflow-auto">
+        {/* Student Profile Card */}
+        <Card className="border-gray-200">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-sm font-semibold text-gray-900">Student Profile</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div>
+              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Name</label>
+              <p className="text-sm font-semibold text-gray-900">{student.name}</p>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Student ID</label>
+              <p className="text-sm text-gray-900">{student.student_id || 'N/A'}</p>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Email</label>
+              <p className="text-sm text-gray-900 truncate">{student.email}</p>
+            </div>
+            {student.phone && (
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Notes</label>
-                  {!editingNotes && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setEditingNotes(true)}
-                      className="h-6 text-xs"
-                      data-testid="edit-notes-btn"
-                    >
-                      <Edit3 className="w-3 h-3 mr-1" />
-                      Edit
-                    </Button>
-                  )}
-                </div>
-                {editingNotes ? (
-                  <div className="space-y-2">
-                    <Textarea
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      rows={3}
-                      className="text-sm"
-                      data-testid="notes-textarea"
-                    />
-                    <div className="flex space-x-2">
-                      <Button size="sm" onClick={handleSaveNotes} className="h-7 text-xs" data-testid="save-notes-btn">
-                        Save
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setNotes(student.notes || '');
-                          setEditingNotes(false);
-                        }}
-                        className="h-7 text-xs"
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <p className="text-sm text-gray-600">
-                    {student.notes || 'No notes yet'}
-                  </p>
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Phone</label>
+                <p className="text-sm text-gray-900">{student.phone}</p>
+              </div>
+            )}
+            {student.sis_url && (
+              <div>
+                <a
+                  href={student.sis_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-1 text-sm text-gray-900 hover:text-gray-700 font-medium"
+                  data-testid="sis-link"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  <span>View in SIS</span>
+                </a>
+              </div>
+            )}
+
+            <Separator className="my-3" />
+
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Notes</label>
+                {!editingNotes && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setEditingNotes(true)}
+                    className="h-6 text-xs"
+                    data-testid="edit-notes-btn"
+                  >
+                    <Edit3 className="w-3 h-3 mr-1" />
+                    Edit
+                  </Button>
                 )}
               </div>
+              {editingNotes ? (
+                <div className="space-y-2">
+                  <Textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    rows={3}
+                    className="text-sm"
+                    data-testid="notes-textarea"
+                  />
+                  <div className="flex space-x-2">
+                    <Button size="sm" onClick={handleSaveNotes} className="h-7 text-xs" data-testid="save-notes-btn">
+                      Save
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setNotes(student.notes || '');
+                        setEditingNotes(false);
+                      }}
+                      className="h-7 text-xs"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-sm text-gray-600">
+                  {student.notes || 'No notes yet'}
+                </p>
+              )}
             </div>
+          </CardContent>
+        </Card>
 
-            {/* Interaction Timeline */}
-            <div className="p-4 border-b border-gray-100">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-gray-900">Interaction Timeline</h3>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowAddEventDialog(true)}
-                  className="h-7 text-xs"
-                  data-testid="add-event-btn"
-                >
-                  Add Interaction
-                </Button>
+        {/* Interaction Timeline Card */}
+        <Card className="border-gray-200">
+          <CardHeader className="pb-4">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-semibold text-gray-900">Interaction Timeline</CardTitle>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowAddEventDialog(true)}
+                className="h-7 text-xs"
+                data-testid="add-event-btn"
+              >
+                Add Interaction
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {timeline.length === 0 ? (
+              <p className="text-xs text-gray-500 text-center py-4">No interactions yet</p>
+            ) : (
+              <div className="space-y-3">
+                {timeline.slice(0, 8).map((event) => (
+                  <div key={event.id} className="flex items-start space-x-2" data-testid={`timeline-event-${event.id}`}>
+                    <div className="mt-0.5">{getEventIcon(event.event_type)}</div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-gray-900 capitalize">
+                        {event.event_type.replace('_', ' ')}
+                      </p>
+                      <p className="text-xs text-gray-600 line-clamp-2">{event.content}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        {formatDistanceToNow(new Date(event.created_at), { addSuffix: true })}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              {timeline.length === 0 ? (
-                <p className="text-xs text-gray-500 text-center py-4">No interactions yet</p>
-              ) : (
-                <div className="space-y-3">
-                  {timeline.slice(0, 8).map((event) => (
-                    <div key={event.id} className="flex items-start space-x-2" data-testid={`timeline-event-${event.id}`}>
-                      <div className="mt-0.5">{getEventIcon(event.event_type)}</div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium text-gray-900 capitalize">
-                          {event.event_type.replace('_', ' ')}
-                        </p>
-                        <p className="text-xs text-gray-600 line-clamp-2">{event.content}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">
-                          {formatDistanceToNow(new Date(event.created_at), { addSuffix: true })}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            )}
+          </CardContent>
+        </Card>
 
-            {/* Audit Log */}
-            <div className="p-4">
-              <h3 className="text-sm font-semibold text-gray-900 mb-4">Audit Log</h3>
-              {aiAuditLog.length === 0 ? (
-                <p className="text-xs text-gray-500 text-center py-4">No AI activity yet</p>
-              ) : (
-                <div className="space-y-3">
-                  {aiAuditLog.map((log) => (
-                    <div key={log.id} className="flex items-start space-x-2">
-                      <div className="mt-0.5">{getAuditIcon(log.action, log.status)}</div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <p className="text-xs font-medium text-gray-900">
-                            {getAuditLabel(log.action, log.status)}
-                          </p>
-                          <Badge 
-                            variant="outline" 
-                            className={`text-xs ${ 
-                              log.status === 'sent' ? 'bg-green-50 text-green-700 border-green-200' :
-                              log.status === 'edited' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                              'bg-gray-50 text-gray-700 border-gray-200'
-                            }`}
-                          >
-                            {log.status}
-                          </Badge>
-                        </div>
-                        <p className="text-xs text-gray-600">{log.summary}</p>
-                        {log.kb_articles && (
-                          <p className="text-xs text-gray-400 mt-0.5">
-                            {log.kb_articles} KB article{log.kb_articles > 1 ? 's' : ''} referenced
-                          </p>
-                        )}
-                        <p className="text-xs text-gray-400 mt-1">
-                          {formatDistanceToNow(new Date(log.timestamp), { addSuffix: true })}
+        {/* Audit Log Card */}
+        <Card className="border-gray-200">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-sm font-semibold text-gray-900">Audit Log</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {aiAuditLog.length === 0 ? (
+              <p className="text-xs text-gray-500 text-center py-4">No AI activity yet</p>
+            ) : (
+              <div className="space-y-3">
+                {aiAuditLog.map((log) => (
+                  <div key={log.id} className="flex items-start space-x-2">
+                    <div className="mt-0.5">{getAuditIcon(log.action, log.status)}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="text-xs font-medium text-gray-900">
+                          {getAuditLabel(log.action, log.status)}
                         </p>
+                        <Badge 
+                          variant="outline" 
+                          className={`text-xs ${ 
+                            log.status === 'sent' ? 'bg-green-50 text-green-700 border-green-200' :
+                            log.status === 'edited' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                            'bg-gray-50 text-gray-700 border-gray-200'
+                          }`}
+                        >
+                          {log.status}
+                        </Badge>
                       </div>
+                      <p className="text-xs text-gray-600">{log.summary}</p>
+                      {log.kb_articles && (
+                        <p className="text-xs text-gray-400 mt-0.5">
+                          {log.kb_articles} KB article{log.kb_articles > 1 ? 's' : ''} referenced
+                        </p>
+                      )}
+                      <p className="text-xs text-gray-400 mt-1">
+                        {formatDistanceToNow(new Date(log.timestamp), { addSuffix: true })}
+                      </p>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </ScrollArea>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Add Event Dialog */}
       <Dialog open={showAddEventDialog} onOpenChange={setShowAddEventDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add Timeline Event</DialogTitle>
+            <DialogTitle>Add Interaction</DialogTitle>
             <DialogDescription>
               Log a note, phone call, or walk-in interaction
             </DialogDescription>
@@ -384,7 +388,7 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
               className="bg-gray-900 hover:bg-gray-800 text-white"
               data-testid="save-event-btn"
             >
-              {savingEvent ? 'Saving...' : 'Add Event'}
+              {savingEvent ? 'Saving...' : 'Add Interaction'}
             </Button>
           </DialogFooter>
         </DialogContent>
