@@ -97,58 +97,58 @@ const ReportsPage = () => {
   const currentData = getDataForPeriod(timePeriod);
   
   // Generate actual dates based on time period
-      const generateDates = (period) => {
-        const now = new Date();
-        const dates = [];
-        
-        if (period === '7') {
-          for (let i = 6; i >= 0; i--) {
-            const date = new Date(now);
-            date.setDate(date.getDate() - i);
-            dates.push({
-              label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-              fullDate: date.toLocaleDateString()
-            });
-          }
-        } else if (period === '30') {
-          for (let i = 3; i >= 0; i--) {
-            const date = new Date(now);
-            date.setDate(date.getDate() - (i * 7));
-            dates.push({
-              label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-              fullDate: date.toLocaleDateString()
-            });
-          }
-        } else if (period === '60') {
-          for (let i = 1; i >= 0; i--) {
-            const date = new Date(now);
-            date.setMonth(date.getMonth() - i);
-            dates.push({
-              label: date.toLocaleDateString('en-US', { month: 'short' }),
-              fullDate: date.toLocaleDateString()
-            });
-          }
-        } else { // 90 days
-          for (let i = 2; i >= 0; i--) {
-            const date = new Date(now);
-            date.setMonth(date.getMonth() - i);
-            dates.push({
-              label: date.toLocaleDateString('en-US', { month: 'short' }),
-              fullDate: date.toLocaleDateString()
-            });
-          }
-        }
-        return dates;
-      };
-      
-      const chartDates = generateDates(timePeriod);
-      
-      // Update response trend with actual dates
-      const responseTrendWithDates = currentData.responseTrend.map((point, index) => ({
-        ...point,
-        day: chartDates[index]?.label || point.day,
-        fullDate: chartDates[index]?.fullDate || point.day
-      }));
+  const generateDates = (period) => {
+    const now = new Date();
+    const dates = [];
+    
+    if (period === '7') {
+      for (let i = 6; i >= 0; i--) {
+        const date = new Date(now);
+        date.setDate(date.getDate() - i);
+        dates.push({
+          label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          fullDate: date.toLocaleDateString()
+        });
+      }
+    } else if (period === '30') {
+      for (let i = 3; i >= 0; i--) {
+        const date = new Date(now);
+        date.setDate(date.getDate() - (i * 7));
+        dates.push({
+          label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          fullDate: date.toLocaleDateString()
+        });
+      }
+    } else if (period === '60') {
+      for (let i = 1; i >= 0; i--) {
+        const date = new Date(now);
+        date.setMonth(date.getMonth() - i);
+        dates.push({
+          label: date.toLocaleDateString('en-US', { month: 'short' }),
+          fullDate: date.toLocaleDateString()
+        });
+      }
+    } else { // 90 days
+      for (let i = 2; i >= 0; i--) {
+        const date = new Date(now);
+        date.setMonth(date.getMonth() - i);
+        dates.push({
+          label: date.toLocaleDateString('en-US', { month: 'short' }),
+          fullDate: date.toLocaleDateString()
+        });
+      }
+    }
+    return dates;
+  };
+  
+  const chartDates = generateDates(timePeriod);
+  
+  // Update response trend with actual dates
+  const responseTrendWithDates = currentData.responseTrend.map((point, index) => ({
+    ...point,
+    day: chartDates[index]?.label || point.day,
+    fullDate: chartDates[index]?.fullDate || point.day
+  }));
   
   // Mock team member activity data
   const teamActivity = [
