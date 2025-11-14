@@ -1,13 +1,100 @@
-import React from 'react';
+import React, { useState } from 'react';
 import WorkspaceLayout from '../components/workspace/WorkspaceLayout';
 import { useAuth } from '../contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { BarChart3, TrendingUp, Users, Clock, User, Mail, FileText, Sparkles } from 'lucide-react';
 import { Badge } from '../components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { formatDistanceToNow } from 'date-fns';
 
 const ReportsPage = () => {
   const { user } = useAuth();
+  const [timePeriod, setTimePeriod] = useState('30');
+  
+  // Mock data that changes based on time period
+  const getDataForPeriod = (period) => {
+    const baseData = {
+      '7': {
+        totalTickets: 8,
+        avgResponseTime: 1.2,
+        aiDrafts: 6,
+        satisfaction: 4.9,
+        ticketsByCategory: {
+          'FAFSA': 3,
+          'Verification': 2,
+          'SAP Appeals': 1,
+          'Billing': 1,
+          'General': 1,
+        },
+        responseTrend: [
+          { day: 'Day 1', time: 2.1 },
+          { day: 'Day 2', time: 1.8 },
+          { day: 'Day 3', time: 1.5 },
+          { day: 'Day 4', time: 1.2 },
+          { day: 'Day 5', time: 0.9 },
+          { day: 'Day 6', time: 1.1 },
+          { day: 'Day 7', time: 1.2 },
+        ]
+      },
+      '30': {
+        totalTickets: 25,
+        avgResponseTime: 2.1,
+        aiDrafts: 18,
+        satisfaction: 4.8,
+        ticketsByCategory: {
+          'FAFSA': 8,
+          'Verification': 6,
+          'SAP Appeals': 4,
+          'Billing': 4,
+          'General': 3,
+        },
+        responseTrend: [
+          { day: 'Week 1', time: 2.8 },
+          { day: 'Week 2', time: 2.4 },
+          { day: 'Week 3', time: 2.0 },
+          { day: 'Week 4', time: 1.8 },
+        ]
+      },
+      '60': {
+        totalTickets: 52,
+        avgResponseTime: 2.8,
+        aiDrafts: 35,
+        satisfaction: 4.6,
+        ticketsByCategory: {
+          'FAFSA': 18,
+          'Verification': 12,
+          'SAP Appeals': 8,
+          'Billing': 9,
+          'General': 5,
+        },
+        responseTrend: [
+          { day: 'Month 1', time: 3.2 },
+          { day: 'Month 2', time: 2.4 },
+        ]
+      },
+      '90': {
+        totalTickets: 89,
+        avgResponseTime: 3.2,
+        aiDrafts: 62,
+        satisfaction: 4.5,
+        ticketsByCategory: {
+          'FAFSA': 28,
+          'Verification': 20,
+          'SAP Appeals': 15,
+          'Billing': 16,
+          'General': 10,
+        },
+        responseTrend: [
+          { day: 'Month 1', time: 3.8 },
+          { day: 'Month 2', time: 3.2 },
+          { day: 'Month 3', time: 2.6 },
+        ]
+      },
+    };
+    return baseData[period];
+  };
+  
+  const currentData = getDataForPeriod(timePeriod);
   
   // Mock team member activity data
   const teamActivity = [
