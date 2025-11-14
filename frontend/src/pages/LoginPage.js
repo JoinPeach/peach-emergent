@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Card, CardContent, CardHeader } from '../components/ui/card';
 import { toast } from 'sonner';
 
 const LoginPage = () => {
@@ -31,19 +31,16 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]" data-testid="login-page">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50" data-testid="login-page">
       <Card className="w-full max-w-md mx-4">
-        <CardHeader className="space-y-2">
-          <CardTitle className="text-2xl font-bold text-[#003366]">
-            AidHub Pro
-          </CardTitle>
-          <CardDescription className="text-[#64748B]">
-            University Financial Aid Platform
-          </CardDescription>
+        <CardHeader className="space-y-4 pb-4">
+          <div className="flex justify-center">
+            <img src="/peach_logo.svg" alt="Logo" className="h-12" />
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium text-[#475569]">
+            <label htmlFor="email" className="text-sm font-medium text-gray-700">
               Email Address
             </label>
             <Input
@@ -53,18 +50,18 @@ const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               data-testid="email-input"
-              className="border-[#E2E8F0]"
+              className="border-gray-300"
             />
           </div>
 
           <div className="pt-2 space-y-3">
-            <p className="text-sm text-[#64748B]">
+            <p className="text-sm text-gray-600">
               Sign in with your institution account:
             </p>
             <Button
               onClick={() => handleLogin('microsoft')}
               disabled={loading}
-              className="w-full bg-[#0066CC] hover:bg-[#003366] text-white"
+              className="w-full bg-gray-900 hover:bg-gray-800 text-white"
               data-testid="microsoft-login-btn"
             >
               <svg className="w-5 h-5 mr-2" viewBox="0 0 21 21" fill="currentColor">
@@ -79,7 +76,7 @@ const LoginPage = () => {
               onClick={() => handleLogin('google')}
               disabled={loading}
               variant="outline"
-              className="w-full border-[#E2E8F0] hover:bg-[#F1F5F9]"
+              className="w-full border-gray-300 hover:bg-gray-50"
               data-testid="google-login-btn"
             >
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -92,8 +89,8 @@ const LoginPage = () => {
             </Button>
           </div>
 
-          <div className="pt-4 border-t border-[#E2E8F0]">
-            <p className="text-xs text-[#64748B]">
+          <div className="pt-4 border-t border-gray-200">
+            <p className="text-xs text-gray-500">
               <strong>Demo Login:</strong> Use any of these emails:
               <br />• advisor1@demou.edu
               <br />• advisor2@demou.edu

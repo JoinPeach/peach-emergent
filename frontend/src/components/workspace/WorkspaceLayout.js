@@ -50,9 +50,7 @@ const WorkspaceLayout = ({ user, children }) => {
       {/* Header */}
       <header className="h-16 border-b border-gray-200 flex items-center justify-between px-6 bg-white">
         <div className="flex items-center space-x-6">
-          <h1 className="text-xl font-semibold text-gray-900">
-            AidHub Pro
-          </h1>
+          <img src="/peach_logo.svg" alt="Peach" className="h-8" />
           <nav className="flex items-center space-x-1">
             {navItems.map((item) => (
               <button

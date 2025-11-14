@@ -4,7 +4,7 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { Separator } from '../ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Mail, Send, RefreshCw, Edit3, Sparkles, Clock, Check } from 'lucide-react';
+import { Send, RefreshCw, Edit3, Sparkles, Clock, Check, FileText } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { messageAPI, aiToolsAPI, ticketAPI, userAPI } from '../../lib/api';
 import { toast } from 'sonner';
@@ -58,7 +58,7 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
     return (
       <div className="flex-1 flex items-center justify-center bg-white border-r border-gray-200" data-testid="conversation-panel-empty">
         <div className="text-center">
-          <Mail className="w-16 h-16 mx-auto mb-4 text-gray-200" />
+          <FileText className="w-16 h-16 mx-auto mb-4 text-gray-200" />
           <p className="text-base font-medium text-gray-900">Select a ticket</p>
           <p className="text-sm text-gray-500 mt-1">Choose a ticket from the list to view details</p>
         </div>
@@ -165,6 +165,9 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
   };
 
   const isTicketClosed = ticket.status === 'closed';
+  
+  // Generate 4-digit ticket number from UUID
+  const ticketNumber = parseInt(ticket.id.replace(/\D/g, '').substring(0, 4)) || Math.floor(1000 + Math.random() * 9000);
 
   return (
     <div className="flex-1 flex flex-col bg-white border-r border-gray-200" data-testid="conversation-panel">
