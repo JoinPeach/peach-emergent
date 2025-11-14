@@ -4,6 +4,9 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Toaster } from './components/ui/sonner';
 import LoginPage from './pages/LoginPage';
 import WorkspacePage from './pages/WorkspacePage';
+import ReportsPage from './pages/ReportsPage';
+import KnowledgeBasePage from './pages/KnowledgeBasePage';
+import SettingsPage from './pages/SettingsPage';
 import './App.css';
 
 const PrivateRoute = ({ children }) => {
@@ -31,6 +34,30 @@ function App() {
             element={
               <PrivateRoute>
                 <WorkspacePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <PrivateRoute>
+                <ReportsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/knowledge-base"
+            element={
+              <PrivateRoute>
+                <KnowledgeBasePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <SettingsPage />
               </PrivateRoute>
             }
           />
