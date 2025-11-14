@@ -1,26 +1,26 @@
 [
   {
     "content": "Move x-axis labels outside chart lines to bottom with proper spacing",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Make dots interactive with hover tooltips showing exact values",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add edit functionality to Student Profile card",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Make Sign Out button smaller (not full width)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Change filter tabs (All, My Tickets, Unassigned) to underlined tabs",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test all improvements",
-    "status": "pending"
+    "status": "completed"
   }
 ]
