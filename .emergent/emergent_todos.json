@@ -1,42 +1,42 @@
 [
   {
     "content": "Update copy: AI-Generated Reply → AI Suggested Reply, AI Activity Log → Audit Log, Activity Timeline → Interaction Timeline, All Queues → All Tickets",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Change Add button to 'Add Interaction' (remove icon)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Make right panel cards more cohesive and connected (remove gaps, unified design)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add ticket status dropdown in middle panel header",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Remove all gradient circle avatars throughout the app",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create Reports page with placeholder content",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create Knowledge Base page with placeholder content",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create Settings page with logout moved there, make settings icon functional",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Make notification icon functional with dropdown",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test all changes and new pages",
-    "status": "pending"
+    "status": "in_progress"
   }
 ]
