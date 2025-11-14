@@ -68,7 +68,7 @@ class Ticket(BaseModel):
     institution_id: str
     student_id: str
     subject: str
-    status: Literal["open", "waiting_on_student", "closed"] = "open"
+    status: Literal["open", "in_progress", "closed"] = "open"
     priority: Literal["low", "medium", "high", "urgent"] = "medium"
     category: Literal["fafsa", "verification", "sap_appeal", "billing", "general"] = "general"
     queue_id: Optional[str] = None
