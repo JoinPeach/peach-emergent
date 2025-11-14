@@ -1,30 +1,42 @@
 [
   {
-    "content": "Reports: Update 'Recent Activity' to 'Team Member Activity' and create mock data for activity table",
-    "status": "completed"
+    "content": "Make ticket status filter a dropdown and place next to All Tickets dropdown",
+    "status": "in_progress"
   },
   {
-    "content": "Knowledge Base: Make Upload button functional with dialog flow for uploading articles and adding links",
-    "status": "completed"
+    "content": "Left panel: Remove ticket numbers and change Student Name to show 'Ticket #{number}' instead",
+    "status": "pending"
   },
   {
-    "content": "Tickets left panel: Remove email icon from category, add ticket numbers, add status filter tabs",
-    "status": "completed"
+    "content": "Hide AI Suggested Reply section for closed tickets, only show when status is Open or In Progress",
+    "status": "pending"
   },
   {
-    "content": "Seed database with 100+ additional tickets for testing",
-    "status": "completed"
+    "content": "Change 'Waiting on Student' to 'In Progress' throughout app",
+    "status": "pending"
   },
   {
-    "content": "Notifications: Make 'Clear all' button functional",
-    "status": "completed"
+    "content": "Remove category badge from middle panel header",
+    "status": "pending"
   },
   {
-    "content": "Top navigation: Remove Sarah Chen avatar and update name to Puneet Thiara",
-    "status": "completed"
+    "content": "Add assignee dropdown in middle panel for unassigned tickets",
+    "status": "pending"
   },
   {
-    "content": "Test all new features and mock data",
-    "status": "completed"
+    "content": "Clear notifications: Make modal show empty state after clearing",
+    "status": "pending"
+  },
+  {
+    "content": "Change copy to 'Generating AI reply...' (first time) and 'Regenerating AI reply...' (on regenerate click)",
+    "status": "pending"
+  },
+  {
+    "content": "Notes interaction: Display in Notes section instead of timeline when added",
+    "status": "pending"
+  },
+  {
+    "content": "Test all refinements",
+    "status": "pending"
   }
 ]
