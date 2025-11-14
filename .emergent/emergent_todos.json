@@ -1,18 +1,18 @@
 [
   {
     "content": "Add time period filter dropdown (7/30/60/90 days) that updates all reports data",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Create Ticket Volume by Category bar chart visualization",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create Response Time Trend line chart visualization",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test chart interactions and filter functionality",
-    "status": "pending"
+    "status": "completed"
   }
 ]
