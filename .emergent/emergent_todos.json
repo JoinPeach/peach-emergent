@@ -1,18 +1,18 @@
 [
   {
-    "content": "Add time period filter dropdown (7/30/60/90 days) that updates all reports data",
-    "status": "completed"
+    "content": "Change Ticket Volume by Category bar color from blue to #FFD5A3",
+    "status": "in_progress"
   },
   {
-    "content": "Create Ticket Volume by Category bar chart visualization",
-    "status": "completed"
+    "content": "Make Response Time Trend line graph more interactive with actual dates",
+    "status": "pending"
   },
   {
-    "content": "Create Response Time Trend line chart visualization",
-    "status": "completed"
+    "content": "Fix dot cutoff issue and change dot color to #FFD5A3",
+    "status": "pending"
   },
   {
-    "content": "Test chart interactions and filter functionality",
-    "status": "completed"
+    "content": "Test updated chart colors and interactions",
+    "status": "pending"
   }
 ]
