@@ -58,7 +58,6 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
     return (
       <div className="flex-1 flex items-center justify-center bg-white border-r border-gray-200" data-testid="conversation-panel-empty">
         <div className="text-center">
-          <FileText className="w-16 h-16 mx-auto mb-4 text-gray-200" />
           <p className="text-base font-medium text-gray-900">Select a ticket</p>
           <p className="text-sm text-gray-500 mt-1">Choose a ticket from the list to view details</p>
         </div>
