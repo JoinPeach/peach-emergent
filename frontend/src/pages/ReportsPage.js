@@ -220,29 +220,113 @@ const ReportsPage = () => {
 
         {/* Charts */}
         <div className="grid grid-cols-2 gap-6 mb-6">
+          {/* Ticket Volume by Category */}
           <Card>
             <CardHeader>
               <CardTitle className="text-lg flex items-center">
                 <BarChart3 className="w-5 h-5 mr-2 text-gray-600" />
                 Ticket Volume by Category
               </CardTitle>
+              <CardDescription>Distribution of tickets by category for selected period</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-64 flex items-center justify-center text-gray-400">
-                <p className="text-sm">Chart visualization coming soon</p>
+              <div className="space-y-4">
+                {Object.entries(currentData.ticketsByCategory).map(([category, count]) => {
+                  const maxCount = Math.max(...Object.values(currentData.ticketsByCategory));
+                  const percentage = (count / maxCount) * 100;
+                  return (
+                    <div key={category} className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-medium text-gray-700">{category}</span>
+                        <span className="text-sm text-gray-600">{count}</span>
+                      </div>
+                      <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div 
+                          className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                          style={{ width: `${percentage}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </CardContent>
           </Card>
+          
+          {/* Response Time Trend */}
           <Card>
             <CardHeader>
               <CardTitle className="text-lg flex items-center">
                 <TrendingUp className="w-5 h-5 mr-2 text-gray-600" />
                 Response Time Trend
               </CardTitle>
+              <CardDescription>Average response time over selected period</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-64 flex items-center justify-center text-gray-400">
-                <p className="text-sm">Chart visualization coming soon</p>
+              <div className="h-48 relative">
+                {/* Y-axis labels */}
+                <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-gray-500 pr-3">
+                  <span>4h</span>
+                  <span>3h</span>
+                  <span>2h</span>
+                  <span>1h</span>
+                  <span>0h</span>
+                </div>
+                
+                {/* Chart area */}
+                <div className="ml-8 h-full relative">
+                  {/* Grid lines */}
+                  <div className="absolute inset-0 flex flex-col justify-between">
+                    {[0, 1, 2, 3, 4].map((_, i) => (
+                      <div key={i} className="border-t border-gray-100"></div>
+                    ))}
+                  </div>
+                  
+                  {/* Line chart */}
+                  <div className="absolute inset-0 flex items-end justify-between pb-6">
+                    {currentData.responseTrend.map((point, index) => {
+                      const height = (point.time / 4) * 100; // Scale to max 4 hours
+                      return (
+                        <div key={index} className="flex flex-col items-center flex-1">
+                          <div className="relative w-full flex justify-center">
+                            <div 
+                              className="w-2 bg-blue-600 rounded-t-sm transition-all duration-500"
+                              style={{ height: `${height}%` }}
+                            ></div>
+                          </div>
+                          <span className="text-xs text-gray-600 mt-2">{point.day}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* Connecting line overlay */}
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                    <polyline
+                      fill="none"
+                      stroke="#2563EB"
+                      strokeWidth="2"
+                      points={currentData.responseTrend.map((point, index) => {
+                        const x = (index / (currentData.responseTrend.length - 1)) * 100;
+                        const y = 100 - (point.time / 4) * 80; // Scale and flip
+                        return `${x}%,${y}%`;
+                      }).join(' ')}
+                    />
+                    {currentData.responseTrend.map((point, index) => {
+                      const x = (index / (currentData.responseTrend.length - 1)) * 100;
+                      const y = 100 - (point.time / 4) * 80;
+                      return (
+                        <circle
+                          key={index}
+                          cx={`${x}%`}
+                          cy={`${y}%`}
+                          r="3"
+                          fill="#2563EB"
+                        />
+                      );
+                    })}
+                  </svg>
+                </div>
               </div>
             </CardContent>
           </Card>
