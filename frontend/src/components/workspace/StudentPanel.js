@@ -234,7 +234,6 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
                         className="h-6 text-xs"
                         data-testid="add-note-btn"
                       >
-                        <Plus className="w-3 h-3 mr-1" />
                         Add
                       </Button>
                       <Button
@@ -244,7 +243,6 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
                         className="h-6 text-xs"
                         data-testid="edit-notes-btn"
                       >
-                        <Edit3 className="w-3 h-3 mr-1" />
                         Edit
                       </Button>
                     </>
