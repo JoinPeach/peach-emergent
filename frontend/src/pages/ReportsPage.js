@@ -317,9 +317,9 @@ const ReportsPage = () => {
               <CardDescription>Average response time over selected period</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-56 relative">
+              <div className="h-64 relative">
                 {/* Y-axis labels */}
-                <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-gray-500 pr-3 py-4">
+                <div className="absolute left-0 top-4 bottom-12 flex flex-col justify-between text-xs text-gray-500 pr-3">
                   <span>4h</span>
                   <span>3h</span>
                   <span>2h</span>
@@ -327,62 +327,67 @@ const ReportsPage = () => {
                   <span>0h</span>
                 </div>
                 
-                {/* Chart area with padding for dots */}
-                <div className="ml-8 h-full relative px-4 py-4">
+                {/* Chart area with space for x-axis */}
+                <div className="ml-8 mr-4 relative" style={{ height: 'calc(100% - 48px)', marginTop: '16px' }}>
                   {/* Grid lines */}
-                  <div className="absolute inset-4 flex flex-col justify-between">
+                  <div className="absolute inset-0 flex flex-col justify-between">
                     {[0, 1, 2, 3, 4].map((_, i) => (
                       <div key={i} className="border-t border-gray-100"></div>
                     ))}
                   </div>
                   
-                  {/* Interactive chart area */}
-                  <div className="relative h-full">
-                    {/* SVG for line and dots */}
-                    <svg className="absolute inset-0 w-full h-full" style={{ padding: '16px 0 32px 0' }}>
-                      {/* Line */}
-                      <polyline
-                        fill="none"
-                        stroke="#2563EB"
-                        strokeWidth="2"
-                        points={responseTrendWithDates.map((point, index) => {
-                          const x = 16 + (index / (responseTrendWithDates.length - 1)) * (100 - 32); // Account for padding
-                          const y = 16 + (100 - 32) * (1 - (point.time / 4)); // Scale and flip with padding
-                          return `${x}%,${y}%`;
-                        }).join(' ')}
-                      />
-                      
-                      {/* Interactive dots */}
-                      {responseTrendWithDates.map((point, index) => {
-                        const x = 16 + (index / (responseTrendWithDates.length - 1)) * (100 - 32);
-                        const y = 16 + (100 - 32) * (1 - (point.time / 4));
-                        return (
-                          <g key={index}>
-                            <circle
-                              cx={`${x}%`}
-                              cy={`${y}%`}
-                              r="4"
-                              fill="#FFD5A3"
-                              stroke="#FFA726"
-                              strokeWidth="2"
-                              className="hover:r-6 transition-all cursor-pointer"
-                            />
-                            {/* Tooltip on hover */}
-                            <title>{`${point.fullDate}: ${point.time}h response time`}</title>
-                          </g>
-                        );
-                      })}
-                    </svg>
+                  {/* SVG Chart */}
+                  <svg className="absolute inset-0 w-full h-full overflow-visible">
+                    {/* Line */}
+                    <polyline
+                      fill="none"
+                      stroke="#2563EB"
+                      strokeWidth="2"
+                      points={responseTrendWithDates.map((point, index) => {
+                        const x = (index / (responseTrendWithDates.length - 1)) * 100;
+                        const y = (1 - (point.time / 4)) * 100; // Scale and flip
+                        return `${x}%,${y}%`;
+                      }).join(' ')}
+                    />
                     
-                    {/* X-axis labels at bottom */}
-                    <div className="absolute bottom-0 left-0 right-0 flex justify-between px-4">
-                      {responseTrendWithDates.map((point, index) => (
-                        <span key={index} className="text-xs text-gray-600 text-center">
-                          {point.day}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                    {/* Interactive dots with hover */}
+                    {responseTrendWithDates.map((point, index) => {
+                      const x = (index / (responseTrendWithDates.length - 1)) * 100;
+                      const y = (1 - (point.time / 4)) * 100;
+                      return (
+                        <g key={index}>
+                          <circle
+                            cx={`${x}%`}
+                            cy={`${y}%`}
+                            r="5"
+                            fill="#FFD5A3"
+                            stroke="#FFA726"
+                            strokeWidth="2"
+                            className="hover:r-7 transition-all cursor-pointer drop-shadow-sm"
+                          />
+                          {/* Larger invisible hover area */}
+                          <circle
+                            cx={`${x}%`}
+                            cy={`${y}%`}
+                            r="12"
+                            fill="transparent"
+                            className="cursor-pointer"
+                          >
+                            <title>{`${point.fullDate}: ${point.time}h response time`}</title>
+                          </circle>
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+                
+                {/* X-axis labels at very bottom */}
+                <div className="absolute bottom-0 left-8 right-4 flex justify-between">
+                  {responseTrendWithDates.map((point, index) => (
+                    <span key={index} className="text-xs text-gray-600 text-center">
+                      {point.day}
+                    </span>
+                  ))}
                 </div>
               </div>
             </CardContent>
