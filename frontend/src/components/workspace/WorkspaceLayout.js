@@ -73,51 +73,47 @@ const WorkspaceLayout = ({ user, children }) => {
 
         <div className="flex items-center space-x-4">
           {/* Collaborative User Avatars - Figma Style */}
-          <div className="flex items-center space-x-2" data-testid="collaborative-avatars">
+          <div className="flex items-center -space-x-1" data-testid="collaborative-avatars">
             {/* Sarah Chen */}
             <div className="relative group">
-              <div className="w-3 h-0.5 bg-blue-500 rounded-full mx-auto mb-1"></div>
-              <div className="w-8 h-8 rounded-full bg-orange-400 flex items-center justify-center text-white text-sm font-semibold cursor-pointer transition-transform hover:scale-110 shadow-sm">
+              <div className="w-6 h-6 rounded-full bg-orange-400 flex items-center justify-center text-white text-xs font-semibold cursor-pointer transition-transform hover:scale-110 shadow-sm hover:z-10 relative">
                 S
               </div>
               {/* Tooltip */}
-              <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
                 Sarah Chen
               </div>
             </div>
             
             {/* Michael Rodriguez */}
             <div className="relative group">
-              <div className="w-3 h-0.5 bg-green-500 rounded-full mx-auto mb-1"></div>
-              <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-sm font-semibold cursor-pointer transition-transform hover:scale-110 shadow-sm">
+              <div className="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-semibold cursor-pointer transition-transform hover:scale-110 shadow-sm hover:z-10 relative">
                 M
               </div>
               {/* Tooltip */}
-              <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
                 Michael Rodriguez
               </div>
             </div>
             
             {/* Dr. Emily Thompson */}
             <div className="relative group">
-              <div className="w-3 h-0.5 bg-pink-500 rounded-full mx-auto mb-1"></div>
-              <div className="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center text-white text-sm font-semibold cursor-pointer transition-transform hover:scale-110 shadow-sm">
+              <div className="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center text-white text-xs font-semibold cursor-pointer transition-transform hover:scale-110 shadow-sm hover:z-10 relative">
                 E
               </div>
               {/* Tooltip */}
-              <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
                 Dr. Emily Thompson
               </div>
             </div>
             
             {/* Current User (Puneet Thiara) */}
             <div className="relative group">
-              <div className="w-3 h-0.5 bg-yellow-500 rounded-full mx-auto mb-1"></div>
-              <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-sm font-semibold cursor-pointer transition-transform hover:scale-110 shadow-sm ring-2 ring-white">
+              <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-semibold cursor-pointer transition-transform hover:scale-110 shadow-sm ring-1 ring-white hover:z-10 relative">
                 P
               </div>
               {/* Tooltip */}
-              <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
                 Puneet Thiara (You)
               </div>
             </div>
