@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { LogOut, User, Bell, Shield } from 'lucide-react';
+import { LogOut, User, Bell, Shield, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
 const SettingsPage = () => {
@@ -23,6 +23,18 @@ const SettingsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50" data-testid="settings-page">
       <div className="max-w-4xl mx-auto p-6">
+        <div className="flex items-center space-x-4 mb-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/workspace')}
+            className="text-gray-600 hover:text-gray-900"
+            data-testid="back-to-tickets-btn"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Tickets
+          </Button>
+        </div>
         <h1 className="text-2xl font-semibold text-gray-900 mb-6">Settings</h1>
 
         <div className="space-y-6">
