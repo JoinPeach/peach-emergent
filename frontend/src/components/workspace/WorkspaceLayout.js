@@ -8,8 +8,14 @@ import { Badge } from '../ui/badge';
 const WorkspaceLayout = ({ user, children }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [notificationCount, setNotificationCount] = useState(3);
 
   const isActive = (path) => location.pathname === path;
+  
+  const handleClearNotifications = () => {
+    setNotificationCount(0);
+    toast.success('All notifications cleared');
+  };
 
   const navItems = [
     { path: '/workspace', label: 'Tickets' },
@@ -53,9 +59,11 @@ const WorkspaceLayout = ({ user, children }) => {
                 data-testid="notifications-btn"
               >
                 <Bell className="w-4 h-4" />
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white text-xs">
-                  3
-                </Badge>
+                {notificationCount > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white text-xs">
+                    {notificationCount}
+                  </Badge>
+                )}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-80">
@@ -80,7 +88,13 @@ const WorkspaceLayout = ({ user, children }) => {
                 </DropdownMenuItem>
               </div>
               <div className="p-2 border-t border-gray-200">
-                <Button variant="ghost" size="sm" className="w-full text-xs text-gray-600 hover:text-gray-900">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="w-full text-xs text-gray-600 hover:text-gray-900"
+                  onClick={handleClearNotifications}
+                  data-testid="clear-notifications-btn"
+                >
                   Clear all
                 </Button>
               </div>
@@ -105,11 +119,8 @@ const WorkspaceLayout = ({ user, children }) => {
 
           {/* User Info */}
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-sm font-medium">
-              {user?.name?.charAt(0).toUpperCase()}
-            </div>
             <span className="text-sm font-medium text-gray-700">
-              {user?.name}
+              Puneet Thiara
             </span>
           </div>
         </div>
