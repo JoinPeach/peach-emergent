@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Search, FileText, Upload, Link as LinkIcon } from 'lucide-react';
+import { Search, FileText, Upload, Link as LinkIcon, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
 
 const KnowledgeBasePage = () => {
@@ -67,13 +67,62 @@ const KnowledgeBasePage = () => {
   ];
 
   const articles = [
-    { title: 'FAFSA Submission Deadlines 2024-2025', category: 'FAFSA', updatedAt: '2 days ago', type: 'article' },
-    { title: 'Verification Process - Required Documents', category: 'Verification', updatedAt: '1 week ago', type: 'article' },
-    { title: 'Satisfactory Academic Progress (SAP) Appeals', category: 'SAP Appeals', updatedAt: '3 weeks ago', type: 'article' },
-    { title: 'Understanding Your Billing Statement', category: 'Billing', updatedAt: '1 month ago', type: 'article' },
-    { title: 'General Financial Aid Eligibility Requirements', category: 'General', updatedAt: '2 months ago', type: 'article' },
-    { title: 'How to Complete the FAFSA', category: 'FAFSA', updatedAt: '2 months ago', type: 'article' },
-    { title: 'Work-Study Program Information', category: 'General', updatedAt: '3 months ago', type: 'article' },
+    { 
+      id: '1',
+      title: 'FAFSA Submission Deadlines 2024-2025', 
+      category: 'FAFSA', 
+      type: 'Article',
+      lastUpdated: '2 days ago',
+      updatedBy: 'Sarah Chen'
+    },
+    { 
+      id: '2',
+      title: 'Verification Process - Required Documents', 
+      category: 'Verification', 
+      type: 'Article',
+      lastUpdated: '1 week ago',
+      updatedBy: 'Michael Rodriguez'
+    },
+    { 
+      id: '3',
+      title: 'Satisfactory Academic Progress (SAP) Appeals', 
+      category: 'SAP Appeals', 
+      type: 'Article',
+      lastUpdated: '3 weeks ago',
+      updatedBy: 'Dr. Emily Thompson'
+    },
+    { 
+      id: '4',
+      title: 'Understanding Your Billing Statement', 
+      category: 'Billing', 
+      type: 'Article',
+      lastUpdated: '1 month ago',
+      updatedBy: 'Sarah Chen'
+    },
+    { 
+      id: '5',
+      title: 'Federal Student Aid Website', 
+      category: 'General', 
+      type: 'Link',
+      lastUpdated: '2 months ago',
+      updatedBy: 'Michael Rodriguez'
+    },
+    { 
+      id: '6',
+      title: 'How to Complete the FAFSA', 
+      category: 'FAFSA', 
+      type: 'Article',
+      lastUpdated: '2 months ago',
+      updatedBy: 'Dr. Emily Thompson'
+    },
+    { 
+      id: '7',
+      title: 'Work-Study Program Information', 
+      category: 'General', 
+      type: 'Article',
+      lastUpdated: '3 months ago',
+      updatedBy: 'Sarah Chen'
+    },
   ];
 
   return (
@@ -123,28 +172,70 @@ const KnowledgeBasePage = () => {
             </Card>
           </div>
 
-          {/* Main Content - Articles List */}
+          {/* Main Content - Articles Table */}
           <div className="col-span-9">
-            <div className="space-y-3">
-              {articles.map((article, index) => (
-                <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <CardTitle className="text-base font-semibold text-gray-900 mb-1">
-                          {article.title}
-                        </CardTitle>
-                        <CardDescription className="flex items-center space-x-2">
-                          <Badge variant="outline" className="text-xs">{article.category}</Badge>
-                          <span className="text-xs text-gray-500">• Updated {article.updatedAt}</span>
-                        </CardDescription>
-                      </div>
-                      <FileText className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                    </div>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Articles & Links</CardTitle>
+                <CardDescription>Knowledge base content for AI-powered replies</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Title</th>
+                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Category</th>
+                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Type</th>
+                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Last Updated</th>
+                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Updated By</th>
+                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {articles.map((article) => (
+                        <tr key={article.id} className="hover:bg-gray-50 cursor-pointer">
+                          <td className="py-3 px-4">
+                            <div className="flex items-center space-x-2">
+                              {article.type === 'Link' ? (
+                                <LinkIcon className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                              ) : (
+                                <FileText className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                              )}
+                              <span className="text-sm font-medium text-gray-900">{article.title}</span>
+                            </div>
+                          </td>
+                          <td className="py-3 px-4">
+                            <Badge variant="outline" className="text-xs">{article.category}</Badge>
+                          </td>
+                          <td className="py-3 px-4">
+                            <span className="text-sm text-gray-700">{article.type}</span>
+                          </td>
+                          <td className="py-3 px-4">
+                            <span className="text-xs text-gray-500">{article.lastUpdated}</span>
+                          </td>
+                          <td className="py-3 px-4">
+                            <span className="text-xs text-gray-600">{article.updatedBy}</span>
+                          </td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center space-x-2">
+                              <Button variant="ghost" size="sm" className="h-7 text-xs">
+                                Edit
+                              </Button>
+                              {article.type === 'Link' && (
+                                <Button variant="ghost" size="sm" className="h-7 text-xs">
+                                  <ExternalLink className="w-3 h-3" />
+                                </Button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

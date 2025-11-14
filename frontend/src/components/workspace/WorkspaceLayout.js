@@ -49,20 +49,23 @@ const WorkspaceLayout = ({ user, children }) => {
     <div className="h-screen flex flex-col bg-white" data-testid="workspace-layout">
       {/* Header */}
       <header className="h-16 border-b border-gray-200 flex items-center justify-between px-6 bg-white">
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-8">
           <img src="/peach_logo.svg" alt="Peach" className="h-8" />
-          <nav className="flex items-center space-x-1">
+          <nav className="flex items-center">
             {navItems.map((item) => (
               <button
                 key={item.path}
                 onClick={() => navigate(item.path)}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`px-4 py-4 text-sm font-medium transition-colors relative ${
                   isActive(item.path)
-                    ? 'bg-gray-900 text-white'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    ? 'text-gray-900'
+                    : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
                 {item.label}
+                {isActive(item.path) && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900" />
+                )}
               </button>
             ))}
           </nav>
