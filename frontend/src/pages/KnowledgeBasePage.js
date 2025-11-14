@@ -147,96 +147,70 @@ const KnowledgeBasePage = () => {
           />
         </div>
 
-        <div className="grid grid-cols-12 gap-6">
-          {/* Sidebar - Categories */}
-          <div className="col-span-3">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Categories</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <button className="w-full flex items-center justify-between p-2 rounded-md hover:bg-gray-50 text-left">
-                  <span className="text-sm font-medium text-gray-900">All Articles</span>
-                  <Badge variant="secondary">7</Badge>
-                </button>
-                {categories.map((category) => (
-                  <button
-                    key={category.name}
-                    className="w-full flex items-center justify-between p-2 rounded-md hover:bg-gray-50 text-left"
-                  >
-                    <span className="text-sm text-gray-700">{category.name}</span>
-                    <Badge className={category.color}>{category.count}</Badge>
-                  </button>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Main Content - Articles Table */}
-          <div className="col-span-9">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Articles & Links</CardTitle>
-                <CardDescription>Knowledge base content for AI-powered replies</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Title</th>
-                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Category</th>
-                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Type</th>
-                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Last Updated</th>
-                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Updated By</th>
-                        <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {articles.map((article) => (
-                        <tr key={article.id} className="hover:bg-gray-50 cursor-pointer">
-                          <td className="py-3 px-4">
-                            <div className="flex items-center space-x-2">
-                              {article.type === 'Link' ? (
-                                <LinkIcon className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                              ) : (
-                                <FileText className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                              )}
-                              <span className="text-sm font-medium text-gray-900">{article.title}</span>
-                            </div>
-                          </td>
-                          <td className="py-3 px-4">
-                            <Badge variant="outline" className="text-xs">{article.category}</Badge>
-                          </td>
-                          <td className="py-3 px-4">
-                            <span className="text-sm text-gray-700">{article.type}</span>
-                          </td>
-                          <td className="py-3 px-4">
-                            <span className="text-xs text-gray-500">{article.lastUpdated}</span>
-                          </td>
-                          <td className="py-3 px-4">
-                            <span className="text-xs text-gray-600">{article.updatedBy}</span>
-                          </td>
-                          <td className="py-3 px-4">
-                            <div className="flex items-center space-x-2">
+        <div className="w-full">
+          {/* Articles Table - Full Width */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Articles & Links</CardTitle>
+              <CardDescription>Knowledge base content for AI-powered replies</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-200">
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Title</th>
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Category</th>
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Type</th>
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Last Updated</th>
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Updated By</th>
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {articles.map((article) => (
+                      <tr key={article.id} className="hover:bg-gray-50 cursor-pointer">
+                        <td className="py-3 px-4">
+                          <div className="flex items-center space-x-2">
+                            {article.type === 'Link' ? (
+                              <LinkIcon className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            ) : (
+                              <FileText className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            )}
+                            <span className="text-sm font-medium text-gray-900">{article.title}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 px-4">
+                          <Badge variant="outline" className="text-xs">{article.category}</Badge>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className="text-sm text-gray-700">{article.type}</span>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className="text-xs text-gray-500">{article.lastUpdated}</span>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className="text-xs text-gray-600">{article.updatedBy}</span>
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex items-center space-x-2">
+                            <Button variant="ghost" size="sm" className="h-7 text-xs">
+                              Edit
+                            </Button>
+                            {article.type === 'Link' && (
                               <Button variant="ghost" size="sm" className="h-7 text-xs">
-                                Edit
+                                <ExternalLink className="w-3 h-3" />
                               </Button>
-                              {article.type === 'Link' && (
-                                <Button variant="ghost" size="sm" className="h-7 text-xs">
-                                  <ExternalLink className="w-3 h-3" />
-                                </Button>
-                              )}
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
       </div>
