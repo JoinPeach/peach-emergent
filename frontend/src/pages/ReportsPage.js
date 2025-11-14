@@ -94,7 +94,59 @@ const ReportsPage = () => {
     return baseData[period];
   };
   
-  const currentData = getDataForPeriod(timePeriod);
+      // Generate actual dates based on time period
+      const generateDates = (period) => {
+        const now = new Date();
+        const dates = [];
+        
+        if (period === '7') {
+          for (let i = 6; i >= 0; i--) {
+            const date = new Date(now);
+            date.setDate(date.getDate() - i);
+            dates.push({
+              label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+              fullDate: date.toLocaleDateString()
+            });
+          }
+        } else if (period === '30') {
+          for (let i = 3; i >= 0; i--) {
+            const date = new Date(now);
+            date.setDate(date.getDate() - (i * 7));
+            dates.push({
+              label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+              fullDate: date.toLocaleDateString()
+            });
+          }
+        } else if (period === '60') {
+          for (let i = 1; i >= 0; i--) {
+            const date = new Date(now);
+            date.setMonth(date.getMonth() - i);
+            dates.push({
+              label: date.toLocaleDateString('en-US', { month: 'short' }),
+              fullDate: date.toLocaleDateString()
+            });
+          }
+        } else { // 90 days
+          for (let i = 2; i >= 0; i--) {
+            const date = new Date(now);
+            date.setMonth(date.getMonth() - i);
+            dates.push({
+              label: date.toLocaleDateString('en-US', { month: 'short' }),
+              fullDate: date.toLocaleDateString()
+            });
+          }
+        }
+        return dates;
+      };
+      
+      const chartDates = generateDates(timePeriod);
+      
+      // Update response trend with actual dates
+      const responseTrendWithDates = currentData.responseTrend.map((point, index) => ({
+        ...point,
+        day: chartDates[index]?.label || point.day,
+        fullDate: chartDates[index]?.fullDate || point.day
+      }));
   
   // Mock team member activity data
   const teamActivity = [
@@ -242,8 +294,8 @@ const ReportsPage = () => {
                       </div>
                       <div className="w-full bg-gray-100 rounded-full h-2">
                         <div 
-                          className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${percentage}%` }}
+                          className="h-2 rounded-full transition-all duration-500"
+                          style={{ width: `${percentage}%`, backgroundColor: '#FFD5A3' }}
                         ></div>
                       </div>
                     </div>
