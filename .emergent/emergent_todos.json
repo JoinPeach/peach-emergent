@@ -1,11 +1,11 @@
 [
   {
     "content": "Create backend CRUD endpoints: Auth (mock OAuth login), Tickets (list/get/patch), Messages (list/create), Students (list/get/patch), Queues (list), Users (list)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Set up frontend routing and Auth context with mock OAuth flow",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Build three-pane workspace layout component (Inbox | Thread | Student Context) following design guidelines",
