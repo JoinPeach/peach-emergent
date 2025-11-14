@@ -2,7 +2,7 @@ import React from 'react';
 import WorkspaceLayout from '../components/workspace/WorkspaceLayout';
 import { useAuth } from '../contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { BarChart3, TrendingUp, Users, Clock, User, Mail } from 'lucide-react';
+import { BarChart3, TrendingUp, Users, Clock, User, Mail, FileText, Sparkles } from 'lucide-react';
 import { Badge } from '../components/ui/badge';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -54,42 +54,65 @@ const ReportsPage = () => {
       <div className="max-w-7xl mx-auto p-6">
         <h1 className="text-2xl font-semibold text-gray-900 mb-6">Reports</h1>
 
-        {/* Key Metrics */}
-        <div className="grid grid-cols-4 gap-4 mb-6">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardDescription>Total Tickets</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold text-gray-900">4</p>
-              <p className="text-xs text-green-600 mt-1">↑ 12% from last week</p>
+        {/* Key Metrics - Updated Style */}
+        <div className="grid grid-cols-4 gap-6 mb-6">
+          <Card className="border border-gray-200 bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-2">
+                <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                  <FileText className="w-5 h-5 text-blue-600" />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <p className="text-3xl font-bold text-gray-900">25</p>
+                <p className="text-sm font-medium text-gray-600">Total Tickets</p>
+                <p className="text-xs text-green-600">↑ 12% from last week</p>
+              </div>
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardDescription>Avg Response Time</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold text-gray-900">2.5h</p>
-              <p className="text-xs text-green-600 mt-1">↓ 18% improvement</p>
+          
+          <Card className="border border-gray-200 bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-2">
+                <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-green-600" />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <p className="text-3xl font-bold text-gray-900">12</p>
+                <p className="text-sm font-medium text-gray-600">Avg Response Time</p>
+                <p className="text-xs text-green-600">↓ 18% improvement</p>
+              </div>
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardDescription>AI Drafts Generated</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold text-gray-900">12</p>
-              <p className="text-xs text-gray-500 mt-1">8 sent as-is</p>
+          
+          <Card className="border border-gray-200 bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-2">
+                <div className="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-purple-600" />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <p className="text-3xl font-bold text-gray-900">02</p>
+                <p className="text-sm font-medium text-gray-600">AI Drafts Generated</p>
+                <p className="text-xs text-gray-500">8 sent as-is</p>
+              </div>
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardDescription>Student Satisfaction</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold text-gray-900">4.8</p>
-              <p className="text-xs text-green-600 mt-1">↑ 0.2 from last month</p>
+          
+          <Card className="border border-gray-200 bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-2">
+                <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-orange-600" />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <p className="text-3xl font-bold text-gray-900">4.8</p>
+                <p className="text-sm font-medium text-gray-600">Student Satisfaction</p>
+                <p className="text-xs text-green-600">↑ 0.2 from last month</p>
+              </div>
             </CardContent>
           </Card>
         </div>
