@@ -79,8 +79,8 @@ const WorkspaceLayout = ({ user, children }) => {
               <div className="w-7 h-7 rounded-full bg-orange-400 flex items-center justify-center text-white text-sm font-semibold cursor-pointer transition-transform hover:scale-105 shadow-sm hover:z-10 relative">
                 S
               </div>
-              {/* Tooltip - Much higher above avatar */}
-              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-30 shadow-lg">
+              {/* Tooltip - Above navigation bar */}
+              <div className="fixed top-2 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
                 Sarah Chen
               </div>
             </div>
@@ -90,8 +90,8 @@ const WorkspaceLayout = ({ user, children }) => {
               <div className="w-7 h-7 rounded-full bg-purple-500 flex items-center justify-center text-white text-sm font-semibold cursor-pointer transition-transform hover:scale-105 shadow-sm hover:z-10 relative">
                 M
               </div>
-              {/* Tooltip - Much higher above avatar */}
-              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-30 shadow-lg">
+              {/* Tooltip - Above navigation bar */}
+              <div className="fixed top-2 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
                 Michael Rodriguez
               </div>
             </div>
@@ -101,8 +101,8 @@ const WorkspaceLayout = ({ user, children }) => {
               <div className="w-7 h-7 rounded-full bg-teal-500 flex items-center justify-center text-white text-sm font-semibold cursor-pointer transition-transform hover:scale-105 shadow-sm hover:z-10 relative">
                 E
               </div>
-              {/* Tooltip - Much higher above avatar */}
-              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-30 shadow-lg">
+              {/* Tooltip - Above navigation bar */}
+              <div className="fixed top-2 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
                 Dr. Emily Thompson
               </div>
             </div>
@@ -112,8 +112,8 @@ const WorkspaceLayout = ({ user, children }) => {
               <div className="w-7 h-7 rounded-full bg-indigo-500 flex items-center justify-center text-white text-sm font-semibold cursor-pointer transition-transform hover:scale-105 shadow-sm ring-1 ring-white hover:z-10 relative">
                 P
               </div>
-              {/* Tooltip - Much higher above avatar */}
-              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-30 shadow-lg">
+              {/* Tooltip - Above navigation bar */}
+              <div className="fixed top-2 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
                 Puneet Thiara (You)
               </div>
             </div>
