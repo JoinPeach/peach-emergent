@@ -51,10 +51,6 @@ const CursorTracker = () => {
       {activeUsers
         .filter(user => user.isVisible)
         .map(user => {
-          // Ensure name stays within screen bounds
-          const nameX = Math.max(0, Math.min(window.innerWidth - 100, user.x + 15));
-          const nameY = Math.max(30, user.y - 10);
-          
           return (
             <div key={user.id}>
               {/* Colored Cursor Arrow */}
