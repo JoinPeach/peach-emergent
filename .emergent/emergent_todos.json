@@ -1,22 +1,42 @@
 [
   {
-    "content": "Redesign to 3-panel layout: Ticket List | Conversation+Draft | Student Info+Timeline+Audit",
-    "status": "completed"
+    "content": "Update copy: AI-Generated Reply → AI Suggested Reply, AI Activity Log → Audit Log, Activity Timeline → Interaction Timeline, All Queues → All Tickets",
+    "status": "in_progress"
   },
   {
-    "content": "Create middle panel with subject, conversation, and read-only AI draft in one cohesive card",
-    "status": "completed"
+    "content": "Change Add button to 'Add Interaction' (remove icon)",
+    "status": "pending"
   },
   {
-    "content": "Create right panel with student profile, activity timeline, and AI audit log",
-    "status": "completed"
+    "content": "Make right panel cards more cohesive and connected (remove gaps, unified design)",
+    "status": "pending"
   },
   {
-    "content": "Add AI audit log to track all AI-generated replies and student responses",
-    "status": "completed"
+    "content": "Add ticket status dropdown in middle panel header",
+    "status": "pending"
   },
   {
-    "content": "Test new 3-panel layout and audit logging",
-    "status": "completed"
+    "content": "Remove all gradient circle avatars throughout the app",
+    "status": "pending"
+  },
+  {
+    "content": "Create Reports page with placeholder content",
+    "status": "pending"
+  },
+  {
+    "content": "Create Knowledge Base page with placeholder content",
+    "status": "pending"
+  },
+  {
+    "content": "Create Settings page with logout moved there, make settings icon functional",
+    "status": "pending"
+  },
+  {
+    "content": "Make notification icon functional with dropdown",
+    "status": "pending"
+  },
+  {
+    "content": "Test all changes and new pages",
+    "status": "pending"
   }
 ]
