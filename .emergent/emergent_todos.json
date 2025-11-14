@@ -1,26 +1,26 @@
 [
   {
-    "content": "Update design guidelines to match Outlook aesthetic (Microsoft blue, sidebar navigation, email-style layout)",
-    "status": "completed"
+    "content": "Create Stripe-style design system (Inter font, muted colors, card-based layout)",
+    "status": "in_progress"
   },
   {
-    "content": "Redesign workspace layout to match Outlook (left sidebar, center email list, right reading pane)",
-    "status": "completed"
+    "content": "Redesign to two-panel layout: Left (ticket list) + Right (combined details + student + AI draft)",
+    "status": "pending"
   },
   {
-    "content": "Modify ThreadPanel to auto-generate AI draft when ticket opens (no manual Generate button)",
-    "status": "completed"
+    "content": "Remove middle thread panel and merge into single right panel",
+    "status": "pending"
   },
   {
-    "content": "Add Regenerate, Edit, Send buttons for AI draft instead of dialog",
-    "status": "completed"
+    "content": "Update all components with modern B2B SaaS styling",
+    "status": "pending"
   },
   {
-    "content": "Update color scheme to Microsoft Outlook style",
-    "status": "completed"
+    "content": "Add smooth transitions and modern interactions",
+    "status": "pending"
   },
   {
-    "content": "Test auto-draft generation flow and UI",
-    "status": "completed"
+    "content": "Test new layout and styling",
+    "status": "pending"
   }
 ]
