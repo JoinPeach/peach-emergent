@@ -208,275 +208,332 @@ const TicketDetails = ({ ticketDetails, onTicketUpdate }) => {
   return (
     <div className="flex-1 bg-gray-50 overflow-hidden" data-testid="ticket-details">
       <ScrollArea className="h-full">
-        <div className="max-w-4xl mx-auto p-6 space-y-6">
-          {/* Ticket Header Card */}
-          <Card className="border-gray-200 shadow-sm">
-            <CardHeader className="pb-4">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <CardTitle className="text-xl font-semibold text-gray-900 mb-2">
-                    {ticket.subject}
-                  </CardTitle>
-                  <div className="flex items-center space-x-3 text-sm text-gray-600">
-                    <span className="font-medium">{student.name}</span>
-                    <span className="text-gray-400">•</span>
-                    <span>{student.email}</span>
-                    <Badge className="capitalize bg-gray-100 text-gray-700 border-gray-200">
-                      {ticket.category.replace('_', ' ')}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-            </CardHeader>
-          </Card>
-
-          {/* Two Column Layout */}
-          <div className="grid grid-cols-2 gap-6">
-            {/* Left Column: Messages */}
-            <div className="space-y-6">
-              <Card className="border-gray-200 shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-base font-semibold text-gray-900">Conversation</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {messages.map((message, index) => (
-                    <div key={message.id} className="space-y-3">
-                      {index > 0 && <Separator />}
-                      <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
-                          {message.direction === 'inbound'
-                            ? student.name.charAt(0).toUpperCase()
-                            : user.name.charAt(0).toUpperCase()}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center space-x-2 mb-1">
-                            <span className="text-sm font-medium text-gray-900">
-                              {message.direction === 'inbound' ? student.name : user.name}
-                            </span>
-                            <span className="text-xs text-gray-500">
-                              {formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}
-                            </span>
-                          </div>
-                          <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
-                            {message.body}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Right Column: Student Info + Timeline */}
-            <div className="space-y-6">
-              {/* Student Profile */}
-              <Card className="border-gray-200 shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-base font-semibold text-gray-900">Student Profile</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-lg font-medium">
+        <div className="max-w-5xl mx-auto p-6 space-y-4">
+          {/* Ticket Header */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex-1">
+                <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+                  {ticket.subject}
+                </h1>
+                <div className="flex items-center space-x-3 text-sm text-gray-600">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-medium">
                       {student.name.charAt(0).toUpperCase()}
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900">{student.name}</h3>
-                      <p className="text-sm text-gray-500">ID: {student.student_id || 'N/A'}</p>
-                    </div>
+                    <span className="font-medium text-gray-900">{student.name}</span>
                   </div>
-
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center space-x-2 text-gray-600">
-                      <Mail className="w-4 h-4 text-gray-400" />
-                      <span>{student.email}</span>
-                    </div>
-                    {student.phone && (
-                      <div className="flex items-center space-x-2 text-gray-600">
-                        <Phone className="w-4 h-4 text-gray-400" />
-                        <span>{student.phone}</span>
-                      </div>
-                    )}
-                    {student.sis_url && (
-                      <a
-                        href={student.sis_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-blue-600 hover:text-blue-700"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        <span>View in SIS</span>
-                      </a>
-                    )}
-                  </div>
-
-                  <Separator />
-
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="text-sm font-medium text-gray-900">Notes</label>
-                      {!editingNotes && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setEditingNotes(true)}
-                          className="h-7 text-xs"
-                        >
-                          <Edit3 className="w-3 h-3 mr-1" />
-                          Edit
-                        </Button>
-                      )}
-                    </div>
-                    {editingNotes ? (
-                      <div className="space-y-2">
-                        <Textarea
-                          value={notes}
-                          onChange={(e) => setNotes(e.target.value)}
-                          rows={3}
-                          className="text-sm"
-                        />
-                        <div className="flex space-x-2">
-                          <Button size="sm" onClick={handleSaveNotes} className="h-7 text-xs">
-                            Save
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => {
-                              setNotes(student.notes || '');
-                              setEditingNotes(false);
-                            }}
-                            className="h-7 text-xs"
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-sm text-gray-600">
-                        {student.notes || 'No notes yet'}
-                      </p>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Timeline */}
-              <Card className="border-gray-200 shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-base font-semibold text-gray-900">Timeline</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {timeline.length === 0 ? (
-                    <p className="text-sm text-gray-500 text-center py-4">No events yet</p>
-                  ) : (
-                    <div className="space-y-3">
-                      {timeline.slice(0, 5).map((event) => (
-                        <div key={event.id} className="flex items-start space-x-2">
-                          <div className="mt-0.5">{getEventIcon(event.event_type)}</div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-xs font-medium text-gray-900 capitalize">
-                              {event.event_type.replace('_', ' ')}
-                            </p>
-                            <p className="text-xs text-gray-600 line-clamp-2">{event.content}</p>
-                            <p className="text-xs text-gray-400 mt-0.5">
-                              {formatDistanceToNow(new Date(event.created_at), { addSuffix: true })}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+                  <span className="text-gray-400">•</span>
+                  <span>{student.email}</span>
+                  <Badge className="capitalize bg-gray-100 text-gray-700 border-gray-200">
+                    {ticket.category.replace('_', ' ')}
+                  </Badge>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* AI Draft Reply Section */}
-          <Card className="border-gray-200 shadow-sm">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-base font-semibold text-gray-900">Reply</CardTitle>
-                {aiDraft && !isEditing && (
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setIsEditing(true)}
-                      disabled={generatingDraft}
-                      className="h-8 text-xs"
-                    >
-                      <Edit3 className="w-3 h-3 mr-1" />
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleGenerateDraft(false)}
-                      disabled={generatingDraft}
-                      className="h-8 text-xs"
-                    >
-                      <RefreshCw className="w-3 h-3 mr-1" />
-                      Regenerate
-                    </Button>
-                  </div>
+          {/* Student Profile & Contact */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <h2 className="text-base font-semibold text-gray-900 mb-4">Student Profile</h2>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Student ID</label>
+                <p className="text-sm text-gray-900 mt-1">{student.student_id || 'N/A'}</p>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Phone</label>
+                <p className="text-sm text-gray-900 mt-1">{student.phone || 'N/A'}</p>
+              </div>
+              <div className="col-span-2">
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Email</label>
+                <p className="text-sm text-gray-900 mt-1">{student.email}</p>
+              </div>
+              {student.sis_url && (
+                <div className="col-span-2">
+                  <a
+                    href={student.sis_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-2 text-sm text-gray-900 hover:text-gray-700 font-medium"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>View in SIS</span>
+                  </a>
+                </div>
+              )}
+            </div>
+
+            <Separator className="my-4" />
+
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Notes</label>
+                {!editingNotes && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setEditingNotes(true)}
+                    className="h-7 text-xs"
+                    data-testid="edit-notes-btn"
+                  >
+                    <Edit3 className="w-3 h-3 mr-1" />
+                    Edit
+                  </Button>
                 )}
               </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* AI Status Banner */}
-              {generatingDraft ? (
-                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-center space-x-2">
-                  <Clock className="w-4 h-4 text-amber-600 animate-spin" />
-                  <span className="text-sm text-amber-900">Generating AI-powered reply...</span>
+              {editingNotes ? (
+                <div className="space-y-2">
+                  <Textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    rows={3}
+                    className="text-sm"
+                    data-testid="notes-textarea"
+                  />
+                  <div className="flex space-x-2">
+                    <Button size="sm" onClick={handleSaveNotes} className="h-7 text-xs" data-testid="save-notes-btn">
+                      Save
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setNotes(student.notes || '');
+                        setEditingNotes(false);
+                      }}
+                      className="h-7 text-xs"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
                 </div>
-              ) : aiDraft && !isEditing ? (
-                <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="flex items-start space-x-2">
-                    <Sparkles className="w-4 h-4 text-green-600 mt-0.5" />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-green-900 mb-1">AI Draft Ready</p>
-                      <p className="text-xs text-green-700">{aiDraft.summary}</p>
-                      {aiDraft.cited_kb && aiDraft.cited_kb.length > 0 && (
-                        <p className="text-xs text-green-600 mt-1">
-                          References: {aiDraft.cited_kb.map(kb => kb.title).join(', ')}
-                        </p>
-                      )}
+              ) : (
+                <p className="text-sm text-gray-600">
+                  {student.notes || 'No notes yet'}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Conversation History */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <h2 className="text-base font-semibold text-gray-900 mb-4">Conversation</h2>
+            <div className="space-y-4">
+              {messages.map((message, index) => (
+                <div key={message.id} className="space-y-3">
+                  {index > 0 && <Separator />}
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+                      {message.direction === 'inbound'
+                        ? student.name.charAt(0).toUpperCase()
+                        : user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <span className="text-sm font-medium text-gray-900">
+                          {message.direction === 'inbound' ? student.name : user.name}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          {formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+                        {message.body}
+                      </p>
                     </div>
                   </div>
                 </div>
-              ) : null}
+              ))}
+            </div>
+          </div>
 
-              <Textarea
-                placeholder="Type your reply..."
-                value={isEditing || !aiDraft ? replyBody : aiDraft.safe_reply}
-                onChange={(e) => setReplyBody(e.target.value)}
-                disabled={!isEditing && aiDraft && !generatingDraft}
-                rows={8}
-                className="resize-none text-sm"
-              />
-
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-gray-500">
-                  {aiDraft && 'AI-generated content. Please review before sending.'}
-                </p>
-                <Button
-                  onClick={handleSendReply}
-                  disabled={sending || generatingDraft || (!aiDraft && !replyBody.trim())}
-                  className="bg-gray-900 hover:bg-gray-800 text-white"
-                >
-                  {sending ? (
-                    <Clock className="w-4 h-4 mr-2 animate-spin" />
-                  ) : (
-                    <Send className="w-4 h-4 mr-2" />
-                  )}
-                  Send Reply
-                </Button>
+          {/* Timeline */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-base font-semibold text-gray-900">Activity Timeline</h2>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowAddEventDialog(true)}
+                className="h-8 text-xs"
+                data-testid="add-event-btn"
+              >
+                <MessageSquare className="w-3 h-3 mr-1" />
+                Add Event
+              </Button>
+            </div>
+            {timeline.length === 0 ? (
+              <p className="text-sm text-gray-500 text-center py-4">No events yet</p>
+            ) : (
+              <div className="space-y-3">
+                {timeline.map((event) => (
+                  <div key={event.id} className="flex items-start space-x-3" data-testid={`timeline-event-${event.id}`}>
+                    <div className="mt-0.5">{getEventIcon(event.event_type)}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <span className="text-xs font-medium text-gray-900 capitalize">
+                          {event.event_type.replace('_', ' ')}
+                        </span>
+                        <span className="text-xs text-gray-400">
+                          {formatDistanceToNow(new Date(event.created_at), { addSuffix: true })}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600">{event.content}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </CardContent>
-          </Card>
+            )}
+          </div>
+
+          {/* AI Draft Reply Section */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-base font-semibold text-gray-900">Reply</h2>
+              {aiDraft && !isEditing && (
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsEditing(true)}
+                    disabled={generatingDraft}
+                    className="h-8 text-xs"
+                    data-testid="edit-draft-btn"
+                  >
+                    <Edit3 className="w-3 h-3 mr-1" />
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleGenerateDraft(false)}
+                    disabled={generatingDraft}
+                    className="h-8 text-xs"
+                    data-testid="regenerate-draft-btn"
+                  >
+                    <RefreshCw className="w-3 h-3 mr-1" />
+                    Regenerate
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            {/* AI Status Banner */}
+            {generatingDraft ? (
+              <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-center space-x-2">
+                <Clock className="w-4 h-4 text-amber-600 animate-spin" />
+                <span className="text-sm text-amber-900">Generating AI-powered reply...</span>
+              </div>
+            ) : aiDraft && !isEditing ? (
+              <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-start space-x-2">
+                  <Sparkles className="w-4 h-4 text-green-600 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-green-900 mb-1">AI Draft Ready</p>
+                    <p className="text-xs text-green-700">{aiDraft.summary}</p>
+                    {aiDraft.cited_kb && aiDraft.cited_kb.length > 0 && (
+                      <p className="text-xs text-green-600 mt-1">
+                        References: {aiDraft.cited_kb.map(kb => kb.title).join(', ')}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : null}
+
+            <Textarea
+              placeholder="Type your reply..."
+              value={isEditing || !aiDraft ? replyBody : aiDraft.safe_reply}
+              onChange={(e) => setReplyBody(e.target.value)}
+              disabled={!isEditing && aiDraft && !generatingDraft}
+              rows={10}
+              className="resize-none text-sm mb-4"
+              data-testid="reply-textarea"
+            />
+
+            <div className="flex items-center justify-between">
+              <p className="text-xs text-gray-500">
+                {aiDraft && 'AI-generated content. Please review before sending.'}
+              </p>
+              <Button
+                onClick={handleSendReply}
+                disabled={sending || generatingDraft || (!aiDraft && !replyBody.trim())}
+                className="bg-gray-900 hover:bg-gray-800 text-white"
+                data-testid="send-reply-btn"
+              >
+                {sending ? (
+                  <Clock className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4 mr-2" />
+                )}
+                Send Reply
+              </Button>
+            </div>
+          </div>
         </div>
       </ScrollArea>
+
+      {/* Add Event Dialog */}
+      <Dialog open={showAddEventDialog} onOpenChange={setShowAddEventDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add Timeline Event</DialogTitle>
+            <DialogDescription>
+              Log a note, phone call, or walk-in interaction
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium text-gray-900 mb-2 block">
+                Event Type
+              </label>
+              <Select value={newEventType} onValueChange={setNewEventType}>
+                <SelectTrigger data-testid="event-type-select">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="note">Note</SelectItem>
+                  <SelectItem value="phone_call">Phone Call</SelectItem>
+                  <SelectItem value="walk_in">Walk-in</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-900 mb-2 block">
+                Details
+              </label>
+              <Textarea
+                value={newEventContent}
+                onChange={(e) => setNewEventContent(e.target.value)}
+                rows={4}
+                placeholder="Enter event details..."
+                className="text-sm"
+                data-testid="event-content-textarea"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowAddEventDialog(false);
+                setNewEventContent('');
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleAddEvent}
+              disabled={savingEvent}
+              className="bg-gray-900 hover:bg-gray-800 text-white"
+              data-testid="save-event-btn"
+            >
+              {savingEvent ? 'Saving...' : 'Add Event'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
