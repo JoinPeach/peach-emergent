@@ -1,26 +1,6 @@
 [
   {
-    "content": "Move x-axis labels outside chart lines to bottom with proper spacing",
-    "status": "completed"
-  },
-  {
-    "content": "Make dots interactive with hover tooltips showing exact values",
-    "status": "completed"
-  },
-  {
-    "content": "Add edit functionality to Student Profile card",
-    "status": "completed"
-  },
-  {
-    "content": "Make Sign Out button smaller (not full width)",
-    "status": "completed"
-  },
-  {
-    "content": "Change filter tabs (All, My Tickets, Unassigned) to underlined tabs",
-    "status": "completed"
-  },
-  {
-    "content": "Test all improvements",
-    "status": "completed"
+    "content": "Update Response Time chart dot hover to show professional tooltip with light background, dark date text, and peach value text",
+    "status": "in_progress"
   }
 ]
