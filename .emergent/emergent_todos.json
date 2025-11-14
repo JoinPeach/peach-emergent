@@ -1,14 +1,14 @@
 [
   {
-    "content": "Make avatar circles smaller, remove colored dash lines, stack avatars closer (overlapping)",
-    "status": "completed"
+    "content": "Fix cursor name positioning - prevent cutoff and overlapping with avatars",
+    "status": "in_progress"
   },
   {
-    "content": "Add cursor-following name display for other users with colored background matching avatar",
-    "status": "completed"
+    "content": "Add proper spacing between collaborative avatars in header (not overlapping)",
+    "status": "pending"
   },
   {
-    "content": "Test collaborative features and avatar improvements",
-    "status": "completed"
+    "content": "Test fixed positioning and spacing",
+    "status": "pending"
   }
 ]
