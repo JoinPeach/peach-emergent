@@ -1,22 +1,22 @@
 [
   {
     "content": "Redesign to 3-panel layout: Ticket List | Conversation+Draft | Student Info+Timeline+Audit",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Create middle panel with subject, conversation, and read-only AI draft in one cohesive card",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create right panel with student profile, activity timeline, and AI audit log",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add AI audit log to track all AI-generated replies and student responses",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test new 3-panel layout and audit logging",
-    "status": "pending"
+    "status": "completed"
   }
 ]
