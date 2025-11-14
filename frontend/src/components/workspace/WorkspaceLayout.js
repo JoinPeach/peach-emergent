@@ -80,8 +80,8 @@ const WorkspaceLayout = ({ user, children }) => {
                 </DropdownMenuItem>
               </div>
               <div className="p-2 border-t border-gray-200">
-                <Button variant="ghost" size="sm" className="w-full text-xs">
-                  View all notifications
+                <Button variant="ghost" size="sm" className="w-full text-xs text-gray-600 hover:text-gray-900">
+                  Clear all
                 </Button>
               </div>
             </DropdownMenuContent>
