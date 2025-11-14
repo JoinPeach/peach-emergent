@@ -1,22 +1,18 @@
 [
   {
-    "content": "Login Page: Remove 'AidHub Pro' and 'University Financial Aid Platform' text",
-    "status": "completed"
+    "content": "Make search ticket bar functional with real-time filtering",
+    "status": "in_progress"
   },
   {
-    "content": "Middle panel empty state: Remove email icon",
-    "status": "completed"
+    "content": "Remove Peach logo from login screen only (keep in workspace header)",
+    "status": "pending"
   },
   {
-    "content": "Replace AidHub Pro logo with Peach logo (SVG) in top navigation",
-    "status": "completed"
+    "content": "Remove FileText icon from middle panel empty state",
+    "status": "pending"
   },
   {
-    "content": "Change ticket numbers from 8-char UUID to random 4-digit format (#1234)",
-    "status": "completed"
-  },
-  {
-    "content": "Test all branding changes",
-    "status": "completed"
+    "content": "Test search functionality and UI changes",
+    "status": "pending"
   }
 ]
