@@ -1,14 +1,14 @@
 [
   {
     "content": "Move cursor arrow to top of username (not top-right)",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Fix avatar hover tooltips to be visible above navigation bar",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test cursor and tooltip positioning fixes",
-    "status": "pending"
+    "status": "completed"
   }
 ]
