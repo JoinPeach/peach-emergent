@@ -1,14 +1,22 @@
 [
   {
-    "content": "Redesign right panel layout - remove two-column grid, make cards feel connected and cohesive",
-    "status": "completed"
+    "content": "Redesign to 3-panel layout: Ticket List | Conversation+Draft | Student Info+Timeline+Audit",
+    "status": "in_progress"
   },
   {
-    "content": "Add 'Add Event' button and dialog to timeline for logging notes, calls, and walk-ins",
-    "status": "completed"
+    "content": "Create middle panel with subject, conversation, and read-only AI draft in one cohesive card",
+    "status": "pending"
   },
   {
-    "content": "Test new cohesive layout and event creation flow",
-    "status": "completed"
+    "content": "Create right panel with student profile, activity timeline, and AI audit log",
+    "status": "pending"
+  },
+  {
+    "content": "Add AI audit log to track all AI-generated replies and student responses",
+    "status": "pending"
+  },
+  {
+    "content": "Test new 3-panel layout and audit logging",
+    "status": "pending"
   }
 ]
