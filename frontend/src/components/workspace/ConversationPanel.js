@@ -134,17 +134,24 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
               <h1 className="text-2xl font-semibold text-gray-900">
                 {ticket.subject}
               </h1>
-              <Badge className="capitalize bg-gray-100 text-gray-700 border-gray-200">
-                {ticket.category.replace('_', ' ')}
-              </Badge>
+              <div className="flex items-center space-x-2">
+                <Select value={ticket.status} onValueChange={handleStatusChange}>
+                  <SelectTrigger className="w-40 h-9">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="open">Open</SelectItem>
+                    <SelectItem value="waiting_on_student">Waiting on Student</SelectItem>
+                    <SelectItem value="closed">Closed</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Badge className="capitalize bg-gray-100 text-gray-700 border-gray-200">
+                  {ticket.category.replace('_', ' ')}
+                </Badge>
+              </div>
             </div>
             <div className="flex items-center space-x-3 text-sm text-gray-600">
-              <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-medium">
-                  {student.name.charAt(0).toUpperCase()}
-                </div>
-                <span className="font-medium text-gray-900">{student.name}</span>
-              </div>
+              <span className="font-medium text-gray-900">{student.name}</span>
               <span className="text-gray-400">•</span>
               <span>{student.email}</span>
             </div>
