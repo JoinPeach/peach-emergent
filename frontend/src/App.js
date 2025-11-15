@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { TicketProvider } from './contexts/TicketContext';
 import { Toaster } from './components/ui/sonner';
 import CursorTracker from './components/CursorTracker';
 import LoginPage from './pages/LoginPage';
