@@ -259,7 +259,6 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
                 </div>
                 <div className="flex space-x-2 pt-2">
                   <Button size="sm" onClick={handleSaveProfile} className="h-7 text-xs">
-                    <Save className="w-3 h-3 mr-1" />
                     Save
                   </Button>
                   <Button
@@ -276,7 +275,6 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
                     }}
                     className="h-7 text-xs"
                   >
-                    <X className="w-3 h-3 mr-1" />
                     Cancel
                   </Button>
                 </div>
