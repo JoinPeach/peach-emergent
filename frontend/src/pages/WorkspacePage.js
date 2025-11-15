@@ -19,6 +19,18 @@ const WorkspacePage = () => {
     queue_id: null,
   });
 
+  // Persist selected ticket in localStorage
+  useEffect(() => {
+    const savedTicketId = localStorage.getItem('selectedTicketId');
+    if (savedTicketId) {
+      // Find the ticket in the loaded tickets and set it as selected
+      const savedTicket = tickets.find(t => t.id === savedTicketId);
+      if (savedTicket) {
+        setSelectedTicket(savedTicket);
+      }
+    }
+  }, [tickets]);
+
   useEffect(() => {
     loadQueues();
   }, []);
@@ -29,8 +41,11 @@ const WorkspacePage = () => {
 
   useEffect(() => {
     if (selectedTicket) {
+      // Save selected ticket to localStorage
+      localStorage.setItem('selectedTicketId', selectedTicket.id);
       loadTicketDetails(selectedTicket.id);
     } else {
+      localStorage.removeItem('selectedTicketId');
       setTicketDetails(null);
     }
   }, [selectedTicket]);
