@@ -28,46 +28,48 @@ const PrivateRoute = ({ children }) => {
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/workspace"
-            element={
-              <PrivateRoute>
-                <WorkspacePage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/reports"
-            element={
-              <PrivateRoute>
-                <ReportsPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/knowledge-base"
-            element={
-              <PrivateRoute>
-                <KnowledgeBasePage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <PrivateRoute>
-                <SettingsPage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/" element={<Navigate to="/workspace" />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster position="top-right" richColors />
-      <CursorTracker />
+      <TicketProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/workspace"
+              element={
+                <PrivateRoute>
+                  <WorkspacePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/reports"
+              element={
+                <PrivateRoute>
+                  <ReportsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/knowledge-base"
+              element={
+                <PrivateRoute>
+                  <KnowledgeBasePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <SettingsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/" element={<Navigate to="/workspace" />} />
+          </Routes>
+        </BrowserRouter>
+        <Toaster position="top-right" richColors />
+        <CursorTracker />
+      </TicketProvider>
     </AuthProvider>
   );
 }
