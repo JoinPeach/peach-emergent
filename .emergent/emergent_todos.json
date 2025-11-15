@@ -1,26 +1,26 @@
 [
   {
     "content": "Restrict moving cursors to logged-in users only (not shown on login view)",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Make Edit button functional in AI Suggested Reply section",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add manual editing mode with textarea for AI reply",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add file attachment button during AI reply editing",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add Save button to save edited AI reply before sending",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test full edit workflow: Edit > Attach > Save > Send",
-    "status": "pending"
+    "status": "in_progress"
   }
 ]
