@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollArea } from '../ui/scroll-area';
 import { Button } from '../ui/button';
+import { Textarea } from '../ui/textarea';
 import { Badge } from '../ui/badge';
 import { Separator } from '../ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Send, RefreshCw, Edit3, Sparkles, Clock, Check, FileText } from 'lucide-react';
+import { Send, RefreshCw, Edit3, Sparkles, Clock, Check, FileText, Paperclip, Save } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { messageAPI, aiToolsAPI, ticketAPI, userAPI } from '../../lib/api';
 import { toast } from 'sonner';
@@ -18,6 +19,9 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [staffMembers, setStaffMembers] = useState([]);
   const [lastMessageCount, setLastMessageCount] = useState(0);
+  const [isEditingDraft, setIsEditingDraft] = useState(false);
+  const [editedReply, setEditedReply] = useState('');
+  const [attachments, setAttachments] = useState([]);
 
   useEffect(() => {
     loadStaffMembers();
@@ -52,6 +56,9 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
     setAiDraft(null);
     setIsRegenerating(false);
     setLastMessageCount(0);
+    setIsEditingDraft(false);
+    setEditedReply('');
+    setAttachments([]);
   }, [ticketDetails?.ticket?.id]);
 
   if (!ticketDetails) {
@@ -87,25 +94,73 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
     }
   };
 
+  const handleEditDraft = () => {
+    setEditedReply(aiDraft?.safe_reply || '');
+    setIsEditingDraft(true);
+  };
+
+  const handleSaveDraft = () => {
+    setAiDraft(prev => ({ ...prev, safe_reply: editedReply }));
+    setIsEditingDraft(false);
+    toast.success('Draft saved');
+  };
+
+  const handleCancelEdit = () => {
+    setEditedReply(aiDraft?.safe_reply || '');
+    setIsEditingDraft(false);
+  };
+
+  const handleAttachFile = () => {
+    // Create file input and trigger click
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.pdf,.doc,.docx,.jpg,.png,.txt';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        setAttachments(prev => [...prev, {
+          id: Date.now().toString(),
+          name: file.name,
+          size: file.size,
+          type: file.type
+        }]);
+        toast.success(`Attached ${file.name}`);
+      }
+    };
+    input.click();
+  };
+
+  const removeAttachment = (attachmentId) => {
+    setAttachments(prev => prev.filter(att => att.id !== attachmentId));
+    toast.success('Attachment removed');
+  };
+
   const handleSendReply = async () => {
-    if (!aiDraft?.safe_reply?.trim()) {
+    const replyToSend = isEditingDraft ? editedReply : aiDraft?.safe_reply;
+    
+    if (!replyToSend?.trim()) {
       toast.error('No reply to send');
       return;
     }
 
     setSending(true);
     try {
-      // Send the message
-      await messageAPI.create(ticket.id, aiDraft.safe_reply, 'outbound');
+      // Send the message (with attachments info if any)
+      let finalReply = replyToSend;
+      if (attachments.length > 0) {
+        finalReply += '\n\nAttachments: ' + attachments.map(att => att.name).join(', ');
+      }
       
-      // Clear AI draft
+      await messageAPI.create(ticket.id, finalReply, 'outbound');
+      
+      // Clear everything
       setAiDraft(null);
       setIsRegenerating(false);
+      setIsEditingDraft(false);
+      setEditedReply('');
+      setAttachments([]);
       
-      // Show success
       toast.success('Reply sent successfully');
-      
-      // Reload ticket to show new message in conversation
       onTicketUpdate();
     } catch (error) {
       toast.error('Failed to send reply');
@@ -247,7 +302,7 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
             ))}
           </div>
 
-          {/* AI Suggested Reply - Only show if not closed AND has draft */}
+          {/* AI Suggested Reply - Only show if not closed */}
           {!isTicketClosed && aiDraft && (
             <>
               <Separator className="mb-6" />
@@ -255,58 +310,145 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">AI Suggested Reply</h2>
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => toast.info('Edit functionality coming soon')}
-                      disabled={generatingDraft}
-                      className="h-8 text-xs"
-                      data-testid="edit-draft-btn"
-                    >
-                      <Edit3 className="w-3 h-3 mr-1" />
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleGenerateDraft(false, true)}
-                      disabled={generatingDraft}
-                      className="h-8 text-xs"
-                      data-testid="regenerate-draft-btn"
-                    >
-                      <RefreshCw className={`w-3 h-3 mr-1 ${generatingDraft ? 'animate-spin' : ''}`} />
-                      Regenerate
-                    </Button>
-                  </div>
+                  {!isEditingDraft ? (
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleEditDraft}
+                        disabled={generatingDraft}
+                        className="h-8 text-xs"
+                        data-testid="edit-draft-btn"
+                      >
+                        <Edit3 className="w-3 h-3 mr-1" />
+                        Edit
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleGenerateDraft(false, true)}
+                        disabled={generatingDraft}
+                        className="h-8 text-xs"
+                        data-testid="regenerate-draft-btn"
+                      >
+                        <RefreshCw className={`w-3 h-3 mr-1 ${generatingDraft ? 'animate-spin' : ''}`} />
+                        Regenerate
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleAttachFile}
+                        className="h-8 text-xs"
+                        data-testid="attach-file-btn"
+                      >
+                        <Paperclip className="w-3 h-3 mr-1" />
+                        Attach
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleSaveDraft}
+                        className="h-8 text-xs"
+                        data-testid="save-draft-btn"
+                      >
+                        <Save className="w-3 h-3 mr-1" />
+                        Save
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleCancelEdit}
+                        className="h-8 text-xs"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  )}
                 </div>
 
-                <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="flex items-start space-x-3">
-                    <Sparkles className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-green-900 mb-1">AI Draft Ready</p>
-                      <p className="text-xs text-green-700 mb-2">{aiDraft.summary}</p>
-                      {aiDraft.cited_kb && aiDraft.cited_kb.length > 0 && (
-                        <div className="space-y-1">
-                          <p className="text-xs font-medium text-green-800">Knowledge Base References:</p>
-                          {aiDraft.cited_kb.map((kb, idx) => (
-                            <p key={idx} className="text-xs text-green-600">• {kb.title}</p>
-                          ))}
+                {!isEditingDraft ? (
+                  <>
+                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <div className="flex items-start space-x-3">
+                        <Sparkles className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-green-900 mb-1">AI Draft Ready</p>
+                          <p className="text-xs text-green-700 mb-2">{aiDraft.summary}</p>
+                          {aiDraft.cited_kb && aiDraft.cited_kb.length > 0 && (
+                            <div className="space-y-1">
+                              <p className="text-xs font-medium text-green-800">Knowledge Base References:</p>
+                              {aiDraft.cited_kb.map((kb, idx) => (
+                                <p key={idx} className="text-xs text-green-600">• {kb.title}</p>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Read-only Draft Display */}
+                    <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                      <div className="prose prose-sm max-w-none">
+                        <p className="text-sm text-gray-900 whitespace-pre-wrap leading-relaxed">
+                          {aiDraft.safe_reply}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <div className="flex items-start space-x-3">
+                        <Edit3 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-blue-900 mb-1">Editing AI Draft</p>
+                          <p className="text-xs text-blue-700">Make changes to the AI-generated reply below</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Editable Draft */}
+                    <div className="space-y-3">
+                      <Textarea
+                        value={editedReply}
+                        onChange={(e) => setEditedReply(e.target.value)}
+                        rows={10}
+                        className="text-sm"
+                        placeholder="Edit the AI-generated reply..."
+                        data-testid="edit-reply-textarea"
+                      />
+                      
+                      {/* Attachments */}
+                      {attachments.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="text-xs font-medium text-gray-700">Attachments:</p>
+                          <div className="space-y-1">
+                            {attachments.map((attachment) => (
+                              <div key={attachment.id} className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded p-2">
+                                <div className="flex items-center space-x-2">
+                                  <Paperclip className="w-3 h-3 text-gray-400" />
+                                  <span className="text-xs text-gray-700">{attachment.name}</span>
+                                  <span className="text-xs text-gray-500">({Math.round(attachment.size / 1024)}KB)</span>
+                                </div>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => removeAttachment(attachment.id)}
+                                  className="h-6 w-6 p-0 text-gray-400 hover:text-red-600"
+                                >
+                                  ×
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>
-                  </div>
-                </div>
-
-                {/* Read-only Draft Display */}
-                <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                  <div className="prose prose-sm max-w-none">
-                    <p className="text-sm text-gray-900 whitespace-pre-wrap leading-relaxed">
-                      {aiDraft.safe_reply}
-                    </p>
-                  </div>
-                </div>
+                  </>
+                )}
 
                 <p className="text-xs text-gray-500 italic">
                   This AI-generated content has been reviewed for safety and includes required disclaimers.
@@ -342,11 +484,11 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-500">
               <Check className="w-3 h-3 inline mr-1" />
-              Ready to send
+              {isEditingDraft ? 'Draft edited' : 'Ready to send'}
             </div>
             <Button
               onClick={handleSendReply}
-              disabled={sending || generatingDraft}
+              disabled={sending || generatingDraft || (!editedReply.trim() && !aiDraft?.safe_reply?.trim())}
               className="bg-gray-900 hover:bg-gray-800 text-white"
               data-testid="send-reply-btn"
             >

@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 const CursorTracker = () => {
+  const { user } = useAuth();
   const [activeUsers, setActiveUsers] = useState([]);
 
   useEffect(() => {
+    // Only show cursors when user is logged in
+    if (!user) {
+      setActiveUsers([]);
+      return;
+    }
+
     // Mock other users for demo (in production this would come from WebSocket)
     const mockUsers = [
       {
         id: '1',
         name: 'Sarah',
         color: '#FB923C', // Orange to match avatar
-        x: 500,
-        y: 300,
+        x: 600,
+        y: 350,
         isVisible: true
       },
       {
         id: '2', 
         name: 'Michael',
         color: '#8B5CF6', // Purple to match avatar
-        x: 800,
-        y: 200,
+        x: 900,
+        y: 250,
         isVisible: false // Start hidden
       }
     ];
@@ -44,7 +52,12 @@ const CursorTracker = () => {
     setActiveUsers(mockUsers);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [user]); // Depend on user login state
+
+  // Don't render anything if user is not logged in
+  if (!user) {
+    return null;
+  }
 
   return (
     <>
