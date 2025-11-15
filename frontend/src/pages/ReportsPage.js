@@ -195,7 +195,7 @@ const ReportsPage = () => {
       <div className="max-w-7xl mx-auto p-6">
         {/* Header with Time Filter */}
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-semibold text-gray-900">Reports</h1>
+          <h1 className="text-2xl font-semibold text-gray-900">Analytics</h1>
           <Select value={timePeriod} onValueChange={setTimePeriod}>
             <SelectTrigger className="w-40" data-testid="time-period-filter">
               <SelectValue />
