@@ -1,6 +1,6 @@
 [
   {
-    "content": "Remove card containers from right panel, use dividers and spacing like left panel",
-    "status": "completed"
+    "content": "Implement state persistence - keep selected ticket when navigating between tabs",
+    "status": "in_progress"
   }
 ]
