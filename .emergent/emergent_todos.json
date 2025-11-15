@@ -1,26 +1,26 @@
 [
   {
     "content": "Change 'Articles' to 'Documents' in Knowledge Base",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Change 'Reports' to 'Analytics' in navigation and page titles",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Remove Save icon and X icon from Student Profile Save/Cancel buttons",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Save attached files when clicking Save in AI edit mode",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add 500 more tickets to database (total 600+)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test all final changes",
-    "status": "pending"
+    "status": "completed"
   }
 ]
