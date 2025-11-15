@@ -80,7 +80,7 @@ const WorkspaceLayout = ({ user, children }) => {
                 S
               </div>
               {/* Tooltip - Above navigation bar like notification modal */}
-              <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
+              <div className="fixed top-2 left-3/4 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
                 Sarah Chen
               </div>
             </div>
@@ -91,7 +91,7 @@ const WorkspaceLayout = ({ user, children }) => {
                 M
               </div>
               {/* Tooltip - Above navigation bar like notification modal */}
-              <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
+              <div className="fixed top-2 left-3/4 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
                 Michael Rodriguez
               </div>
             </div>
@@ -102,7 +102,7 @@ const WorkspaceLayout = ({ user, children }) => {
                 E
               </div>
               {/* Tooltip - Above navigation bar like notification modal */}
-              <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
+              <div className="fixed top-2 left-3/4 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
                 Dr. Emily Thompson
               </div>
             </div>
@@ -113,7 +113,7 @@ const WorkspaceLayout = ({ user, children }) => {
                 P
               </div>
               {/* Tooltip - Above navigation bar like notification modal */}
-              <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
+              <div className="fixed top-2 left-3/4 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
                 Puneet Thiara (You)
               </div>
             </div>
