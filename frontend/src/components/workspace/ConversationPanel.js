@@ -100,9 +100,14 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
   };
 
   const handleSaveDraft = () => {
-    setAiDraft(prev => ({ ...prev, safe_reply: editedReply }));
+    // Save both the edited text and attachments
+    setAiDraft(prev => ({ 
+      ...prev, 
+      safe_reply: editedReply,
+      attachments: attachments // Save attachments with draft
+    }));
     setIsEditingDraft(false);
-    toast.success('Draft saved');
+    toast.success('Draft and attachments saved');
   };
 
   const handleCancelEdit = () => {
