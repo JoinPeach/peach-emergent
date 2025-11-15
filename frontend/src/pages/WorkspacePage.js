@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useTicket } from '../contexts/TicketContext';
 import { ticketAPI, queueAPI } from '../lib/api';
 import WorkspaceLayout from '../components/workspace/WorkspaceLayout';
 import TicketList from '../components/workspace/TicketList';
@@ -9,27 +10,14 @@ import { toast } from 'sonner';
 
 const WorkspacePage = () => {
   const { user } = useAuth();
+  const { selectedTicket, setSelectedTicket, ticketDetails, handleTicketUpdate } = useTicket();
   const [tickets, setTickets] = useState([]);
   const [queues, setQueues] = useState([]);
-  const [selectedTicket, setSelectedTicket] = useState(null);
-  const [ticketDetails, setTicketDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     status: null,
     queue_id: null,
   });
-
-  // Persist selected ticket in localStorage
-  useEffect(() => {
-    const savedTicketId = localStorage.getItem('selectedTicketId');
-    if (savedTicketId) {
-      // Find the ticket in the loaded tickets and set it as selected
-      const savedTicket = tickets.find(t => t.id === savedTicketId);
-      if (savedTicket) {
-        setSelectedTicket(savedTicket);
-      }
-    }
-  }, [tickets]);
 
   useEffect(() => {
     loadQueues();
@@ -38,17 +26,6 @@ const WorkspacePage = () => {
   useEffect(() => {
     loadTickets();
   }, [filters]);
-
-  useEffect(() => {
-    if (selectedTicket) {
-      // Save selected ticket to localStorage
-      localStorage.setItem('selectedTicketId', selectedTicket.id);
-      loadTicketDetails(selectedTicket.id);
-    } else {
-      localStorage.removeItem('selectedTicketId');
-      setTicketDetails(null);
-    }
-  }, [selectedTicket]);
 
   const loadQueues = async () => {
     try {
