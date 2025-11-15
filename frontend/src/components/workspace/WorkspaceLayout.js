@@ -79,8 +79,8 @@ const WorkspaceLayout = ({ user, children }) => {
               <div className="w-7 h-7 rounded-full bg-orange-400 flex items-center justify-center text-white text-sm font-semibold cursor-pointer transition-transform hover:scale-105 shadow-sm hover:z-10 relative">
                 S
               </div>
-              {/* Tooltip - Directly above this avatar */}
-              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg" style={{ zIndex: 9999 }}>
+              {/* Tooltip - Directly above this specific avatar */}
+              <div className="absolute -top-11 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap" style={{ zIndex: 9999 }}>
                 Sarah Chen
               </div>
             </div>
