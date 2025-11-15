@@ -48,28 +48,12 @@ const WorkspacePage = () => {
     }
   };
 
-  const loadTicketDetails = async (ticketId) => {
-    try {
-      const data = await ticketAPI.get(ticketId);
-      setTicketDetails(data);
-    } catch (error) {
-      toast.error('Failed to load ticket details');
-    }
-  };
-
   const handleTicketSelect = (ticket) => {
     setSelectedTicket(ticket);
   };
 
   const handleFilterChange = (newFilters) => {
     setFilters(prev => ({ ...prev, ...newFilters }));
-  };
-
-  const handleTicketUpdate = () => {
-    loadTickets();
-    if (selectedTicket) {
-      loadTicketDetails(selectedTicket.id);
-    }
   };
 
   return (
