@@ -201,77 +201,196 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
   const { student } = ticketDetails;
 
   return (
-    <div className="w-96 bg-gray-50 flex flex-col" data-testid="student-panel">
-      <div className="flex-1 p-4 space-y-4 overflow-auto">
-        {/* Student Profile Card */}
-        <Card className="border-gray-200">
-          <CardHeader className="pb-4">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-semibold text-gray-900">Student Profile</CardTitle>
-              {!editingProfile && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setEditingProfile(true)}
-                  className="h-6 text-xs"
-                  data-testid="edit-profile-btn"
-                >
-                  Edit
+    <div className="w-96 bg-white border-l border-gray-200 flex flex-col" data-testid="student-panel">
+      <div className="flex-1 overflow-auto">
+        {/* Student Profile Section */}
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-semibold text-gray-900">Student Profile</h3>
+            {!editingProfile && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setEditingProfile(true)}
+                className="h-6 text-xs"
+                data-testid="edit-profile-btn"
+              >
+                Edit
+              </Button>
+            )}
+          </div>
+          
+          {editingProfile ? (
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Name</label>
+                <Input
+                  value={profileData.name}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, name: e.target.value }))}
+                  className="text-sm"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Student ID</label>
+                <Input
+                  value={profileData.student_id}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, student_id: e.target.value }))}
+                  className="text-sm"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Phone</label>
+                <Input
+                  value={profileData.phone}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
+                  className="text-sm"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">SIS URL</label>
+                <Input
+                  value={profileData.sis_url}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, sis_url: e.target.value }))}
+                  placeholder="https://..."
+                  className="text-sm"
+                />
+              </div>
+              <div className="flex space-x-2 pt-2">
+                <Button size="sm" onClick={handleSaveProfile} className="h-7 text-xs">
+                  Save
                 </Button>
-              )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setProfileData({
+                      name: student.name || '',
+                      student_id: student.student_id || '',
+                      phone: student.phone || '',
+                      sis_url: student.sis_url || ''
+                    });
+                    setEditingProfile(false);
+                  }}
+                  className="h-7 text-xs"
+                >
+                  Cancel
+                </Button>
+              </div>
             </div>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {editingProfile ? (
-              <div className="space-y-3">
-                <div>
-                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Name</label>
-                  <Input
-                    value={profileData.name}
-                    onChange={(e) => setProfileData(prev => ({ ...prev, name: e.target.value }))}
-                    className="text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Student ID</label>
-                  <Input
-                    value={profileData.student_id}
-                    onChange={(e) => setProfileData(prev => ({ ...prev, student_id: e.target.value }))}
-                    className="text-sm"
-                  />
-                </div>
+          ) : (
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Name</label>
+                <p className="text-sm font-semibold text-gray-900">{student.name}</p>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Student ID</label>
+                <p className="text-sm text-gray-900">{student.student_id || 'N/A'}</p>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Email</label>
+                <p className="text-sm text-gray-900 truncate">{student.email}</p>
+              </div>
+              {student.phone && (
                 <div>
                   <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Phone</label>
-                  <Input
-                    value={profileData.phone}
-                    onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
-                    className="text-sm"
-                  />
+                  <p className="text-sm text-gray-900">{student.phone}</p>
                 </div>
+              )}
+              {student.sis_url && (
                 <div>
-                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">SIS URL</label>
-                  <Input
-                    value={profileData.sis_url}
-                    onChange={(e) => setProfileData(prev => ({ ...prev, sis_url: e.target.value }))}
-                    placeholder="https://..."
-                    className="text-sm"
-                  />
+                  <a
+                    href={student.sis_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-sm text-gray-900 hover:text-gray-700 font-medium"
+                    data-testid="sis-link"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>View in SIS</span>
+                  </a>
                 </div>
-                <div className="flex space-x-2 pt-2">
-                  <Button size="sm" onClick={handleSaveProfile} className="h-7 text-xs">
+              )}
+            </div>
+          )}
+
+          <div className="border-t border-gray-200 mt-4 pt-4">
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Notes</label>
+              <div className="flex space-x-1">
+                {!addingNote && !editingNotes && (
+                  <>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setAddingNote(true)}
+                      className="h-6 text-xs"
+                      data-testid="add-note-btn"
+                    >
+                      Add
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setEditingNotes(true)}
+                      className="h-6 text-xs"
+                      data-testid="edit-notes-btn"
+                    >
+                      Edit
+                    </Button>
+                  </>
+                )}
+              </div>
+            </div>
+            
+            {addingNote ? (
+              <div className="space-y-2">
+                <Textarea
+                  value={newNote}
+                  onChange={(e) => setNewNote(e.target.value)}
+                  rows={3}
+                  placeholder="Enter new note..."
+                  className="text-sm"
+                  data-testid="add-note-textarea"
+                  autoFocus
+                />
+                <div className="flex space-x-2">
+                  <Button size="sm" onClick={handleAddNote} className="h-7 text-xs" data-testid="save-note-btn">
                     Save
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      setProfileData({
-                        name: student.name || '',
-                        student_id: student.student_id || '',
-                        phone: student.phone || '',
-                        sis_url: student.sis_url || ''
-                      });
-                      setEditingProfile(false);
+                      setNewNote('');
+                      setAddingNote(false);
+                    }}
+                    className="h-7 text-xs"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            ) : editingNotes ? (
+              <div className="space-y-2">
+                <Textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  rows={5}
+                  className="text-sm"
+                  data-testid="notes-textarea"
+                  autoFocus
+                />
+                <div className="flex space-x-2">
+                  <Button size="sm" onClick={handleSaveNotes} className="h-7 text-xs" data-testid="save-notes-btn">
+                    Save
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setNotes(student.notes || '');
+                      setEditingNotes(false);
                     }}
                     className="h-7 text-xs"
                   >
@@ -280,224 +399,92 @@ const StudentPanel = ({ ticketDetails, onStudentUpdate }) => {
                 </div>
               </div>
             ) : (
-              <>
-                <div>
-                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Name</label>
-                  <p className="text-sm font-semibold text-gray-900">{student.name}</p>
-                </div>
-                <div>
-                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Student ID</label>
-                  <p className="text-sm text-gray-900">{student.student_id || 'N/A'}</p>
-                </div>
-                <div>
-                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Email</label>
-                  <p className="text-sm text-gray-900 truncate">{student.email}</p>
-                </div>
-                {student.phone && (
-                  <div>
-                    <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">Phone</label>
-                    <p className="text-sm text-gray-900">{student.phone}</p>
-                  </div>
-                )}
-                {student.sis_url && (
-                  <div>
-                    <a
-                      href={student.sis_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-1 text-sm text-gray-900 hover:text-gray-700 font-medium"
-                      data-testid="sis-link"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      <span>View in SIS</span>
-                    </a>
-                  </div>
-                )}
-              </>
+              <p className="text-sm text-gray-600 whitespace-pre-wrap">
+                {student.notes || 'No notes yet'}
+              </p>
             )}
+          </div>
+        </div>
 
-            <Separator className="my-3" />
-
-            {/* Notes Section with Add/Edit */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Notes</label>
-                <div className="flex space-x-1">
-                  {!addingNote && !editingNotes && (
-                    <>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setAddingNote(true)}
-                        className="h-6 text-xs"
-                        data-testid="add-note-btn"
-                      >
-                        Add
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setEditingNotes(true)}
-                        className="h-6 text-xs"
-                        data-testid="edit-notes-btn"
-                      >
-                        Edit
-                      </Button>
-                    </>
-                  )}
-                </div>
-              </div>
-              
-              {/* Add Note Mode */}
-              {addingNote ? (
-                <div className="space-y-2">
-                  <Textarea
-                    value={newNote}
-                    onChange={(e) => setNewNote(e.target.value)}
-                    rows={3}
-                    placeholder="Enter new note..."
-                    className="text-sm"
-                    data-testid="add-note-textarea"
-                    autoFocus
-                  />
-                  <div className="flex space-x-2">
-                    <Button size="sm" onClick={handleAddNote} className="h-7 text-xs" data-testid="save-note-btn">
-                      Save
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        setNewNote('');
-                        setAddingNote(false);
-                      }}
-                      className="h-7 text-xs"
-                    >
-                      Cancel
-                    </Button>
+        {/* Interaction Timeline Section */}
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-semibold text-gray-900">Interaction Timeline</h3>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowAddEventDialog(true)}
+              className="h-7 text-xs"
+              data-testid="add-event-btn"
+            >
+              Add Interaction
+            </Button>
+          </div>
+          
+          {timeline.length === 0 ? (
+            <p className="text-xs text-gray-500 text-center py-4">No interactions yet</p>
+          ) : (
+            <div className="space-y-3">
+              {timeline.slice(0, 8).map((event) => (
+                <div key={event.id} className="flex items-start space-x-2" data-testid={`timeline-event-${event.id}`}>
+                  <div className="mt-0.5">{getEventIcon(event.event_type)}</div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium text-gray-900 capitalize">
+                      {event.event_type.replace('_', ' ')}
+                    </p>
+                    <p className="text-xs text-gray-600 line-clamp-2">{event.content}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">
+                      {formatDistanceToNow(new Date(event.created_at), { addSuffix: true })}
+                    </p>
                   </div>
                 </div>
-              ) : editingNotes ? (
-                <div className="space-y-2">
-                  <Textarea
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    rows={5}
-                    className="text-sm"
-                    data-testid="notes-textarea"
-                    autoFocus
-                  />
-                  <div className="flex space-x-2">
-                    <Button size="sm" onClick={handleSaveNotes} className="h-7 text-xs" data-testid="save-notes-btn">
-                      Save
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        setNotes(student.notes || '');
-                        setEditingNotes(false);
-                      }}
-                      className="h-7 text-xs"
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <p className="text-sm text-gray-600 whitespace-pre-wrap">
-                  {student.notes || 'No notes yet'}
-                </p>
-              )}
+              ))}
             </div>
-          </CardContent>
-        </Card>
+          )}
+        </div>
 
-        {/* Interaction Timeline Card (NO notes) */}
-        <Card className="border-gray-200">
-          <CardHeader className="pb-4">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-semibold text-gray-900">Interaction Timeline</CardTitle>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowAddEventDialog(true)}
-                className="h-7 text-xs"
-                data-testid="add-event-btn"
-              >
-                Add Interaction
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {timeline.length === 0 ? (
-              <p className="text-xs text-gray-500 text-center py-4">No interactions yet</p>
-            ) : (
-              <div className="space-y-3">
-                {timeline.slice(0, 8).map((event) => (
-                  <div key={event.id} className="flex items-start space-x-2" data-testid={`timeline-event-${event.id}`}>
-                    <div className="mt-0.5">{getEventIcon(event.event_type)}</div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-gray-900 capitalize">
-                        {event.event_type.replace('_', ' ')}
+        {/* Audit Log Section */}
+        <div className="p-6">
+          <h3 className="text-sm font-semibold text-gray-900 mb-4">Audit Log</h3>
+          
+          {aiAuditLog.length === 0 ? (
+            <p className="text-xs text-gray-500 text-center py-4">No AI activity yet</p>
+          ) : (
+            <div className="space-y-3">
+              {aiAuditLog.map((log) => (
+                <div key={log.id} className="flex items-start space-x-2">
+                  <div className="mt-0.5">{getAuditIcon(log.action, log.status)}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-xs font-medium text-gray-900">
+                        {getAuditLabel(log.action, log.status)}
                       </p>
-                      <p className="text-xs text-gray-600 line-clamp-2">{event.content}</p>
+                      <Badge 
+                        variant="outline" 
+                        className={`text-xs ${ 
+                          log.status === 'sent' ? 'bg-green-50 text-green-700 border-green-200' :
+                          log.status === 'edited' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                          'bg-gray-50 text-gray-700 border-gray-200'
+                        }`}
+                      >
+                        {log.status}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-gray-600">{log.summary}</p>
+                    {log.kb_articles && (
                       <p className="text-xs text-gray-400 mt-0.5">
-                        {formatDistanceToNow(new Date(event.created_at), { addSuffix: true })}
+                        {log.kb_articles} KB article{log.kb_articles > 1 ? 's' : ''} referenced
                       </p>
-                    </div>
+                    )}
+                    <p className="text-xs text-gray-400 mt-1">
+                      {formatDistanceToNow(new Date(log.timestamp), { addSuffix: true })}
+                    </p>
                   </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Audit Log Card */}
-        <Card className="border-gray-200">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-sm font-semibold text-gray-900">Audit Log</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {aiAuditLog.length === 0 ? (
-              <p className="text-xs text-gray-500 text-center py-4">No AI activity yet</p>
-            ) : (
-              <div className="space-y-3">
-                {aiAuditLog.map((log) => (
-                  <div key={log.id} className="flex items-start space-x-2">
-                    <div className="mt-0.5">{getAuditIcon(log.action, log.status)}</div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <p className="text-xs font-medium text-gray-900">
-                          {getAuditLabel(log.action, log.status)}
-                        </p>
-                        <Badge 
-                          variant="outline" 
-                          className={`text-xs ${ 
-                            log.status === 'sent' ? 'bg-green-50 text-green-700 border-green-200' :
-                            log.status === 'edited' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                            'bg-gray-50 text-gray-700 border-gray-200'
-                          }`}
-                        >
-                          {log.status}
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-gray-600">{log.summary}</p>
-                      {log.kb_articles && (
-                        <p className="text-xs text-gray-400 mt-0.5">
-                          {log.kb_articles} KB article{log.kb_articles > 1 ? 's' : ''} referenced
-                        </p>
-                      )}
-                      <p className="text-xs text-gray-400 mt-1">
-                        {formatDistanceToNow(new Date(log.timestamp), { addSuffix: true })}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Add Interaction Dialog (NO note option) */}
