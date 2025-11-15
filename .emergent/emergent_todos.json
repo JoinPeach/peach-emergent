@@ -1,26 +1,6 @@
 [
   {
-    "content": "Change 'Articles' to 'Documents' in Knowledge Base",
-    "status": "completed"
-  },
-  {
-    "content": "Change 'Reports' to 'Analytics' in navigation and page titles",
-    "status": "completed"
-  },
-  {
-    "content": "Remove Save icon and X icon from Student Profile Save/Cancel buttons",
-    "status": "completed"
-  },
-  {
-    "content": "Save attached files when clicking Save in AI edit mode",
-    "status": "completed"
-  },
-  {
-    "content": "Add 500 more tickets to database (total 600+)",
-    "status": "completed"
-  },
-  {
-    "content": "Test all final changes",
-    "status": "completed"
+    "content": "Remove card containers from right panel, use dividers and spacing like left panel",
+    "status": "in_progress"
   }
 ]
