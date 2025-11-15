@@ -1,6 +1,6 @@
 [
   {
     "content": "Implement state persistence - keep selected ticket when navigating between tabs",
-    "status": "in_progress"
+    "status": "completed"
   }
 ]
