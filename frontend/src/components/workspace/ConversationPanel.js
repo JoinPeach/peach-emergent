@@ -36,7 +36,18 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
     }
   };
 
-  // Check if new student message arrived - trigger AI draft ONLY then
+  // Auto-generate AI draft when ticket opens (only if not closed and has inbound messages)
+  useEffect(() => {
+    if (ticketDetails && ticketDetails.ticket.status !== 'closed') {
+      const inboundMessages = ticketDetails.messages.filter(m => m.direction === 'inbound');
+      if (inboundMessages.length > 0) {
+        // Trigger AI generation for any ticket with student messages
+        handleGenerateDraft(true, false);
+      }
+    }
+  }, [ticketDetails?.ticket?.id]); // Trigger when ticket ID changes
+
+  // Check if new student message arrived - trigger AI draft for additional messages
   useEffect(() => {
     if (ticketDetails) {
       const inboundMessages = ticketDetails.messages.filter(m => m.direction === 'inbound');
@@ -49,7 +60,7 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
       
       setLastMessageCount(currentInboundCount);
     }
-  }, [ticketDetails?.messages?.length]);
+  }, [ticketDetails?.messages?.length]); // Trigger when message count changes
 
   // Reset draft when ticket changes
   useEffect(() => {
@@ -59,7 +70,7 @@ const ConversationPanel = ({ ticketDetails, onTicketUpdate }) => {
     setIsEditingDraft(false);
     setEditedReply('');
     setAttachments([]);
-  }, [ticketDetails?.ticket?.id]);
+  }, [ticketDetails?.ticket?.id]); // Reset when ticket ID changes
 
   if (!ticketDetails) {
     return (
