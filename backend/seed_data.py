@@ -302,7 +302,7 @@ async def seed_database():
             "student_id": students[1]["id"],
             "ticket_id": tickets_data[1]["ticket"]["id"],
             "event_type": "ai_routed",
-            "content": "Ticket automatically categorized as 'verification' with high priority",
+            "content": "Ticket automatically categorized as 'verification'",
             "created_by": None,
             "created_at": (now - timedelta(days=1)).isoformat()
         },
