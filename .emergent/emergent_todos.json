@@ -1,14 +1,14 @@
 [
   {
     "content": "Fix AI Suggested Reply not loading when ticket is clicked via TicketContext",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Fix left panel ticket selection highlighting not showing",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test both fixes to ensure proper ticket selection and AI generation",
-    "status": "pending"
+    "status": "completed"
   }
 ]
