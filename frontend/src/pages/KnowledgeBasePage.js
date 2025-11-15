@@ -44,7 +44,7 @@ const KnowledgeBasePage = () => {
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     if (uploadType === 'article') {
-      toast.success(`Article "${articleTitle}" uploaded successfully`);
+      toast.success(`Document "${articleTitle}" uploaded successfully`);
     } else {
       toast.success(`Link "${linkTitle}" added successfully`);
     }
@@ -58,20 +58,12 @@ const KnowledgeBasePage = () => {
     setUploading(false);
   };
   
-  const categories = [
-    { name: 'FAFSA', count: 2, color: 'bg-blue-100 text-blue-700' },
-    { name: 'Verification', count: 1, color: 'bg-green-100 text-green-700' },
-    { name: 'SAP Appeals', count: 1, color: 'bg-purple-100 text-purple-700' },
-    { name: 'Billing', count: 1, color: 'bg-orange-100 text-orange-700' },
-    { name: 'General', count: 2, color: 'bg-gray-100 text-gray-700' },
-  ];
-
   const articles = [
     { 
       id: '1',
       title: 'FAFSA Submission Deadlines 2024-2025', 
       category: 'FAFSA', 
-      type: 'Article',
+      type: 'Document',
       lastUpdated: '2 days ago',
       updatedBy: 'Sarah Chen'
     },
@@ -79,7 +71,7 @@ const KnowledgeBasePage = () => {
       id: '2',
       title: 'Verification Process - Required Documents', 
       category: 'Verification', 
-      type: 'Article',
+      type: 'Document',
       lastUpdated: '1 week ago',
       updatedBy: 'Michael Rodriguez'
     },
@@ -87,7 +79,7 @@ const KnowledgeBasePage = () => {
       id: '3',
       title: 'Satisfactory Academic Progress (SAP) Appeals', 
       category: 'SAP Appeals', 
-      type: 'Article',
+      type: 'Document',
       lastUpdated: '3 weeks ago',
       updatedBy: 'Dr. Emily Thompson'
     },
@@ -95,7 +87,7 @@ const KnowledgeBasePage = () => {
       id: '4',
       title: 'Understanding Your Billing Statement', 
       category: 'Billing', 
-      type: 'Article',
+      type: 'Document',
       lastUpdated: '1 month ago',
       updatedBy: 'Sarah Chen'
     },
@@ -111,7 +103,7 @@ const KnowledgeBasePage = () => {
       id: '6',
       title: 'How to Complete the FAFSA', 
       category: 'FAFSA', 
-      type: 'Article',
+      type: 'Document',
       lastUpdated: '2 months ago',
       updatedBy: 'Dr. Emily Thompson'
     },
@@ -119,7 +111,7 @@ const KnowledgeBasePage = () => {
       id: '7',
       title: 'Work-Study Program Information', 
       category: 'General', 
-      type: 'Article',
+      type: 'Document',
       lastUpdated: '3 months ago',
       updatedBy: 'Sarah Chen'
     },
@@ -142,16 +134,16 @@ const KnowledgeBasePage = () => {
         <div className="relative mb-6">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <Input
-            placeholder="Search articles..."
+            placeholder="Search documents..."
             className="pl-10 h-11"
           />
         </div>
 
         <div className="w-full">
-          {/* Articles Table - Full Width */}
+          {/* Documents Table - Full Width */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Articles & Links</CardTitle>
+              <CardTitle className="text-base">Documents & Links</CardTitle>
               <CardDescription>Knowledge base content for AI-powered replies</CardDescription>
             </CardHeader>
             <CardContent>
@@ -221,7 +213,7 @@ const KnowledgeBasePage = () => {
           <DialogHeader>
             <DialogTitle>Upload to Knowledge Base</DialogTitle>
             <DialogDescription>
-              Add a new article or external link to the knowledge base
+              Add a new document or external link to the knowledge base
             </DialogDescription>
           </DialogHeader>
           
@@ -234,7 +226,7 @@ const KnowledgeBasePage = () => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="article">Article</SelectItem>
+                  <SelectItem value="article">Document</SelectItem>
                   <SelectItem value="link">External Link</SelectItem>
                 </SelectContent>
               </Select>
@@ -272,7 +264,7 @@ const KnowledgeBasePage = () => {
                     value={articleContent}
                     onChange={(e) => setArticleContent(e.target.value)}
                     rows={10}
-                    placeholder="# Article Title\n\nArticle content in markdown format..."
+                    placeholder="# Document Title\n\nDocument content in markdown format..."
                     className="font-mono text-sm"
                   />
                 </div>
@@ -334,7 +326,7 @@ const KnowledgeBasePage = () => {
               disabled={uploading}
               className="bg-gray-900 hover:bg-gray-800 text-white"
             >
-              {uploading ? 'Uploading...' : uploadType === 'article' ? 'Upload Article' : 'Add Link'}
+              {uploading ? 'Uploading...' : uploadType === 'article' ? 'Upload Document' : 'Add Link'}
             </Button>
           </DialogFooter>
         </DialogContent>

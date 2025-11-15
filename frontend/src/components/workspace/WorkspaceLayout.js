@@ -41,7 +41,7 @@ const WorkspaceLayout = ({ user, children }) => {
 
   const navItems = [
     { path: '/workspace', label: 'Tickets' },
-    { path: '/reports', label: 'Reports' },
+    { path: '/reports', label: 'Analytics' },
     { path: '/knowledge-base', label: 'Knowledge Base' },
   ];
 
