@@ -1,14 +1,26 @@
 [
   {
-    "content": "Move cursor arrow to top of username (not top-right)",
-    "status": "completed"
+    "content": "Restrict moving cursors to logged-in users only (not shown on login view)",
+    "status": "in_progress"
   },
   {
-    "content": "Fix avatar hover tooltips to be visible above navigation bar",
-    "status": "completed"
+    "content": "Make Edit button functional in AI Suggested Reply section",
+    "status": "pending"
   },
   {
-    "content": "Test cursor and tooltip positioning fixes",
-    "status": "completed"
+    "content": "Add manual editing mode with textarea for AI reply",
+    "status": "pending"
+  },
+  {
+    "content": "Add file attachment button during AI reply editing",
+    "status": "pending"
+  },
+  {
+    "content": "Add Save button to save edited AI reply before sending",
+    "status": "pending"
+  },
+  {
+    "content": "Test full edit workflow: Edit > Attach > Save > Send",
+    "status": "pending"
   }
 ]
