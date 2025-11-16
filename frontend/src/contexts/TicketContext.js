@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { ticketAPI, queueAPI } from '../lib/api';
-import { toast } from 'sonner';
+import { ticketAPI } from '../lib/api';
 
 const TicketContext = createContext(null);
 
@@ -15,47 +14,6 @@ export const useTicket = () => {
 export const TicketProvider = ({ children }) => {
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [ticketDetails, setTicketDetails] = useState(null);
-  const [tickets, setTickets] = useState([]);
-  const [queues, setQueues] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState({
-    status: null,
-    queue_id: null,
-  });
-
-  // Load tickets and queues on mount
-  useEffect(() => {
-    loadQueues();
-    loadTickets();
-  }, []);
-
-  // Reload tickets when filters change
-  useEffect(() => {
-    if (filters.status !== null || filters.queue_id !== null) {
-      loadTickets();
-    }
-  }, [filters]);
-
-  const loadQueues = async () => {
-    try {
-      const data = await queueAPI.list();
-      setQueues(data.queues || []);
-    } catch (error) {
-      console.error('Failed to load queues:', error);
-    }
-  };
-
-  const loadTickets = async () => {
-    setLoading(true);
-    try {
-      const data = await ticketAPI.list(filters);
-      setTickets(data.tickets || []);
-    } catch (error) {
-      toast.error('Failed to load tickets');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Load ticket details when ticket changes
   useEffect(() => {
@@ -76,19 +34,17 @@ export const TicketProvider = ({ children }) => {
     const savedTicketId = localStorage.getItem('selectedTicketId');
     const savedTicketData = localStorage.getItem('selectedTicketData');
     
-    if (savedTicketId && savedTicketData && tickets.length > 0) {
+    if (savedTicketId && savedTicketData) {
       try {
         const ticketData = JSON.parse(savedTicketData);
-        // Find the ticket in current tickets or use saved data
-        const currentTicket = tickets.find(t => t.id === savedTicketId) || ticketData;
-        setSelectedTicket(currentTicket);
+        setSelectedTicket(ticketData);
       } catch (error) {
         console.error('Failed to restore ticket state:', error);
         localStorage.removeItem('selectedTicketId');
         localStorage.removeItem('selectedTicketData');
       }
     }
-  }, [tickets]);
+  }, []);
 
   const loadTicketDetails = async (ticketId) => {
     try {
@@ -96,19 +52,15 @@ export const TicketProvider = ({ children }) => {
       setTicketDetails(data);
     } catch (error) {
       console.error('Failed to load ticket details:', error);
-      setSelectedTicket(null);
+      // Don't clear selectedTicket on error, just clear details
+      setTicketDetails(null);
     }
   };
 
   const handleTicketUpdate = () => {
-    loadTickets();
     if (selectedTicket) {
       loadTicketDetails(selectedTicket.id);
     }
-  };
-
-  const handleFilterChange = (newFilters) => {
-    setFilters(prev => ({ ...prev, ...newFilters }));
   };
 
   return (
@@ -116,12 +68,7 @@ export const TicketProvider = ({ children }) => {
       selectedTicket,
       setSelectedTicket,
       ticketDetails,
-      handleTicketUpdate,
-      tickets,
-      queues,
-      loading,
-      filters,
-      handleFilterChange
+      handleTicketUpdate
     }}>
       {children}
     </TicketContext.Provider>
