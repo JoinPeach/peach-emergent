@@ -1,27 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTicket } from '../contexts/TicketContext';
+import { ticketAPI, queueAPI } from '../lib/api';
 import WorkspaceLayout from '../components/workspace/WorkspaceLayout';
 import TicketList from '../components/workspace/TicketList';
 import ConversationPanel from '../components/workspace/ConversationPanel';
 import StudentPanel from '../components/workspace/StudentPanel';
+import { toast } from 'sonner';
 
 const WorkspacePage = () => {
   const { user } = useAuth();
-  const { 
-    tickets, 
-    queues, 
-    selectedTicket, 
-    setSelectedTicket, 
-    ticketDetails, 
-    handleTicketUpdate, 
-    loading, 
-    filters, 
-    handleFilterChange 
-  } = useTicket();
+  const { selectedTicket, setSelectedTicket, ticketDetails, handleTicketUpdate } = useTicket();
+  const [tickets, setTickets] = useState([]);
+  const [queues, setQueues] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    status: null,
+    queue_id: null,
+  });
+
+  useEffect(() => {
+    loadQueues();
+  }, []);
+
+  useEffect(() => {
+    loadTickets();
+  }, [filters]);
+
+  // Restore selected ticket when tickets are loaded
+  useEffect(() => {
+    const savedTicketId = localStorage.getItem('selectedTicketId');
+    if (savedTicketId && tickets.length > 0 && !selectedTicket) {
+      const savedTicket = tickets.find(t => t.id === savedTicketId);
+      if (savedTicket) {
+        setSelectedTicket(savedTicket);
+      }
+    }
+  }, [tickets, selectedTicket, setSelectedTicket]);
+
+  const loadQueues = async () => {
+    try {
+      const data = await queueAPI.list();
+      setQueues(data.queues);
+    } catch (error) {
+      toast.error('Failed to load queues');
+    }
+  };
+
+  const loadTickets = async () => {
+    setLoading(true);
+    try {
+      const data = await ticketAPI.list(filters);
+      setTickets(data.tickets);
+    } catch (error) {
+      toast.error('Failed to load tickets');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleTicketSelect = (ticket) => {
     setSelectedTicket(ticket);
+  };
+
+  const handleFilterChange = (newFilters) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
+  };
+
+  const handleTicketUpdateLocal = () => {
+    loadTickets();
+    handleTicketUpdate();
   };
 
   return (
@@ -41,13 +89,13 @@ const WorkspacePage = () => {
         {/* Middle Panel: Conversation + AI Draft */}
         <ConversationPanel
           ticketDetails={ticketDetails}
-          onTicketUpdate={handleTicketUpdate}
+          onTicketUpdate={handleTicketUpdateLocal}
         />
 
         {/* Right Panel: Student Profile + Timeline + Audit Log */}
         <StudentPanel
           ticketDetails={ticketDetails}
-          onStudentUpdate={handleTicketUpdate}
+          onStudentUpdate={handleTicketUpdateLocal}
         />
       </div>
     </WorkspaceLayout>
