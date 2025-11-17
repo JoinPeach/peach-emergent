@@ -114,23 +114,6 @@ const TicketList = ({
         {/* Dropdowns Row */}
         <div className="grid grid-cols-2 gap-2">
           <Select
-            value={filters.queue_id || 'all'}
-            onValueChange={(value) => onFilterChange({ queue_id: value === 'all' ? null : value })}
-          >
-            <SelectTrigger className="h-9 bg-gray-50 border-gray-200">
-              <SelectValue placeholder="All Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Categories</SelectItem>
-              {queues.map((queue) => (
-                <SelectItem key={queue.id} value={queue.id}>
-                  {queue.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <Select
             value={filters.ticketStatus || 'all'}
             onValueChange={(value) => onFilterChange({ ticketStatus: value === 'all' ? null : value, status: value === 'all' ? null : value })}
           >
@@ -142,6 +125,23 @@ const TicketList = ({
               <SelectItem value="open">Open</SelectItem>
               <SelectItem value="in_progress">In Progress</SelectItem>
               <SelectItem value="closed">Closed</SelectItem>
+            </SelectContent>
+          </Select>
+          
+          <Select
+            value={filters.category || 'all'}
+            onValueChange={(value) => onFilterChange({ category: value === 'all' ? null : value })}
+          >
+            <SelectTrigger className="h-9 bg-gray-50 border-gray-200" data-testid="category-filter-dropdown">
+              <SelectValue placeholder="All Categories" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              <SelectItem value="fafsa">FAFSA</SelectItem>
+              <SelectItem value="verification">Verification</SelectItem>
+              <SelectItem value="sap_appeal">SAP Appeals</SelectItem>
+              <SelectItem value="billing">Billing</SelectItem>
+              <SelectItem value="general">General</SelectItem>
             </SelectContent>
           </Select>
         </div>
