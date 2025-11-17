@@ -118,10 +118,10 @@ const TicketList = ({
             onValueChange={(value) => onFilterChange({ queue_id: value === 'all' ? null : value })}
           >
             <SelectTrigger className="h-9 bg-gray-50 border-gray-200">
-              <SelectValue placeholder="All Tickets" />
+              <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Tickets</SelectItem>
+              <SelectItem value="all">All Categories</SelectItem>
               {queues.map((queue) => (
                 <SelectItem key={queue.id} value={queue.id}>
                   {queue.name}
