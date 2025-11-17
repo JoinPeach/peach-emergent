@@ -1,6 +1,6 @@
 [
   {
     "content": "Fix loading tickets error when returning to Tickets tab after navigation",
-    "status": "in_progress"
+    "status": "completed"
   }
 ]
