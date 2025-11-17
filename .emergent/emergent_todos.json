@@ -1,6 +1,6 @@
 [
   {
-    "content": "Fix continuous flashing and 'failed to load ticket' errors caused by infinite loop in TicketContext",
-    "status": "completed"
+    "content": "Fix loading tickets error when returning to Tickets tab after navigation",
+    "status": "in_progress"
   }
 ]
