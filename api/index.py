@@ -9,20 +9,16 @@ from mangum import Mangum
 
 # Import shared modules
 # Use relative imports for Vercel compatibility
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent))
-
-from _shared.db import get_db
-from _shared.auth import get_current_user, sessions
-from _shared.models import (
+from ._shared.db import get_db
+from ._shared.auth import get_current_user, sessions
+from ._shared.models import (
     SearchKBRequest, SearchKBResponse,
     DraftReplyRequest, DraftReplyResponse,
     UpdateTicketMetadataRequest,
     AddStudentEventRequest,
     StudentEvent, AiSuggestion
 )
-from _shared.ai_tools import search_kb_articles, draft_reply_with_ai, triage_ticket_with_ai
+from ._shared.ai_tools import search_kb_articles, draft_reply_with_ai, triage_ticket_with_ai
 
 # Configure logging
 logging.basicConfig(
