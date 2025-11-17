@@ -17,6 +17,7 @@ const WorkspacePage = () => {
   const [filters, setFilters] = useState({
     status: null,
     queue_id: null,
+    category: null,
   });
 
   useEffect(() => {
