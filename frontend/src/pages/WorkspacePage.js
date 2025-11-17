@@ -48,15 +48,24 @@ const WorkspacePage = () => {
     }
   };
 
-  const loadTickets = async () => {
+  const loadTickets = async (retryCount = 0) => {
     setLoading(true);
     try {
       const data = await ticketAPI.list(filters);
       setTickets(data.tickets || []);
     } catch (error) {
       console.error('Failed to load tickets:', error);
+      
+      // Retry once if it's the first failure
+      if (retryCount === 0) {
+        console.log('Retrying ticket load...');
+        setTimeout(() => loadTickets(1), 1000);
+        return;
+      }
+      
       toast.error('Failed to load tickets - please refresh the page');
-      // Don't leave loading stuck - always reset it
+      // Set empty array to prevent stuck state
+      setTickets([]);
     } finally {
       // Always reset loading state
       setLoading(false);
