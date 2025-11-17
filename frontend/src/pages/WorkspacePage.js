@@ -52,10 +52,13 @@ const WorkspacePage = () => {
     setLoading(true);
     try {
       const data = await ticketAPI.list(filters);
-      setTickets(data.tickets);
+      setTickets(data.tickets || []);
     } catch (error) {
-      toast.error('Failed to load tickets');
+      console.error('Failed to load tickets:', error);
+      toast.error('Failed to load tickets - please refresh the page');
+      // Don't leave loading stuck - always reset it
     } finally {
+      // Always reset loading state
       setLoading(false);
     }
   };
