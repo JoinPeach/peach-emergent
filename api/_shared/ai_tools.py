@@ -2,7 +2,7 @@ import os
 import re
 from typing import List, Dict, Optional
 from emergentintegrations.llm.chat import LlmChat, UserMessage
-from api._shared.models import (
+from _shared.models import (
     SearchKBRequest, SearchKBResponse,
     DraftReplyRequest, DraftReplyResponse,
     KnowledgeBaseArticle
